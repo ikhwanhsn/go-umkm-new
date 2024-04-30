@@ -1,7 +1,11 @@
+import Header from "@/components/Header";
+import Mitra from "@/components/Mitra";
+
 export default function Home() {
   return (
-    <main className="w-full h-screen">
-      <h1 className="text-center mt-24">GoUMKM</h1>
+    <main className="w-full min-h-screen">
+      <Header />
+      <Mitra />
     </main>
   );
 }
