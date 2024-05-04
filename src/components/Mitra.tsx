@@ -10,7 +10,7 @@ import Image from "next/image";
 
 const Mitra = () => {
   return (
-    <main className="mt-12 mx-12">
+    <main className="mt-12">
       <h1 className="text-center text-2xl text-orange-500 font-bold">
         Mitra UMKM
       </h1>
@@ -39,7 +39,7 @@ const MarqueeComponent = () => {
     mitra7,
   ];
   return (
-    <Marquee speed={40}>
+    <Marquee speed={40} pauseOnHover>
       {mitra.map((item, index) => (
         <Image
           key={index}
