@@ -1,10 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import logo from "../../public/img/logo-png.png";
 import Link from "next/link";
 import { IoPersonOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
+  const { status, data: session } = useSession();
+
   return (
     <nav className="navbar bg-gray-50 shadow-md text-black h-16 md:px-12 px-3 fixed top-0 w-full z-50">
       {/* ===== Navbar Start ===== */}
@@ -73,7 +80,12 @@ const Navbar = () => {
       </div>
       {/* ===== Navbar End ===== */}
       <div className="navbar-end md:space-x-4 space-x-2">
-        <FaRegHeart size={20} className="text-center" />
+        <button
+          className="btn btn-ghost -mr-3 btn-circle"
+          onClick={() => router.push("/productLiked")}
+        >
+          <FaRegHeart size={20} className="text-center" />
+        </button>
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
@@ -92,21 +104,36 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-50 rounded-box w-52 bg-white"
           >
+            {session && (
+              <li>
+                <p>
+                  {session.user?.name}
+                  <span className="badge">User</span>
+                </p>
+              </li>
+            )}
             <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
+              <a className="justify-between">Profile</a>
+            </li>
+            <li>
+              <a>Toko saya</a>
             </li>
             <li>
               <a>Settings</a>
             </li>
-            <li>
+            {/* <li>
               <a>Logout</a>
-            </li>
+            </li> */}
           </ul>
         </div>
-        <button className="btn btn-primary text-white">Sign In</button>
+        <button
+          className="btn btn-primary text-white"
+          onClick={() =>
+            status === "authenticated" ? signOut() : signIn("google")
+          }
+        >
+          {status === "authenticated" ? "Sign Out" : "Sign In"}
+        </button>
       </div>
     </nav>
   );

@@ -6,57 +6,57 @@ const dataProduk = [
     id: 1,
     image: produk1,
     name: "Kopi Lorepsipa",
-    mitra: "Nama mitra",
+    mitra: "Nama mitra 1",
     price: "Rp. 71.000",
   },
   {
     id: 2,
     image: produk1,
-    name: "Kopi Lorepsipa",
-    mitra: "Mitra mitra",
-    price: "Rp. 71.000",
+    name: "Teh Serenili",
+    mitra: "Nama mitra 2",
+    price: "Rp. 72.000",
   },
   {
     id: 3,
     image: produk1,
-    name: "Kopi Lorepsipa",
-    mitra: "Mitra mitra",
-    price: "Rp. 71.000",
+    name: "Minuman Coklat Beraroma",
+    mitra: "Nama mitra 3",
+    price: "Rp. 73.500",
   },
   {
     id: 4,
     image: produk1,
-    name: "Kopi Lorepsipa",
-    mitra: "Mitra mitra",
-    price: "Rp. 71.000",
+    name: "Sari Buah Segar",
+    mitra: "Nama mitra 4",
+    price: "Rp. 65.000",
   },
   {
     id: 5,
     image: produk1,
-    name: "Kopi Lorepsipa",
-    mitra: "Mitra mitra",
-    price: "Rp. 71.000",
+    name: "Es Krim Homemade",
+    mitra: "Nama mitra 5",
+    price: "Rp. 80.000",
   },
   {
     id: 6,
     image: produk1,
-    name: "Kopi Lorepsipa",
-    mitra: "Mitra mitra",
-    price: "Rp. 71.000",
+    name: "Kue Tradisional",
+    mitra: "Nama mitra 6",
+    price: "Rp. 45.000",
   },
   {
     id: 7,
     image: produk1,
-    name: "Kopi Lorepsipa",
-    mitra: "Mitra mitra",
-    price: "Rp. 71.000",
+    name: "Jus Segar 100% Buah Lokal",
+    mitra: "Nama mitra 7",
+    price: "Rp. 55.000",
   },
   {
     id: 8,
     image: produk1,
-    name: "Kopi Lorepsipa",
-    mitra: "Mitra mitra",
-    price: "Rp. 71.000",
+    name: "Smoothie Sayur Organik",
+    mitra: "Nama mitra 8",
+    price: "Rp. 60.000",
   },
 ];
 
@@ -92,7 +92,7 @@ type CardProductProps = {
 
 const CardProduct = ({ src, name, mitra, price }: CardProductProps) => {
   return (
-    <main className="shadow-md p-5 rounded-lg">
+    <main className="shadow-md p-5 rounded-lg hover:bg-gray-100 transition-all cursor-pointer">
       <Image
         src={src}
         alt="image-product"
