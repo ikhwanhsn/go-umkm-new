@@ -1,4 +1,3 @@
-import Image, { StaticImageData } from "next/image";
 import produk1 from "../../public/img/product1.png";
 import CardProduct from "./CardProduct";
 
@@ -59,15 +58,26 @@ const dataProduk = [
     mitra: "Nama mitra 8",
     price: "Rp. 60.000",
   },
+  {
+    id: 9,
+    image: produk1,
+    name: "Kopi Hitam",
+    mitra: "mitra 9",
+    price: "Rp. 80.000",
+  },
+  {
+    id: 10,
+    image: produk1,
+    name: "Nasi Jagung",
+    mitra: "mitra 10",
+    price: "Rp. 20.000",
+  },
 ];
 
-const ProdukUnggulan = () => {
+const ProdukFavorit = () => {
   return (
-    <main className="mt-12">
-      <h1 className="text-center text-2xl text-orange-500 font-bold">
-        Produk Unggulan
-      </h1>
-      <section className="grid grid-cols-4 px-24 mx-auto mt-7 gap-7">
+    <main className="mt-7">
+      <section className="grid grid-cols-5 mx-auto mt-7 gap-5">
         {dataProduk.map((item) => (
           <CardProduct
             key={item.id}
@@ -82,4 +92,4 @@ const ProdukUnggulan = () => {
   );
 };
 
-export default ProdukUnggulan;
+export default ProdukFavorit;

@@ -1,4 +1,3 @@
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Lokasi from "@/components/Lokasi";
 import Mitra from "@/components/Mitra";
@@ -15,7 +14,6 @@ export default function Home() {
       <ProdukUnggulan />
       <Outro1 />
       <Outro2 />
-      <Footer />
     </main>
   );
 }

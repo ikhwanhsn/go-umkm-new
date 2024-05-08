@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { NextAuthProvider } from "./Provider";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
           <section className="w-full h-16"></section>
           <Navbar />
           {children}
+          <Footer />
         </NextAuthProvider>
       </body>
     </html>
