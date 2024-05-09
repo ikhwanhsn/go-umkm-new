@@ -21,9 +21,7 @@ const CardProduct = ({ src, name, mitra, price }: CardProductProps) => {
       <Image
         src={src}
         alt="image-product"
-        width={120}
-        height={120}
-        className="mx-auto"
+        className="mx-auto w-full h-44 rounded-sm mb-3"
       />
       <h3 className="text-lg font-semibold">{name}</h3>
       <p>{mitra}</p>

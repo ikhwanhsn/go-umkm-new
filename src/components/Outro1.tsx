@@ -1,5 +1,6 @@
 import Image from "next/image";
 import umkm from "../../public/img/umkm1.jpg";
+import Link from "next/link";
 
 const Outro1 = () => {
   return (
@@ -21,9 +22,11 @@ const Outro1 = () => {
           Lebih dari 100 UMKM dengan ribuan produk yang ada siap melayani
           pesanan Anda.
         </p>
-        <button className="btn bg-orange-500 text-white mt-12 border-none shadow-md hover:bg-orange-600">
-          Cari sekarang
-        </button>
+        <Link href="/store">
+          <button className="btn bg-orange-500 text-white mt-12 border-none shadow-md hover:bg-orange-600">
+            Cari sekarang
+          </button>
+        </Link>
       </aside>
     </main>
   );

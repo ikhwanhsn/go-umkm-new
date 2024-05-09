@@ -8,7 +8,7 @@ const ProductLiked = () => {
           <h1 className="text-xl font-bold mb-1">Favorite Product</h1>
           <p>Welcome to favorite page</p>
         </section>
-        <label className="input input-bordered flex items-center gap-2 bg-gray-50">
+        <label className="input input-bordered  flex items-center gap-2 bg-gray-50">
           <input type="text" className="" placeholder="Search here..." />
           <svg
             xmlns="http://www.w3.org/2000/svg"

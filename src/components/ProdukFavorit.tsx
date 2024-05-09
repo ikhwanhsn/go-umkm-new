@@ -1,4 +1,4 @@
-import produk1 from "../../public/img/product1.png";
+import produk1 from "../../public/img/product1.jpg";
 import CardProduct from "./CardProduct";
 
 const dataProduk = [

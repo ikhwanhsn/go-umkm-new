@@ -26,20 +26,36 @@ const Product = () => {
             </svg>
           </label>
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn m-1 btn-outline">
-              <FiFilter />
-            </div>
-            <ul
+            <div
               tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box w-52"
+              role="button"
+              className="btn m-1 btn-outline border-gray-200 hover:bg-gray-100"
             >
-              <li>
-                <a>Item 1</a>
-              </li>
-              <li>
-                <a>Item 2</a>
-              </li>
-            </ul>
+              <FiFilter className="text-black" />
+            </div>
+            <div
+              tabIndex={0}
+              className="dropdown-content z-[1] menu px-3 py-2 shadow bg-gray-50 rounded-box w-44"
+            >
+              <div className="form-control">
+                <label className="label cursor-pointer flex justify-between w-full">
+                  <span className="label-text text-black">Barusari</span>
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary"
+                  />
+                </label>
+              </div>
+              <div className="form-control">
+                <label className="label cursor-pointer">
+                  <span className="label-text text-black">Bulustalan</span>
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary"
+                  />
+                </label>
+              </div>
+            </div>
           </div>
         </section>
       </section>

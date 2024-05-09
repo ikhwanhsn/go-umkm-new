@@ -1,5 +1,6 @@
 import Image from "next/image";
 import umkm from "../../public/img/umkm2.jpg";
+import Link from "next/link";
 
 const Outro2 = () => {
   return (
@@ -15,9 +16,11 @@ const Outro2 = () => {
           <br />
           dengan harga yang sangat murah.
         </p>
-        <button className="btn bg-yellow-500 text-white mt-12 border-none shadow-md hover:bg-yellow-600">
-          Coba sekarang
-        </button>
+        <Link href="/product">
+          <button className="btn bg-yellow-500 text-white mt-12 border-none shadow-md hover:bg-yellow-600">
+            Coba sekarang
+          </button>
+        </Link>
       </aside>
       <Image
         src={umkm}
