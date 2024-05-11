@@ -9,7 +9,7 @@ const Footer = () => {
         <p className="-mt-5">
           GoUMKM Semarang Ltd.
           <br />
-          Providing reliable tech since 1992
+          Help business to grow and be more efficient.
         </p>
       </aside>
       <nav>

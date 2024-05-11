@@ -6,26 +6,12 @@ import Link from "next/link";
 import { IoPersonOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { MdOpenInNew } from "react-icons/md";
 
 const Navbar = () => {
-  const menu = [
-    {
-      page: "/product",
-      name: "All Product",
-    },
-    {
-      page: "/store",
-      name: "Store",
-    },
-    {
-      page: "/about",
-      name: "About",
-    },
-  ];
   const router = useRouter();
   const { status, data: session } = useSession();
-  const pathname = usePathname();
 
   return (
     <nav className="navbar bg-gray-50 shadow-md text-black h-16 md:px-12 px-3 fixed top-0 w-full z-50">
@@ -76,18 +62,34 @@ const Navbar = () => {
         </Link>
       </div>
       {/* ===== Navbar Center ===== */}
-      <div className="navbar-center hidden lg:flex gap-5">
-        {menu.map((item, index) => (
-          <Link
-            href={item.page}
-            key={index}
-            className={`text-black w-fit ${
-              pathname === item.page ? "border-b-2 border-black" : ""
-            }`}
-          >
-            {item.name}
-          </Link>
-        ))}
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          <li>
+            <Link href="/product">All Product</Link>
+          </li>
+          <li>
+            <Link href="/store">Store</Link>
+          </li>
+          <li>
+            <details>
+              <summary>Others</summary>
+              <ul className="p-2 bg-gray-50">
+                <li>
+                  <Link href="/maps">Maps</Link>
+                </li>
+                <li>
+                  <Link href="/forum">Forum</Link>
+                </li>
+                <li>
+                  <Link href="/learn">Learn</Link>
+                </li>
+                <li>
+                  <Link href="/about">About</Link>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
       </div>
       {/* ===== Navbar End ===== */}
       <div className="navbar-end md:space-x-4 space-x-2">
@@ -105,10 +107,6 @@ const Navbar = () => {
           >
             <div className="">
               <IoPersonOutline size={20} className="text-center" />
-              {/* <img
-                alt="Tailwind CSS Navbar component"
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              /> */}
             </div>
           </div>
           <ul
@@ -124,21 +122,21 @@ const Navbar = () => {
               </li>
             )}
             <li>
-              <a className="justify-between">Profile</a>
+              <Link href="/dashboard">Dashboard</Link>
             </li>
             <li>
-              <a>Toko saya</a>
+              <a href="https://google.com" target="_blank">
+                Documentation
+                <MdOpenInNew size={15} className="text-black -ml-1" />
+              </a>
             </li>
             <li>
-              <a>Settings</a>
+              <Link href="/settings">Settings</Link>
             </li>
-            {/* <li>
-              <a>Logout</a>
-            </li> */}
           </ul>
         </div>
         <button
-          className="btn btn-primary text-white"
+          className="btn bg-orange-500 border-none hover:bg-orange-600 text-white"
           onClick={() =>
             status === "authenticated" ? signOut() : signIn("google")
           }

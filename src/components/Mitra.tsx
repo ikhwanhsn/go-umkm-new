@@ -39,7 +39,7 @@ const MarqueeComponent = () => {
     mitra7,
   ];
   return (
-    <Marquee speed={40} pauseOnHover>
+    <Marquee speed={40}>
       {mitra.map((item, index) => (
         <Image
           key={index}

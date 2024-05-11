@@ -69,8 +69,11 @@ const dataProduk = [
 
 const ProdukUnggulan = () => {
   return (
-    <main className="mt-12">
-      <h1 className="text-center text-2xl text-orange-500 font-bold">
+    <main>
+      <h1
+        className="text-center text-2xl text-orange-500 font-bold pt-24"
+        id="produk-unggulan"
+      >
         Produk Unggulan
       </h1>
       <section className="grid grid-cols-4 px-24 mx-auto mt-7 gap-7">

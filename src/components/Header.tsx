@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <main className="mx-5 mt-5">
       <section className="w-full rounded-md h-[30rem] bg-orange-500 text-white p-28 relative">
-        <aside className="mt-8">
+        <aside className="mt-3">
           <h1 className="text-5xl font-bold mb-5">
             Temukan produk UMKM
             <br />
@@ -17,6 +17,11 @@ const Header = () => {
             dengan berbagai macam kategori yang menarik dan berkualitas
             <br /> dengan harga terjangkau.
           </h3>
+          <a href="#produk-unggulan">
+            <button className="btn bg-yellow-500 text-white mt-5 border-none shadow-md hover:bg-yellow-600">
+              Cari sekarang
+            </button>
+          </a>
         </aside>
         <Image
           src={imageHeader}

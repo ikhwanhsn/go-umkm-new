@@ -1,3 +1,10 @@
+import Image from "next/image";
+import mentor from "../../../../public/img/mentor.jpg";
+import team1 from "../../../../public/img/team-p-1.jpg";
+import team2 from "../../../../public/img/team-l-1.jpg";
+import team3 from "../../../../public/img/team-p-2.jpg";
+import team4 from "../../../../public/img/team-l-2.jpg";
+
 const About = () => {
   return (
     <main className="w-full min-h-screen mt-5 px-5 rounded-md">
@@ -17,6 +24,47 @@ const About = () => {
       </center>
       <section>
         <h1 className="text-xl font-semibold text-center mt-12">Our Mentor</h1>
+        <section className="grid grid-cols-2 mt-12 mx-64">
+          <Image src={mentor} alt="mentor" width={200} height={200} />
+          <aside>
+            <h2 className="text-xl font-semibold">Mentor Name</h2>
+            <p className="text-lg">Mentor Job</p>
+            <p className="text-lg">Mentor Email</p>
+          </aside>
+        </section>
+      </section>
+      <section>
+        <h1 className="text-xl font-semibold text-center mt-12">Our Team</h1>
+        <section className="flex justify-between items-center mt-12 mx-12">
+          <Image
+            src={team1}
+            alt="mentor"
+            width={200}
+            height={200}
+            className="object-cover"
+          />
+          <Image
+            src={team2}
+            alt="mentor"
+            width={200}
+            height={200}
+            className="object-cover"
+          />
+          <Image
+            src={team3}
+            alt="mentor"
+            width={200}
+            height={200}
+            className="object-cover"
+          />
+          <Image
+            src={team4}
+            alt="mentor"
+            width={200}
+            height={200}
+            className="object-cover"
+          />
+        </section>
       </section>
     </main>
   );
