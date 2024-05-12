@@ -2,11 +2,27 @@ import mongoose, { Schema } from "mongoose";
 
 const storeSchema = new Schema(
   {
-    user_id: String,
-    name: String,
-    description: String,
-    image: String,
-    telephone: Number,
+    user_id: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+      max: 1000,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    telephone: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,

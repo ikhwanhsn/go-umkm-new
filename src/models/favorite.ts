@@ -2,8 +2,14 @@ import mongoose, { Schema } from "mongoose";
 
 const favoriteSchema = new Schema(
   {
-    user_id: String,
-    product_id: String,
+    user_id: {
+      type: String,
+      required: true,
+    },
+    product_id: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

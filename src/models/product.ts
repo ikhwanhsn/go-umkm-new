@@ -2,12 +2,47 @@ import mongoose, { Schema } from "mongoose";
 
 const productSchema = new Schema(
   {
-    user_id: String,
-    name: String,
-    description: String,
-    price: String,
-    image: String,
-    category: String,
+    user_id: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+      max: 1000,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    link: {
+      type: String,
+    },
+    category: {
+      type: String,
+      enum: [
+        "Fashion",
+        "Makanan dan Minuman",
+        "Kesehatan dan Kecantikan",
+        "Perhiasan",
+        "Perabotan Rumah Tangga",
+        "Alat Tulis Kantor",
+        "Elektronik dan Gadget",
+        "Otomotif",
+        "Olahraga dan Aktivitas Luar Ruangan",
+        "Karya Seni dan Kerajinan Tangan",
+        "Lainnya",
+      ],
+      required: true,
+    },
   },
   {
     timestamps: true,

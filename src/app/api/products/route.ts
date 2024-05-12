@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { email, name, description, price, image, category } =
+    const { email, name, description, price, image, link, category } =
       await request.json();
     const idUser = await User.findOne({ email: email });
     if (!idUser) {
@@ -18,6 +18,7 @@ export async function POST(request: Request) {
       description,
       price,
       image,
+      link,
       category,
     });
     if (added) {

@@ -11,6 +11,7 @@ export async function PUT(request: Request, { params }: any) {
       NewDescription: description,
       NewPrice: price,
       NewImage: image,
+      NewLink: link,
       NewCategory: category,
     } = await request.json();
     await connectMongoDB();
@@ -20,6 +21,7 @@ export async function PUT(request: Request, { params }: any) {
       description,
       price,
       image,
+      link,
       category,
     });
     if (updated) {
