@@ -1,4 +1,4 @@
-import AllProduct from "@/components/AllProduct";
+import AllStore from "@/components/AllStore";
 import { FiFilter } from "react-icons/fi";
 
 const Store = () => {
@@ -59,7 +59,7 @@ const Store = () => {
           </div>
         </section>
       </section>
-      <AllProduct />
+      <AllStore />
     </main>
   );
 };

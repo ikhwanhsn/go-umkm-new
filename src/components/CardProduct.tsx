@@ -2,21 +2,25 @@
 
 import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
+import { FiMapPin } from "react-icons/fi";
 
 type CardProductProps = {
   src: StaticImageData;
   name: string;
   mitra: string;
-  price: string;
+  price?: string;
+  myRef?: string;
 };
 
-const CardProduct = ({ src, name, mitra, price }: CardProductProps) => {
+const CardProduct = ({ src, name, mitra, price, myRef }: CardProductProps) => {
   const router = useRouter();
 
   return (
     <main
       className="shadow-md p-5 rounded-lg hover:bg-gray-100 transition-all cursor-pointer"
-      onClick={() => router.push(`/product/1`)}
+      onClick={() =>
+        myRef === "store" ? router.push(`/store/1`) : router.push(`/product/1`)
+      }
     >
       <Image
         src={src}
@@ -24,8 +28,13 @@ const CardProduct = ({ src, name, mitra, price }: CardProductProps) => {
         className="mx-auto w-full h-44 rounded-sm mb-3"
       />
       <h3 className="text-lg font-semibold">{name}</h3>
-      <p>{mitra}</p>
-      <p className="text-orange-500 text-lg font-semibold mt-3">{price}</p>
+      <p className="flex items-center gap-1">
+        {myRef === "store" && <FiMapPin />}
+        {mitra}
+      </p>
+      {price && (
+        <p className="text-orange-500 text-lg font-semibold mt-3">{price}</p>
+      )}
     </main>
   );
 };
