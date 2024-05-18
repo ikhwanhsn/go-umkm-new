@@ -58,7 +58,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link href="/" className="-ml-3 md:ml-0">
-          <Image src={logo} alt="Logo" width={80} height={80} />
+          <Image src={logo} alt="Logo" width={110} height={110} />
         </Link>
       </div>
       {/* ===== Navbar Center ===== */}
@@ -122,7 +122,7 @@ const Navbar = () => {
               </li>
             )}
             <li>
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/my-store">My Store</Link>
             </li>
             <li>
               <a href="https://google.com" target="_blank">

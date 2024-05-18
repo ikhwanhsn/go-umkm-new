@@ -19,8 +19,20 @@ const storeSchema = new Schema(
       type: String,
       required: true,
     },
+    province: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    kecamatan: {
+      type: String,
+      required: true,
+    },
     telephone: {
-      type: Number,
+      type: String,
       required: true,
     },
   },

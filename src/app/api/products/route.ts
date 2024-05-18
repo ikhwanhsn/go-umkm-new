@@ -1,23 +1,35 @@
 import connectMongoDB from "@/libs/mongodb";
 import Product from "@/models/product";
 import User from "@/models/user";
-import { NextResponse } from "next/server";
+import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { email, name, description, price, image, link, category } =
+    const { email, name, description, image, price, link, category } =
       await request.json();
     const idUser = await User.findOne({ email: email });
+    const amountProduct = await Product.find({ user_id: idUser?.id });
+
+    if (amountProduct.length >= 5) {
+      return NextResponse.json(
+        { message: "Product limit reached 5 products" },
+        { status: 400 }
+      );
+    }
+
     if (!idUser) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
+
     await connectMongoDB();
     const added = await Product.create({
       user_id: idUser.id,
       name,
       description,
-      price,
       image,
+      price,
       link,
       category,
     });

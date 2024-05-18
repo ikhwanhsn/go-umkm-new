@@ -1,12 +1,13 @@
 import connectMongoDB from "@/libs/mongodb";
 import Product from "@/models/product";
+import User from "@/models/user";
 import { NextResponse } from "next/server";
 
 export async function PUT(request: Request, { params }: any) {
   try {
     const { id } = params;
     const {
-      user_id,
+      email,
       NewName: name,
       NewDescription: description,
       NewPrice: price,
@@ -14,9 +15,10 @@ export async function PUT(request: Request, { params }: any) {
       NewLink: link,
       NewCategory: category,
     } = await request.json();
+    const user = await User.findOne({ email });
     await connectMongoDB();
     const updated = await Product.findByIdAndUpdate(id, {
-      user_id,
+      user_id: user?._id,
       name,
       description,
       price,
@@ -39,16 +41,30 @@ export async function PUT(request: Request, { params }: any) {
 
 export async function GET(request: Request, { params }: any) {
   try {
-    const { id } = params;
+    const { email, id } = params;
     await connectMongoDB();
-    const product = await Product.findOne({ _id: id });
-    if (product) {
-      return NextResponse.json({ product }, { status: 200 });
-    } else {
-      return NextResponse.json(
-        { message: "Product not found" },
-        { status: 404 }
-      );
+    if (!id) {
+      const user = await User.findOne({ email });
+      const product = await Product.find({ user_id: user?.id });
+      if (product) {
+        return NextResponse.json({ product }, { status: 200 });
+      } else {
+        return NextResponse.json(
+          { message: "Product not found" },
+          { status: 404 }
+        );
+      }
+    }
+    if (!email) {
+      const product = await Product.findById(id);
+      if (product) {
+        return NextResponse.json({ product }, { status: 200 });
+      } else {
+        return NextResponse.json(
+          { message: "Product not found" },
+          { status: 404 }
+        );
+      }
     }
   } catch (error) {
     console.log(error);

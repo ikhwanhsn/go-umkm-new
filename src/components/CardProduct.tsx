@@ -17,7 +17,7 @@ const CardProduct = ({ src, name, mitra, price, myRef }: CardProductProps) => {
 
   return (
     <main
-      className="shadow-md p-5 rounded-lg hover:bg-gray-100 transition-all cursor-pointer"
+      className="shadow-md p-5 rounded-lg hover:bg-gray-100 transition-all cursor-pointer overflow-hidden"
       onClick={() =>
         myRef === "store" ? router.push(`/store/1`) : router.push(`/product/1`)
       }
@@ -25,6 +25,8 @@ const CardProduct = ({ src, name, mitra, price, myRef }: CardProductProps) => {
       <Image
         src={src}
         alt="image-product"
+        width={300}
+        height={300}
         className="mx-auto w-full h-44 rounded-sm mb-3"
       />
       <h3 className="text-lg font-semibold">{name}</h3>

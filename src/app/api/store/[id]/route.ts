@@ -1,25 +1,35 @@
 import connectMongoDB from "@/libs/mongodb";
 import Store from "@/models/store";
+import User from "@/models/user";
 import { NextResponse } from "next/server";
 
 export async function PUT(request: Request, { params }: any) {
   try {
-    const { id } = params;
     const {
-      user_id,
+      email,
       NewName: name,
       NewDescription: description,
       NewImage: image,
+      NewProvince: province,
+      NewCity: city,
+      NewKecamatan: kecamatan,
       NewTelephone: telephone,
     } = await request.json();
     await connectMongoDB();
-    const updated = await Store.findByIdAndUpdate(id, {
-      user_id,
-      name,
-      description,
-      image,
-      telephone,
-    });
+    const idUser = await User.findOne({ email });
+    const updated = await Store.findOneAndUpdate(
+      { user_id: idUser?.id },
+      {
+        user_id: idUser?.id,
+        name,
+        description,
+        image,
+        province,
+        city,
+        kecamatan,
+        telephone,
+      }
+    );
     if (updated) {
       return NextResponse.json({ message: "Store updated" }, { status: 200 });
     } else {
@@ -35,13 +45,14 @@ export async function PUT(request: Request, { params }: any) {
 
 export async function GET(request: Request, { params }: any) {
   try {
-    const { id } = params;
+    const { email } = params;
     await connectMongoDB();
-    const store = await Store.findOne({ _id: id });
+    const user = await User.findOne({ email });
+    const store = await Store.findOne({ user_id: user?.id });
     if (store) {
       return NextResponse.json({ store }, { status: 200 });
     } else {
-      return NextResponse.json({ message: "Store not found" }, { status: 404 });
+      return NextResponse.json([]);
     }
   } catch (error) {
     console.log(error);

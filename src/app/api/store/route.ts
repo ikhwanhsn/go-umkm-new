@@ -5,7 +5,16 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { email, name, description, image, telephone } = await request.json();
+    const {
+      email,
+      name,
+      description,
+      image,
+      province,
+      city,
+      kecamatan,
+      telephone,
+    } = await request.json();
     const idUser = await User.findOne({ email: email });
     const storeExists = await Store.findOne({ user_id: idUser.id });
 
@@ -26,6 +35,9 @@ export async function POST(request: Request) {
       name,
       description,
       image,
+      province,
+      city,
+      kecamatan,
       telephone,
     });
     if (added) {
