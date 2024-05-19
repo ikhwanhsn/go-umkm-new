@@ -2,14 +2,14 @@ import ProdukFavorit from "@/components/ProdukFavorit";
 
 const ProductLiked = () => {
   return (
-    <main className="min-h-screen px-12 mt-5">
-      <section className="flex justify-between items-center">
+    <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
+      <section className="flex md:flex-row flex-col justify-between md:items-center items-start">
         <section>
           <h1 className="text-xl font-bold mb-1">Favorite Product</h1>
           <p>Welcome to favorite page</p>
         </section>
-        <label className="input input-bordered  flex items-center gap-2 bg-gray-50">
-          <input type="text" className="" placeholder="Search here..." />
+        <label className="input input-bordered mt-3 md:mt-0 flex items-center gap-2 bg-gray-50">
+          <input type="text" placeholder="Search here..." />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"

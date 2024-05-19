@@ -65,7 +65,7 @@ export async function GET(request: any) {
     if (stores.length > 0) {
       return NextResponse.json(stores);
     } else {
-      return NextResponse.json({ message: "Store not found" }, { status: 404 });
+      return NextResponse.json([]);
     }
   } catch (error) {
     console.log(error);

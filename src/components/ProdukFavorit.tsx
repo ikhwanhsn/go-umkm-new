@@ -86,10 +86,11 @@ const dataProduk = [
 const ProdukFavorit = () => {
   return (
     <main className="mt-7">
-      <section className="grid grid-cols-5 mx-auto mt-7 gap-5">
-        {dataProduk.map((item) => (
+      <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 gap-5">
+        {dataProduk.map((item: any) => (
           <CardProduct
             key={item.id}
+            id={item.id}
             src={item.image}
             name={item.name}
             mitra={item.mitra}

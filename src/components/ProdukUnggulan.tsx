@@ -71,15 +71,16 @@ const ProdukUnggulan = () => {
   return (
     <main>
       <h1
-        className="text-center text-2xl text-orange-500 font-bold pt-24"
+        className="text-center text-2xl text-orange-500 font-bold lg:mt-20 mt-16"
         id="produk-unggulan"
       >
         Produk Unggulan
       </h1>
-      <section className="grid grid-cols-4 px-24 mx-auto mt-7 gap-7">
-        {dataProduk.map((item) => (
+      <section className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:px-24 md:px-12 px-5 mx-auto mt-7 lg:gap-7 md:gap-5 gap-3">
+        {dataProduk.map((item: any) => (
           <CardProduct
-            key={item.id}
+            key={item._id}
+            id={item._id}
             src={item.image}
             name={item.name}
             mitra={item.mitra}

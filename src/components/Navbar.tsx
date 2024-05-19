@@ -14,7 +14,7 @@ const Navbar = () => {
   const { status, data: session } = useSession();
 
   return (
-    <nav className="navbar bg-gray-50 shadow-md text-black h-16 md:px-12 px-3 fixed top-0 w-full z-50">
+    <nav className="navbar bg-gray-50 shadow-md text-black h-16 md:px-5 lg:px-8 px-3 fixed top-0 w-full z-50">
       {/* ===== Navbar Start ===== */}
       <div className="navbar-start">
         <div className="dropdown">
@@ -39,21 +39,29 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-50 rounded-box w-52"
           >
             <li>
-              <a>Item 1</a>
+              <Link href="/product">All Product</Link>
             </li>
             <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
+              <Link href="/store">Store</Link>
             </li>
             <li>
-              <a>Item 3</a>
+              <details>
+                <summary>Others</summary>
+                <ul className="p-2 bg-gray-50">
+                  <li>
+                    <Link href="/maps">Maps</Link>
+                  </li>
+                  <li>
+                    <Link href="/forum">Forum</Link>
+                  </li>
+                  <li>
+                    <Link href="/learn">Learn</Link>
+                  </li>
+                  <li>
+                    <Link href="/about">About</Link>
+                  </li>
+                </ul>
+              </details>
             </li>
           </ul>
         </div>

@@ -11,6 +11,7 @@ import {
 } from "firebase/storage";
 import { storage } from "@/services/firebase/firebase";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const CreateStore = () => {
   const router = useRouter();
@@ -108,7 +109,7 @@ const CreateStore = () => {
 
   return (
     <main className="w-full min-h-screen">
-      <section className="w-1/2 mx-auto text-center">
+      <section className="lg:w-1/2 md:w-3/4 w-full md:mx-auto md:px-0 px-5 text-center">
         <form onSubmit={submit}>
           <h1 className="mt-5 text-xl text-orange-500 font-bold">Buat Toko</h1>
           <p className="text-left mt-12">Nama Toko :</p>
@@ -122,7 +123,7 @@ const CreateStore = () => {
             className="input input-bordered w-full bg-gray-50 mt-2"
           />
           <br />
-          <section className="text-left space-x-3">
+          <section className="text-left">
             <p className="text-left mt-3">Logo Toko :</p>
             <input
               type="file"
@@ -213,9 +214,12 @@ const CreateStore = () => {
             >
               Simpan
             </button>
-            <button className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white mt-5">
+            <Link
+              href={"/my-store"}
+              className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white mt-5"
+            >
               Batal
-            </button>
+            </Link>
           </section>
         </form>
       </section>

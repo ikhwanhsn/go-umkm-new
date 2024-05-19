@@ -11,7 +11,7 @@ import Image from "next/image";
 const Mitra = () => {
   return (
     <main className="mt-12">
-      <h1 className="text-center text-2xl text-orange-500 font-bold">
+      <h1 className="text-center text-2xl text-orange-500 font-bold lg:mb-7 md:mb-6 mb-5">
         Mitra UMKM
       </h1>
       <MarqueeComponent />
@@ -47,7 +47,7 @@ const MarqueeComponent = () => {
           alt="mitra"
           width={70}
           height={70}
-          className="mx-7 mt-5"
+          className="md:mx-7 mx-4"
         />
       ))}
     </Marquee>

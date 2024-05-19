@@ -1,9 +1,8 @@
 import connectMongoDB from "@/libs/mongodb";
 import Product from "@/models/product";
 import User from "@/models/user";
-import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
@@ -58,10 +57,7 @@ export async function GET(request: any) {
     if (products.length > 0) {
       return NextResponse.json(products);
     } else {
-      return NextResponse.json(
-        { message: "Product not found" },
-        { status: 404 }
-      );
+      return NextResponse.json([]);
     }
   } catch (error) {
     console.log(error);

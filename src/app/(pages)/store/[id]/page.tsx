@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import produk1 from "../../../../../public/img/product1.jpg";
 import produk2 from "../../../../../public/img/product2.jpg";
@@ -10,28 +12,60 @@ import produk8 from "../../../../../public/img/product8.jpg";
 import produk9 from "../../../../../public/img/product9.jpg";
 import produk10 from "../../../../../public/img/product10.jpg";
 import CardProduct from "@/components/CardProduct";
+import useSWR from "swr";
+import { fetcher } from "@/libs/swr/fetcher";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 const DetailStore = () => {
+  const { id } = useParams();
+  const { data, status: session } = useSession();
+  const [namaToko, setNamaToko] = useState("");
+  const [deskripsiToko, setDeskripsiToko] = useState("");
+  const [logoToko, setlogoToko] = useState("");
+  const [provinsi, setProvinsi] = useState("");
+  const [kota, setKota] = useState("");
+  const [kecamatan, setKecamatan] = useState("");
+  const [telpToko, setTelpToko] = useState("");
+  const {
+    data: dataStore,
+    error: errorStore,
+    isLoading: isLoadingStore,
+  } = useSWR(`/api/store?email=${data?.user?.email}`, fetcher);
+
+  useEffect(() => {
+    if (dataStore) {
+      const data = dataStore[0];
+      setNamaToko(data.name);
+      setDeskripsiToko(data.description);
+      setlogoToko(data.image);
+      setProvinsi(data.province);
+      setKota(data.city);
+      setKecamatan(data.kecamatan);
+      setTelpToko(data.telephone);
+    }
+  }, [dataStore]);
+
   return (
-    <main className="min-h-screen px-12 mt-5">
+    <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <h1 className="text-xl font-bold mb-1">Detail Store</h1>
-      <section className="flex flex-row mt-3 mb-5">
-        <section className="basis-5/12">
-          <Image src={produk1} alt="image-product" width={200} height={200} />
+      <section className="flex md:flex-row flex-col mt-3 mb-5 gap-x-10 gap-y-5">
+        <section>
+          <Image
+            src={logoToko}
+            alt="image-product"
+            width={200}
+            height={200}
+            className="md:w-80 w-full h-80 object-cover rounded-sm"
+          />
         </section>
-        <aside className="basis-7/12">
-          <h2 className="text-xl font-semibold mb-3">Coffe Essence</h2>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa
-            recusandae ad perferendis reiciendis aspernatur alias nihil vel
-            dignissimos qui eos corrupti, eveniet dicta impedit asperiores
-            labore officiis tempore, iste repellat minus reprehenderit. Qui, sed
-            quisquam id voluptates harum officia, tempora velit, sequi voluptas
-            mollitia vero sapiente fuga doloremque. Vero, ducimus.
-          </p>
+        <aside>
+          <h2 className="text-xl font-semibold mb-3">{namaToko}</h2>
+          <p>{deskripsiToko}</p>
           <section className="space-x-1 mt-5">
             <button className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">
-              Chat penjual
+              Chat toko
             </button>
             <button className="btn bg-orange-500 text-white border-none hover:bg-orange-600">
               Beli sekarang
@@ -123,10 +157,11 @@ const ProductOnStore = () => {
   return (
     <main>
       <h1 className="text-xl font-bold mb-1">Product</h1>
-      <section className="grid grid-cols-5 mx-auto mt-3 gap-5">
-        {dataProduk.map((item) => (
+      <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-3 gap-5">
+        {dataProduk.map((item: any) => (
           <CardProduct
             key={item.id}
+            id={item.id}
             src={item.image}
             name={item.name}
             mitra={item.mitra}

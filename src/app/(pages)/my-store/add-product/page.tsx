@@ -11,6 +11,7 @@ import {
 import { storage } from "@/services/firebase/firebase";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const category = [
   "Makanan dan Minuman",
@@ -40,7 +41,12 @@ const AddProduct = () => {
     e.preventDefault();
     if (!file) return;
     if (file.size > 1048576) {
-      console.error("Ukuran file terlalu besar. Maksimal 1 MB.");
+      // console.error("Ukuran file terlalu besar. Maksimal 1 MB.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Ukuran foto terlalu besar. Maksimal 1 MB!",
+      });
       return;
     }
     try {
@@ -76,7 +82,12 @@ const AddProduct = () => {
         return;
       }
       ref.current && (ref.current.value = "");
-      router.push("/my-store");
+      await Swal.fire({
+        title: "Success!",
+        text: "Produk berhasil ditambahkan!",
+        icon: "success",
+      });
+      await router.push("/my-store");
     } catch (error) {
       console.error(error);
     }
@@ -84,7 +95,7 @@ const AddProduct = () => {
 
   return (
     <main className="w-full min-h-screen">
-      <section className="w-1/2 mx-auto text-center">
+      <section className="lg:w-1/2 md:w-3/4 w-full md:px-0 px-5 mx-auto text-center">
         <form onSubmit={submit}>
           <h1 className="mt-5 text-xl text-orange-500 font-bold">
             Tambah Produk

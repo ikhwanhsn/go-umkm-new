@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Outro1 = () => {
   return (
-    <main className="mx-24 mt-24 flex gap-16">
+    <main className="lg:mx-24 md:px-12 px-12 mt-24 flex md:flex-row flex-col md:gap-16 gap-12">
       <Image
         src={umkm}
         alt="umkm"
@@ -23,7 +23,7 @@ const Outro1 = () => {
           pesanan Anda.
         </p>
         <Link href="/store">
-          <button className="btn bg-orange-500 text-white mt-12 border-none shadow-md hover:bg-orange-600">
+          <button className="btn bg-orange-500 text-white lg:mt-12 md:mt-8 mt-6 border-none shadow-md hover:bg-orange-600">
             Cari sekarang
           </button>
         </Link>

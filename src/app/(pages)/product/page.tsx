@@ -3,15 +3,19 @@ import { FiFilter } from "react-icons/fi";
 
 const Product = () => {
   return (
-    <main className="w-full min-h-screen px-12 mt-5">
-      <section className="flex justify-between items-center">
+    <main className="w-full min-h-screen lg:px-12 md:px-8 px-5 mt-5">
+      <section className="flex md:flex-row flex-col justify-between md:items-center">
         <section>
           <h1 className="text-xl font-bold mb-1">All Product</h1>
           <p>Welcome to all product page</p>
         </section>
-        <section className="flex gap-2 items-center">
-          <label className="input input-bordered flex items-center gap-2 bg-gray-50">
-            <input type="text" className="" placeholder="Search here..." />
+        <section className="flex gap-2 justify-between items-center mt-3 md:mt-0">
+          <label className="input input-bordered flex items-center gap-2 bg-gray-50 w-full">
+            <input
+              type="text"
+              className="w-full"
+              placeholder="Search here..."
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"

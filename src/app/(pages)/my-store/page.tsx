@@ -16,9 +16,12 @@ import {
 } from "firebase/storage";
 import { storage } from "@/services/firebase/firebase";
 import { storageRefFromURL } from "@/services/storageRefFromURL";
+import { MdOutlineDelete } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const MyStore = () => {
   const { data, status: session } = useSession();
+  const [storeId, setStoreId] = useState("");
   const [storeName, setStoreName] = useState("");
   const [storeDesc, setStoreDesc] = useState("");
   const [storeImg, setStoreImg] = useState("");
@@ -132,24 +135,69 @@ const MyStore = () => {
       }
 
       ref.current && (ref.current.value = "");
+      await Swal.fire({
+        title: "Success!",
+        text: "Data has been updated!",
+        icon: "success",
+      });
+
+      await window.location.reload();
     } catch (error) {
       console.error(error);
     }
   };
 
+  const deleteStore = async () => {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Toko Anda akan di hapus secara permanen!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Hapus!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await fetch(`/api/store/${storeId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ storeId, email: data?.user?.email }),
+          });
+
+          if (!res.ok) {
+            alert(await res.text());
+            return;
+          }
+          Swal.fire({
+            title: "Deleted!",
+            text: "Toko Anda telah di hapus!",
+            icon: "success",
+          });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete store");
+    }
+  };
+
   useEffect(() => {
     if (dataStore) {
-      setStoreName(dataStore[0]?.name);
-      setStoreDesc(dataStore[0]?.description);
-      setStoreImg(dataStore[0]?.image);
-      setStoreProv(dataStore[0]?.province);
-      setStoreCity(dataStore[0]?.city);
-      setStoreKec(dataStore[0]?.kecamatan);
-      setStoreTelp(dataStore[0]?.telephone);
-
-      setProvinceSelect(dataStore[0]?.province);
-      setCitySelect(dataStore[0].city);
-      setKecamatanSelect(dataStore[0].kecamatan);
+      const data = dataStore[0];
+      setStoreId(data?._id);
+      setStoreName(data?.name);
+      setStoreDesc(data?.description);
+      setStoreImg(data?.image);
+      setStoreProv(data?.province);
+      setStoreCity(data?.city);
+      setStoreKec(data?.kecamatan);
+      setStoreTelp(data?.telephone);
+      setProvinceSelect(data?.province);
+      setCitySelect(data?.city);
+      setKecamatanSelect(data?.kecamatan);
     }
   }, [dataStore]);
 
@@ -183,32 +231,36 @@ const MyStore = () => {
 
   return (
     <main className="w-full min-h-screen">
-      {!dataStore && !isLoadingStore && (
-        <Link href="/my-store/create">
-          <button className="btn bg-orange-500 text-white border-none hover:bg-orange-600">
-            Create Store
-          </button>
-        </Link>
+      {dataStore?.length === 0 && !isLoadingStore && (
+        <center className="mt-24">
+          <p className="mb-3">Anda belum memiliki toko</p>
+          <Link href="/my-store/create">
+            <button className="btn bg-orange-500 text-white border-none hover:bg-orange-600">
+              Buka toko
+            </button>
+          </Link>
+        </center>
       )}
-      {dataStore && !isLoadingStore && (
-        <main className="mx-12 mt-5">
+      {dataStore?.length > 0 && !isLoadingStore && (
+        <main className="lg:mx-12 md:mx-8 mx-5 mt-5">
           <section className="flex justify-between items-center">
             <section>
               <h1 className="text-xl font-bold mb-1">My Store</h1>
               <p>Welcome to my store page</p>
             </section>
-            {/* <section className="space-x-1 mt-5">
-          <button className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">
-            Edit Store
-          </button>
-          <button className="btn bg-orange-500 text-white border-none hover:bg-orange-600">
-            Kelola Produk
-          </button>
-        </section> */}
           </section>
-          <form className="flex mt-5 gap-12" onSubmit={submit}>
+          <form
+            className="flex md:flex-row flex-col mt-5 gap-12"
+            onSubmit={submit}
+          >
             <section>
-              <Image src={storeImg} alt="store" width={300} height={300} />
+              <Image
+                src={storeImg}
+                alt="store"
+                width={300}
+                height={300}
+                className="w-full md:w-96 h-full md:h-64 object-cover"
+              />
             </section>
             <section className="w-full">
               <label htmlFor="name">Nama Toko</label>
@@ -297,18 +349,27 @@ const MyStore = () => {
                 value={storeTelp}
                 onChange={(e) => setStoreTelp(e.target.value)}
               />
-              <button
-                className="btn bg-orange-500 text-white border-none hover:bg-orange-600 mt-2 mr-2"
-                type="submit"
-              >
-                Update
-              </button>
-              <button
-                className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white mt-2"
-                type="reset"
-              >
-                Batal
-              </button>
+              <section className="flex items-center gap-1">
+                <button
+                  className="btn bg-orange-500 text-white border-none hover:bg-orange-600 mt-2"
+                  type="submit"
+                >
+                  Update
+                </button>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white mt-2"
+                >
+                  Batal
+                </button>
+                <button
+                  className="btn bg-red-500 text-white border-none hover:bg-red-600 mt-2"
+                  type="button"
+                  onClick={deleteStore}
+                >
+                  <MdOutlineDelete size={22} />
+                </button>
+              </section>
             </section>
           </form>
           <section className="mt-12">
@@ -326,8 +387,12 @@ const MyStore = () => {
                 </Link>
               </section>
             </section>
-
-            <section className="grid grid-cols-5 mx-auto mt-3 gap-5">
+            {myProducts.length === 0 && (
+              <p className="mt-24 text-sm italic text-center">
+                Tidak ada produk
+              </p>
+            )}
+            <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-3 lg:gap-5 md:gap-4 gap-3">
               {myProducts.length > 0 &&
                 myProducts.map((item: any) => (
                   <MyProducts
@@ -370,7 +435,7 @@ const MyProducts = ({ id, src, name, price, myRef }: MyProductsProps) => {
         alt="image-product"
         width={300}
         height={300}
-        className="mx-auto w-full h-44 rounded-sm mb-3 object-cover"
+        className="mx-auto w-full lg:h-44 md:h-52 h-32 rounded-sm mb-3 object-cover"
       />
       <h3 className="text-lg font-semibold">{name}</h3>
       <p className="flex items-center gap-1">
