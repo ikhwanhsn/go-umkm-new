@@ -11,7 +11,7 @@ const AllStore = () => {
     data: dataStore,
     error: errorStore,
     isLoading: isLoadingStore,
-  } = useSWR(`/api/store`, fetcher);
+  } = useSWR(`/api/store?limit=50`, fetcher);
 
   useEffect(() => {
     if (dataStore) {
@@ -20,11 +20,12 @@ const AllStore = () => {
   }, [dataStore]);
   return (
     <main className="mt-7">
-      {allStore.length === 0 && (
+      {allStore.length === 0 && !isLoadingStore && (
         <p className="text-center mt-12 text-sm italic">Tidak ada toko</p>
       )}
       <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 gap-5">
         {allStore.length > 0 &&
+          !isLoadingStore &&
           allStore.map((item: any) => (
             <CardProduct
               key={item._id}

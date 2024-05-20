@@ -4,7 +4,6 @@ import CardProduct from "./CardProduct";
 import { fetcher } from "@/libs/swr/fetcher";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 
 const AllProduct = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -12,7 +11,7 @@ const AllProduct = () => {
     data: dataProduct,
     error: errorProduct,
     isLoading: isLoadingProduct,
-  } = useSWR(`/api/products`, fetcher);
+  } = useSWR(`/api/products?limit=50`, fetcher);
 
   useEffect(() => {
     if (dataProduct) {
@@ -22,11 +21,12 @@ const AllProduct = () => {
 
   return (
     <main className="mt-7">
-      {allProducts.length === 0 && (
+      {allProducts.length === 0 && !isLoadingProduct && (
         <p className="text-center mt-12 text-sm italic">Tidak ada produk</p>
       )}
       <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 lg:gap-5 md:gap-4 gap-3">
         {allProducts.length > 0 &&
+          !isLoadingProduct &&
           allProducts.map((item: any) => (
             <CardProduct
               key={item._id}
