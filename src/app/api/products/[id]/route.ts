@@ -51,7 +51,12 @@ export async function GET(request: Request, { params }: any) {
       if (product) {
         return NextResponse.json({ product }, { status: 200 });
       } else {
-        return NextResponse.json([]);
+        return NextResponse.json(
+          {
+            message: "Product not found",
+          },
+          { status: 404 }
+        );
       }
     }
     if (!email) {

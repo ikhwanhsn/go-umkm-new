@@ -51,11 +51,11 @@ export async function GET(request: Request, { params }: any) {
     const { email } = params;
     await connectMongoDB();
     const user = await User.findOne({ email });
-    const store = await Store.findOne({ user_id: user?.id });
+    const store = await Store.findOne({ user_id: user?._id });
     if (store) {
       return NextResponse.json({ store }, { status: 200 });
     } else {
-      return NextResponse.json([]);
+      return NextResponse.json({ message: "Store not found" }, { status: 404 });
     }
   } catch (error) {
     console.log(error);

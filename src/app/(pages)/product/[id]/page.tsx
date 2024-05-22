@@ -7,7 +7,6 @@ import { useParams } from "next/navigation";
 import { fetcher } from "@/libs/swr/fetcher";
 import { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
-import { useSession } from "next-auth/react";
 
 const DetailProduct = () => {
   const { id } = useParams();
@@ -40,7 +39,7 @@ const DetailProduct = () => {
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <h1 className="text-xl font-bold mb-1">Detail Product</h1>
       <section className="flex md:flex-row flex-col mt-3 mb-5 gap-x-10 gap-y-5">
-        <section>
+        <section className="md:w-1/2 w-full">
           <Image
             src={imageURL}
             alt="image-product"

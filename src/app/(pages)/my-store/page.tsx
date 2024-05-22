@@ -4,7 +4,7 @@ import Image, { StaticImageData } from "next/image";
 import { fetcher } from "@/libs/swr/fetcher";
 import useSWR from "swr";
 import { useEffect, useRef, useState } from "react";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FiMapPin } from "react-icons/fi";
@@ -41,11 +41,12 @@ const MyStore = () => {
   const [myProducts, setMyProducts] = useState([]);
   const [file, setFile] = useState<File>();
   const ref = useRef<HTMLInputElement>(null);
+  const [isHaveStore, setIsHaveStore] = useState(true);
   const {
     data: dataStore,
     error: errorStore,
     isLoading: isLoadingStore,
-  } = useSWR(`/api/store?email=${data?.user?.email}`, fetcher);
+  } = useSWR(`/api/store/${data?.user?.email}`, fetcher);
   const {
     data: dataProvince,
     error: errorProvince,
@@ -74,13 +75,17 @@ const MyStore = () => {
     data: dataProducts,
     error: errorProducts,
     isLoading: isLoadingProducts,
-  } = useSWR(`/api/products?email=${data?.user?.email}`, fetcher);
+  } = useSWR(`/api/my-products/${data?.user?.email}`, fetcher);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file && !storeImg) return;
     if (file && file.size > 1048576) {
-      console.error("Ukuran file terlalu besar. Maksimal 1 MB.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Ukuran foto terlalu besar. Maksimal 1 MB!",
+      });
       return;
     }
 
@@ -137,7 +142,7 @@ const MyStore = () => {
       ref.current && (ref.current.value = "");
       await Swal.fire({
         title: "Success!",
-        text: "Data has been updated!",
+        text: "Data toko berhasil di ubah!",
         icon: "success",
       });
 
@@ -186,7 +191,10 @@ const MyStore = () => {
 
   useEffect(() => {
     if (dataStore) {
-      const data = dataStore[0];
+      if (dataStore.message === "Store not found") {
+        setIsHaveStore(false);
+      }
+      const data = dataStore.store;
       setStoreId(data?._id);
       setStoreName(data?.name);
       setStoreDesc(data?.description);
@@ -225,13 +233,24 @@ const MyStore = () => {
 
   useEffect(() => {
     if (dataProducts) {
-      setMyProducts(dataProducts);
+      setMyProducts(dataProducts.product);
     }
   }, [dataProducts]);
 
   return (
     <main className="w-full min-h-screen">
-      {dataStore?.length === 0 && !isLoadingStore && (
+      {session === "unauthenticated" && (
+        <center className="mt-24">
+          <p className="mb-3">Anda harus login terlebih dahulu</p>
+          <button
+            className="btn bg-orange-500 text-white border-none hover:bg-orange-600"
+            onClick={() => signIn("google")}
+          >
+            Login
+          </button>
+        </center>
+      )}
+      {!isHaveStore && !isLoadingStore && session === "authenticated" && (
         <center className="mt-24">
           <p className="mb-3">Anda belum memiliki toko</p>
           <Link href="/my-store/create">
@@ -241,172 +260,176 @@ const MyStore = () => {
           </Link>
         </center>
       )}
-      {dataStore?.length > 0 && !isLoadingStore && (
-        <main className="lg:mx-12 md:mx-8 mx-5 mt-5">
-          <section className="flex justify-between items-center">
-            <section>
-              <h1 className="text-xl font-bold mb-1">My Store</h1>
-              <p>Welcome to my store page</p>
-            </section>
-          </section>
-          <form
-            className="flex md:flex-row flex-col mt-5 gap-12"
-            onSubmit={submit}
-          >
-            <section>
-              <Image
-                src={storeImg}
-                alt="store"
-                width={300}
-                height={300}
-                className="w-full md:w-96 h-full md:h-64 object-cover"
-              />
-            </section>
-            <section className="w-full">
-              <label htmlFor="name">Nama Toko</label>
-              <br />
-              <input
-                type="text"
-                id="name"
-                className="input input-bordered bg-gray-50 w-full my-1"
-                value={storeName}
-                onChange={(e) => setStoreName(e.target.value)}
-              />
-              <label htmlFor="deskripsi">Deskripsi</label>
-              <br />
-              <textarea
-                id="deskripsi"
-                value={storeDesc}
-                maxLength={300}
-                rows={4}
-                onChange={(e) => setStoreDesc(e.target.value)}
-                className="w-full bg-gray-50 textarea textarea-bordered text-base mt-1"
-              ></textarea>
-              <section className="text-left space-x-3">
-                <p className="text-left mt-3">Logo Toko :</p>
-                <input
-                  type="file"
-                  name="file"
-                  ref={ref}
-                  onChange={(e) => setFile(e.target.files?.[0])}
-                  accept="image/png, image/jpeg, image/jpg"
-                  className="file-input file-input-bordered w-full max-w-xs bg-gray-50 mt-3"
-                />
-              </section>
-              <p className="text-left mt-2">Provinsi :</p>
-              <select
-                className="select select-bordered w-full mt-3 bg-gray-50"
-                onChange={(e) => setProvinceSelect(e.target.value)}
-              >
-                <option disabled selected value={provinceName}>
-                  {provinceName}
-                </option>
-                {province &&
-                  province.map((item: any) => (
-                    <option value={item.id} key={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
-              </select>
-              <br />
-              <p className="text-left mt-2">Kota :</p>
-              <select
-                className="select select-bordered w-full mt-3 bg-gray-50"
-                onChange={(e) => setCitySelect(e.target.value)}
-              >
-                <option disabled selected value={cityName}>
-                  {cityName}
-                </option>
-                {city &&
-                  city.map((item: any) => (
-                    <option value={item.id} key={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
-              </select>
-              <br />
-              <p className="text-left mt-2">Kecamatan :</p>
-              <select
-                className="select select-bordered w-full mt-3 mb-2 bg-gray-50"
-                onChange={(e) => setKecamatanSelect(e.target.value)}
-              >
-                <option disabled selected value={kecamatanName}>
-                  {kecamatanName}
-                </option>
-                {kecamatan &&
-                  kecamatan.map((item: any) => (
-                    <option value={item.id} key={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
-              </select>
-              <label htmlFor="telp">No Telp</label>
-              <br />
-              <input
-                type="text"
-                id="telp"
-                className="input input-bordered bg-gray-50 w-full my-1"
-                value={storeTelp}
-                onChange={(e) => setStoreTelp(e.target.value)}
-              />
-              <section className="flex items-center gap-1">
-                <button
-                  className="btn bg-orange-500 text-white border-none hover:bg-orange-600 mt-2"
-                  type="submit"
-                >
-                  Update
-                </button>
-                <button
-                  onClick={() => window.location.reload()}
-                  className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white mt-2"
-                >
-                  Batal
-                </button>
-                <button
-                  className="btn bg-red-500 text-white border-none hover:bg-red-600 mt-2"
-                  type="button"
-                  onClick={deleteStore}
-                >
-                  <MdOutlineDelete size={22} />
-                </button>
-              </section>
-            </section>
-          </form>
-          <section className="mt-12">
+      {dataStore &&
+        isHaveStore &&
+        !isLoadingStore &&
+        session === "authenticated" && (
+          <main className="lg:mx-12 md:mx-8 mx-5 mt-5">
             <section className="flex justify-between items-center">
               <section>
-                <h1 className="text-xl font-bold mb-1">My Product</h1>
-                <p>List all product</p>
-              </section>
-              <section className="space-x-1 mt-5">
-                <Link
-                  href="/my-store/add-product"
-                  className="btn bg-orange-500 text-white border-none hover:bg-orange-600"
-                >
-                  Tambah Produk
-                </Link>
+                <h1 className="text-xl font-bold mb-1">My Store</h1>
+                <p>Welcome to my store page</p>
               </section>
             </section>
-            {myProducts.length === 0 && (
-              <p className="mt-24 text-sm italic text-center">
-                Tidak ada produk
-              </p>
-            )}
-            <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-3 lg:gap-5 md:gap-4 gap-3">
-              {myProducts.length > 0 &&
-                myProducts.map((item: any) => (
-                  <MyProducts
-                    key={item._id}
-                    id={item._id}
-                    src={item.image}
-                    name={item.name}
-                    price={item.price}
+            <form
+              className="flex md:flex-row flex-col mt-5 gap-12"
+              onSubmit={submit}
+            >
+              <section>
+                <Image
+                  src={storeImg}
+                  alt="store"
+                  width={300}
+                  height={300}
+                  className="w-full md:w-96 h-full md:h-64 object-cover rounded-sm"
+                />
+              </section>
+              <section className="w-full">
+                <label htmlFor="name">Nama Toko</label>
+                <br />
+                <input
+                  type="text"
+                  id="name"
+                  className="input input-bordered bg-gray-50 w-full my-1"
+                  value={storeName}
+                  onChange={(e) => setStoreName(e.target.value)}
+                />
+                <label htmlFor="deskripsi">Deskripsi</label>
+                <br />
+                <textarea
+                  id="deskripsi"
+                  value={storeDesc}
+                  maxLength={300}
+                  rows={4}
+                  onChange={(e) => setStoreDesc(e.target.value)}
+                  className="w-full bg-gray-50 textarea textarea-bordered text-base mt-1"
+                ></textarea>
+                <section className="text-left space-x-3">
+                  <p className="text-left mt-3">Logo Toko :</p>
+                  <input
+                    type="file"
+                    name="file"
+                    ref={ref}
+                    onChange={(e) => setFile(e.target.files?.[0])}
+                    accept="image/png, image/jpeg, image/jpg"
+                    className="file-input file-input-bordered w-full max-w-xs bg-gray-50 mt-3"
                   />
-                ))}
+                </section>
+                <p className="text-left mt-2">Provinsi :</p>
+                <select
+                  className="select select-bordered w-full mt-3 bg-gray-50"
+                  onChange={(e) => setProvinceSelect(e.target.value)}
+                >
+                  <option disabled selected value={provinceName}>
+                    {provinceName}
+                  </option>
+                  {province &&
+                    province.map((item: any) => (
+                      <option value={item.id} key={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                </select>
+                <br />
+                <p className="text-left mt-2">Kota :</p>
+                <select
+                  className="select select-bordered w-full mt-3 bg-gray-50"
+                  onChange={(e) => setCitySelect(e.target.value)}
+                >
+                  <option disabled selected value={cityName}>
+                    {cityName}
+                  </option>
+                  {city &&
+                    city.map((item: any) => (
+                      <option value={item.id} key={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                </select>
+                <br />
+                <p className="text-left mt-2">Kecamatan :</p>
+                <select
+                  className="select select-bordered w-full mt-3 mb-2 bg-gray-50"
+                  onChange={(e) => setKecamatanSelect(e.target.value)}
+                >
+                  <option disabled selected value={kecamatanName}>
+                    {kecamatanName}
+                  </option>
+                  {kecamatan &&
+                    kecamatan.map((item: any) => (
+                      <option value={item.id} key={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                </select>
+                <label htmlFor="telp">No Telp</label>
+                <br />
+                <input
+                  type="text"
+                  id="telp"
+                  className="input input-bordered bg-gray-50 w-full my-1"
+                  value={storeTelp}
+                  onChange={(e) => setStoreTelp(e.target.value)}
+                />
+                <section className="flex items-center gap-1">
+                  <button
+                    className="btn bg-orange-500 text-white border-none hover:bg-orange-600 mt-2"
+                    type="submit"
+                  >
+                    Update
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => window.location.reload()}
+                    className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white mt-2"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    className="btn bg-red-500 text-white border-none hover:bg-red-600 mt-2"
+                    type="button"
+                    onClick={deleteStore}
+                  >
+                    <MdOutlineDelete size={22} />
+                  </button>
+                </section>
+              </section>
+            </form>
+            <section className="mt-12">
+              <section className="flex justify-between items-center">
+                <section>
+                  <h1 className="text-xl font-bold mb-1">My Product</h1>
+                  <p>List all product</p>
+                </section>
+                <section className="space-x-1 mt-5">
+                  <Link
+                    href="/my-store/add-product"
+                    className="btn bg-orange-500 text-white border-none hover:bg-orange-600"
+                  >
+                    Tambah Produk
+                  </Link>
+                </section>
+              </section>
+              {myProducts.length === 0 && !isLoadingProducts && (
+                <p className="mt-24 text-sm italic text-center">
+                  Tidak ada produk
+                </p>
+              )}
+              <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-3 lg:gap-5 md:gap-4 gap-3">
+                {myProducts.length > 0 &&
+                  myProducts.map((item: any) => (
+                    <MyProducts
+                      key={item._id}
+                      id={item._id}
+                      src={item.image}
+                      name={item.name}
+                      price={item.price}
+                    />
+                  ))}
+              </section>
             </section>
-          </section>
-        </main>
-      )}
+          </main>
+        )}
     </main>
   );
 };

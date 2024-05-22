@@ -1,16 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import produk1 from "../../../../../public/img/product1.jpg";
-import produk2 from "../../../../../public/img/product2.jpg";
-import produk3 from "../../../../../public/img/product3.jpg";
-import produk4 from "../../../../../public/img/product4.jpg";
-import produk5 from "../../../../../public/img/product5.jpg";
-import produk6 from "../../../../../public/img/product6.jpg";
-import produk7 from "../../../../../public/img/product7.jpg";
-import produk8 from "../../../../../public/img/product8.jpg";
-import produk9 from "../../../../../public/img/product9.jpg";
-import produk10 from "../../../../../public/img/product10.jpg";
 import CardProduct from "@/components/CardProduct";
 import useSWR from "swr";
 import { fetcher } from "@/libs/swr/fetcher";
@@ -28,15 +18,23 @@ const DetailStore = () => {
   const [kota, setKota] = useState("");
   const [kecamatan, setKecamatan] = useState("");
   const [telpToko, setTelpToko] = useState("");
+  const [product, setProduct] = useState([]);
+  const [userID, setUserID] = useState("");
   const {
     data: dataStore,
     error: errorStore,
     isLoading: isLoadingStore,
-  } = useSWR(`/api/store?email=${data?.user?.email}`, fetcher);
+  } = useSWR(`/api/store/id/${id}`, fetcher);
+  const {
+    data: dataProducts,
+    error: errorProducts,
+    isLoading: isLoadingProducts,
+  } = useSWR(`/api/products/store/${userID}`, fetcher);
 
   useEffect(() => {
     if (dataStore) {
       const data = dataStore[0];
+      setUserID(data.user_id);
       setNamaToko(data.name);
       setDeskripsiToko(data.description);
       setlogoToko(data.image);
@@ -45,7 +43,12 @@ const DetailStore = () => {
       setKecamatan(data.kecamatan);
       setTelpToko(data.telephone);
     }
-  }, [dataStore]);
+  }, [dataStore, dataProducts]);
+  useEffect(() => {
+    if (dataProducts) {
+      setProduct(dataProducts.product);
+    }
+  }, [dataProducts]);
 
   return (
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
@@ -73,101 +76,30 @@ const DetailStore = () => {
           </section>
         </aside>
       </section>
-      <ProductOnStore />
+      <ProductOnStore data={product.length > 0 ? product : []} />
     </main>
   );
 };
 
 export default DetailStore;
 
-const dataProduk = [
-  {
-    id: 1,
-    image: produk1,
-    name: "Kopi Lorepsipa",
-    mitra: "Nama mitra 1",
-    price: "Rp. 71.000",
-  },
-  {
-    id: 2,
-    image: produk2,
-    name: "Teh Serenili",
-    mitra: "Nama mitra 2",
-    price: "Rp. 72.000",
-  },
-  {
-    id: 3,
-    image: produk3,
-    name: "Minuman Coklat Beraroma",
-    mitra: "Nama mitra 3",
-    price: "Rp. 73.500",
-  },
-  {
-    id: 4,
-    image: produk4,
-    name: "Sari Buah Segar",
-    mitra: "Nama mitra 4",
-    price: "Rp. 65.000",
-  },
-  {
-    id: 5,
-    image: produk5,
-    name: "Es Krim Homemade",
-    mitra: "Nama mitra 5",
-    price: "Rp. 80.000",
-  },
-  {
-    id: 6,
-    image: produk6,
-    name: "Kue Tradisional",
-    mitra: "Nama mitra 6",
-    price: "Rp. 45.000",
-  },
-  {
-    id: 7,
-    image: produk7,
-    name: "Jus Segar 100% Buah Lokal",
-    mitra: "Nama mitra 7",
-    price: "Rp. 55.000",
-  },
-  {
-    id: 8,
-    image: produk8,
-    name: "Smoothie Sayur Organik",
-    mitra: "Nama mitra 8",
-    price: "Rp. 60.000",
-  },
-  {
-    id: 9,
-    image: produk9,
-    name: "Kopi Hitam",
-    mitra: "mitra 9",
-    price: "Rp. 80.000",
-  },
-  {
-    id: 10,
-    image: produk10,
-    name: "Nasi Jagung",
-    mitra: "mitra 10",
-    price: "Rp. 20.000",
-  },
-];
-
-const ProductOnStore = () => {
+const ProductOnStore = ({ data = [] }: { data: any[] }) => {
   return (
     <main>
       <h1 className="text-xl font-bold mb-1">Product</h1>
+      {data.length === 0 && <p>Tidak ada product</p>}
       <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-3 gap-5">
-        {dataProduk.map((item: any) => (
-          <CardProduct
-            key={item.id}
-            id={item.id}
-            src={item.image}
-            name={item.name}
-            mitra={item.mitra}
-            price={item.price}
-          />
-        ))}
+        {data.length > 0 &&
+          data.map((item: any) => (
+            <CardProduct
+              key={item._id}
+              id={item._id}
+              src={item.image}
+              name={item.name}
+              mitra={item.mitra}
+              price={item.price}
+            />
+          ))}
       </section>
     </main>
   );
