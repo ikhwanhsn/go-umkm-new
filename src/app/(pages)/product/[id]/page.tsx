@@ -7,9 +7,11 @@ import { useParams } from "next/navigation";
 import { fetcher } from "@/libs/swr/fetcher";
 import { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
+import { useSession } from "next-auth/react";
 
 const DetailProduct = () => {
   const { id } = useParams();
+  const { data, status: session } = useSession();
   const [namaProduk, setNamaProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [imageURL, setImageURL] = useState("");
@@ -22,6 +24,41 @@ const DetailProduct = () => {
     error: errorProduct,
     isLoading: isLoadingProduct,
   } = useSWR(`/api/products/${id}`, fetcher);
+  const {
+    data: dataLiked,
+    error: errorLiked,
+    isLoading: isLoadingLiked,
+  } = useSWR(`/api/favorite/${id}`, fetcher);
+
+  const addLikedProduct = async () => {
+    if (!isLiked) {
+      const response = await fetch(`/api/favorite`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data?.user?.email,
+          product_id: id,
+        }),
+      });
+      const res = await response.json();
+      if (res.success) {
+        setIsLiked(true);
+      }
+    } else {
+      const response = await fetch(`/api/favorite?id=${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await response.json();
+      if (res.success) {
+        setIsLiked(false);
+      }
+    }
+  };
 
   useEffect(() => {
     if (dataProduct) {
@@ -34,6 +71,13 @@ const DetailProduct = () => {
       setLinkProduk(product?.link);
     }
   }, [dataProduct]);
+  useEffect(() => {
+    if (dataLiked) {
+      if (dataLiked?.length > 0) {
+        setIsLiked(true);
+      }
+    }
+  }, [dataLiked]);
 
   return (
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
@@ -64,7 +108,7 @@ const DetailProduct = () => {
             </a>
             <button
               className="btn btn-outline btn-error"
-              onClick={() => setIsLiked(!isLiked)}
+              onClick={addLikedProduct}
             >
               {isLiked ? <GoHeartFill size={20} /> : <GoHeart size={20} />}
             </button>

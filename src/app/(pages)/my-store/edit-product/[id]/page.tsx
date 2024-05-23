@@ -52,7 +52,6 @@ const EditProduct = () => {
     e.preventDefault();
     if (!file && !imageURL) return;
     if (file && file.size > 1048576) {
-      // console.error("Ukuran file terlalu besar. Maksimal 1 MB.");
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -116,6 +115,7 @@ const EditProduct = () => {
         text: "Produk Anda telah diperbarui!",
         icon: "success",
       });
+      await router.refresh();
       await router.push("/my-store");
     } catch (error) {
       console.error(error);

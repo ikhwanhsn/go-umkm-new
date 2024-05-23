@@ -41,7 +41,6 @@ const AddProduct = () => {
     e.preventDefault();
     if (!file) return;
     if (file.size > 1048576) {
-      // console.error("Ukuran file terlalu besar. Maksimal 1 MB.");
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -87,6 +86,7 @@ const AddProduct = () => {
         text: "Produk berhasil ditambahkan!",
         icon: "success",
       });
+      await router.refresh();
       await router.push("/my-store");
     } catch (error) {
       console.error(error);

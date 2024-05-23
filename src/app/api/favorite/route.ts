@@ -8,14 +8,11 @@ export async function POST(request: Request) {
     const { email, product_id } = await request.json();
     const idUser = await User.findOne({ email: email });
     if (!idUser) {
-      return NextResponse.json(
-        { message: "Favorite product not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
     await connectMongoDB();
     const added = await Favorite.create({
-      user_id: idUser.id,
+      user_id: idUser._id,
       product_id,
     });
     if (added) {
@@ -38,15 +35,13 @@ export async function GET(request: any) {
   try {
     await connectMongoDB();
     const { nextUrl } = request;
+    const email = nextUrl.searchParams.get("email");
     const limit = nextUrl.searchParams.get("limit");
-    const favorite = await Favorite.find().limit(limit);
+    const favorite = await Favorite.find({ email: email }).limit(limit);
     if (favorite.length > 0) {
       return NextResponse.json(favorite);
     } else {
-      return NextResponse.json(
-        { message: "Favorite product not found" },
-        { status: 404 }
-      );
+      return NextResponse.json([]);
     }
   } catch (error) {
     console.log(error);

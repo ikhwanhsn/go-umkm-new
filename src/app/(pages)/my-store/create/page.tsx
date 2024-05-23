@@ -12,6 +12,7 @@ import {
 import { storage } from "@/services/firebase/firebase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 const CreateStore = () => {
   const router = useRouter();
@@ -57,7 +58,11 @@ const CreateStore = () => {
     e.preventDefault();
     if (!image) return;
     if (image.size > 1048576) {
-      console.error("Ukuran file terlalu besar. Maksimal 1 MB.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Ukuran foto terlalu besar. Maksimal 1 MB!",
+      });
       return;
     }
     try {
@@ -89,7 +94,13 @@ const CreateStore = () => {
 
       if (!res.ok) throw new Error(await res.text());
       ref.current && (ref.current.value = "");
-      router.push("/my-store");
+      await Swal.fire({
+        title: "Success!",
+        text: "Produk berhasil ditambahkan!",
+        icon: "success",
+      });
+      await router.refresh();
+      await router.push("/my-store");
     } catch (error) {
       console.error(error);
     }
