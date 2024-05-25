@@ -1,7 +1,25 @@
-import AllProduct from "@/components/AllProduct";
+"use client";
+
+import CardProduct from "@/components/CardProduct";
+import { fetcher } from "@/libs/swr/fetcher";
+import { useEffect, useState } from "react";
 import { FiFilter } from "react-icons/fi";
+import useSWR from "swr";
 
 const Product = () => {
+  const [allProducts, setAllProducts] = useState([]);
+  const {
+    data: dataProduct,
+    error: errorProduct,
+    isLoading: isLoadingProduct,
+  } = useSWR(`/api/products?limit=50`, fetcher);
+
+  useEffect(() => {
+    if (dataProduct) {
+      setAllProducts(dataProduct);
+    }
+  }, [dataProduct]);
+
   return (
     <main className="w-full min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <section className="flex md:flex-row flex-col justify-between md:items-center">
@@ -63,7 +81,26 @@ const Product = () => {
           </div>
         </section>
       </section>
-      <AllProduct />
+      <section className="mt-7">
+        {allProducts.length === 0 && !isLoadingProduct && (
+          <p className="text-center mt-12 text-sm italic">Tidak ada produk</p>
+        )}
+        <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 lg:gap-5 md:gap-4 gap-3">
+          {allProducts.length > 0 &&
+            !isLoadingProduct &&
+            allProducts.map((item: any) => (
+              <CardProduct
+                key={item._id}
+                id={item._id}
+                myRef={"product"}
+                src={item.image}
+                name={item.name}
+                mitra={item.store_info.name}
+                price={item.price}
+              />
+            ))}
+        </section>
+      </section>
     </main>
   );
 };

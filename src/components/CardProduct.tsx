@@ -47,7 +47,7 @@ const CardProduct = ({
         {myRef === "store" && (
           <>
             <FiMapPin />
-            {"Indonesia"}
+            {city}
           </>
         )}
         {myRef === "product" && <IoStorefrontOutline />}

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import CardProduct from "@/components/CardProduct";
 import useSWR from "swr";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { fetcher } from "@/libs/swr/fetcher";
 import { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 
 const DetailProduct = () => {
   const { id } = useParams();
+  const router = useRouter();
   const { data, status: session } = useSession();
   const [namaProduk, setNamaProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
@@ -28,10 +29,11 @@ const DetailProduct = () => {
     data: dataLiked,
     error: errorLiked,
     isLoading: isLoadingLiked,
-  } = useSWR(`/api/favorite/${id}`, fetcher);
+  } = useSWR(`/api/favorite/${id}?email=${data?.user?.email}`, fetcher);
 
   const addLikedProduct = async () => {
-    if (!isLiked) {
+    if (isLiked === false) {
+      setIsLiked(true);
       const response = await fetch(`/api/favorite`, {
         method: "POST",
         headers: {
@@ -46,8 +48,10 @@ const DetailProduct = () => {
       if (res.success) {
         setIsLiked(true);
       }
-    } else {
-      const response = await fetch(`/api/favorite?id=${id}`, {
+    }
+    if (isLiked === true) {
+      setIsLiked(false);
+      const response = await fetch(`/api/favorite/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -147,7 +151,7 @@ const SimilarProduct = ({ id }: { id: any }) => {
               myRef="product"
               src={item.image}
               name={item.name}
-              mitra={"mitra 1"}
+              mitra={item.store_info.name}
               price={item.price}
             />
           ))}

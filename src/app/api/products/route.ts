@@ -1,5 +1,6 @@
 import connectMongoDB from "@/libs/mongodb";
 import Product from "@/models/product";
+import Store from "@/models/store";
 import User from "@/models/user";
 import "firebase/compat/storage";
 import { NextResponse } from "next/server";
@@ -48,12 +49,50 @@ export async function POST(request: Request) {
   }
 }
 
+// export async function GET(request: any) {
+//   try {
+//     await connectMongoDB();
+//     const { nextUrl } = request;
+//     const limit = nextUrl.searchParams.get("limit");
+//     const products = await Product.find().limit(limit);
+//     if (products.length > 0) {
+//       return NextResponse.json(products);
+//     } else {
+//       return NextResponse.json([]);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return NextResponse.json(
+//       { message: "Internal server error" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
 export async function GET(request: any) {
   try {
     await connectMongoDB();
     const { nextUrl } = request;
-    const limit = nextUrl.searchParams.get("limit");
-    const products = await Product.find().limit(limit);
+    const limit = parseInt(nextUrl.searchParams.get("limit"), 10) || 50; // Default limit to 10 if not specified
+
+    // Using aggregation to join products with store information
+    const products = await Product.aggregate([
+      {
+        $lookup: {
+          from: "stores", // The collection name for stores
+          localField: "user_id",
+          foreignField: "user_id",
+          as: "store_info",
+        },
+      },
+      {
+        $unwind: "$store_info", // Unwind to denormalize the array
+      },
+      {
+        $limit: limit,
+      },
+    ]);
+
     if (products.length > 0) {
       return NextResponse.json(products);
     } else {

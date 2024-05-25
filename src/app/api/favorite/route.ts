@@ -52,11 +52,55 @@ export async function GET(request: any) {
   }
 }
 
+// export async function GET(request: any) {
+//   try {
+//     await connectMongoDB();
+//     const { nextUrl } = request;
+//     const email = nextUrl.searchParams.get("email");
+//     const limit = parseInt(nextUrl.searchParams.get("limit"), 10) || 10; // Default limit to 10 if not specified
+
+//     const favorites = await Favorite.aggregate([
+//       {
+//         $addFields: {
+//           product_id: { $toObjectId: "$product_id" }, // Convert product_id to ObjectId
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "products", // The collection name for products
+//           localField: "product_id", // The field in the favorites collection to join on
+//           foreignField: "_id", // The field in the products collection to join on
+//           as: "productDetails",
+//         },
+//       },
+//       {
+//         $unwind: "$product_info", // Unwind to denormalize the array
+//       },
+//       {
+//         $limit: limit,
+//       },
+//     ]);
+
+//     if (favorites.length > 0) {
+//       return NextResponse.json(favorites);
+//     } else {
+//       return NextResponse.json([]);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return NextResponse.json(
+//       { message: "Internal server error" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
 export async function DELETE(request: any) {
   try {
-    const id = request.nextUrl.searchParams.get("id");
+    const { nextUrl } = request;
+    const id = nextUrl.searchParams.get("id");
     await connectMongoDB();
-    const deleted = await Favorite.findByIdAndDelete(id);
+    const deleted = await Favorite.findOneAndDelete({ product_id: id });
     if (deleted) {
       return NextResponse.json(
         { message: "Favorite product deleted" },

@@ -1,7 +1,24 @@
-import AllStore from "@/components/AllStore";
+"use client";
+
+import CardProduct from "@/components/CardProduct";
+import { fetcher } from "@/libs/swr/fetcher";
+import { useEffect, useState } from "react";
 import { FiFilter } from "react-icons/fi";
+import useSWR from "swr";
 
 const Store = () => {
+  const [allStore, setAllStore] = useState([]);
+  const {
+    data: dataStore,
+    error: errorStore,
+    isLoading: isLoadingStore,
+  } = useSWR(`/api/store?limit=50`, fetcher);
+  useEffect(() => {
+    if (dataStore) {
+      setAllStore(dataStore);
+    }
+  }, [dataStore]);
+
   return (
     <main className="w-full min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <section className="flex md:flex-row flex-col justify-between md:items-center">
@@ -63,7 +80,27 @@ const Store = () => {
           </div>
         </section>
       </section>
-      <AllStore />
+      {/* <AllStore /> */}
+      <section className="mt-7">
+        {allStore.length === 0 && !isLoadingStore && (
+          <p className="text-center mt-12 text-sm italic">Tidak ada toko</p>
+        )}
+        <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 gap-5">
+          {allStore.length > 0 &&
+            !isLoadingStore &&
+            allStore.map((item: any) => (
+              <CardProduct
+                key={item._id}
+                id={item._id}
+                city={"Indonesia"}
+                src={item.image}
+                name={item.name}
+                mitra={item.mitra}
+                myRef={"store"}
+              />
+            ))}
+        </section>
+      </section>
     </main>
   );
 };
