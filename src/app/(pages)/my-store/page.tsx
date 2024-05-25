@@ -194,6 +194,7 @@ const MyStore = () => {
       if (dataStore.message === "Store not found") {
         setIsHaveStore(false);
       }
+      setIsHaveStore(true);
       const data = dataStore.store;
       setStoreId(data?._id);
       setStoreName(data?.name);
