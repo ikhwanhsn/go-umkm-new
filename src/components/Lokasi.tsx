@@ -23,12 +23,12 @@ const Lokasi = () => {
         </p>
       </section>
       <section className="flex md:flex-col flex-row md:gap-7 gap-3 z-10">
-        <button className="btn bg-white md:w-44 w-40 border-none shadow-md hover:bg-gray-300 text-xl text-orange-500">
-          Barusari
-        </button>
-        <button className="btn bg-white md:w-44 w-40 border-none shadow-md hover:bg-gray-300 text-xl text-orange-500">
-          Bulustalan
-        </button>
+        <p className=" bg-white md:w-44 w-40 border-none shadow-md px-5 py-3 rounded-md font-bold text-xl text-orange-500">
+          {`+100 Lokasi`}
+        </p>
+        <p className=" bg-white md:w-44 w-40 border-none shadow-md px-5 py-3 rounded-md font-bold text-xl text-orange-500">
+          {`+500 UMKM`}
+        </p>
       </section>
     </main>
   );

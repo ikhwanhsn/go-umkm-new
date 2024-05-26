@@ -22,11 +22,11 @@ const CreateStore = () => {
   const [image, setImage] = useState<File>();
   const ref = useRef<HTMLInputElement>(null);
   const [province, setProvince] = useState([]);
-  const [provinceSelect, setProvinceSelect] = useState("11");
+  const [provinceSelect, setProvinceSelect] = useState("");
   const [city, setCity] = useState([]);
-  const [citySelect, setCitySelect] = useState("1101");
+  const [citySelect, setCitySelect] = useState("");
   const [kecamatan, setKecamatan] = useState([]);
-  const [kecamatanSelect, setKecamatanSelect] = useState("1101010");
+  const [kecamatanSelect, setKecamatanSelect] = useState("");
   const [noTelp, setNoTelp] = useState("");
 
   const {
@@ -163,8 +163,8 @@ const CreateStore = () => {
             onChange={(e) => setProvinceSelect(e.target.value)}
             required
           >
-            <option disabled selected value={"11"}>
-              ACEH
+            <option disabled selected value={""}>
+              Pilih Provinsi
             </option>
             {province &&
               province.map((item: any) => (
@@ -180,8 +180,8 @@ const CreateStore = () => {
             onChange={(e) => setCitySelect(e.target.value)}
             required
           >
-            <option disabled selected value={"1101"}>
-              KABUPATEN SIMEULUE
+            <option disabled selected value={""}>
+              Pilih Kota
             </option>
             {city &&
               city.map((item: any) => (
@@ -197,8 +197,8 @@ const CreateStore = () => {
             onChange={(e) => setKecamatanSelect(e.target.value)}
             required
           >
-            <option disabled selected value={"1101010"}>
-              TEUPAH SELATAN
+            <option disabled selected value={""}>
+              Pilih Kecamatan
             </option>
             {kecamatan &&
               kecamatan.map((item: any) => (

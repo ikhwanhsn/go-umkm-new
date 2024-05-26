@@ -53,7 +53,8 @@ const MyStore = () => {
     isLoading: isLoadingProvince,
   } = useSWR(
     "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json",
-    fetcher
+    fetcher,
+    { refreshInterval: 1000 }
   );
   const {
     data: dataCity,
@@ -61,7 +62,8 @@ const MyStore = () => {
     isLoading: isLoadingCity,
   } = useSWR(
     `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceSelect}.json`,
-    fetcher
+    fetcher,
+    { refreshInterval: 1000 }
   );
   const {
     data: dataKecamatan,
@@ -69,7 +71,8 @@ const MyStore = () => {
     isLoading: isLoadingKecamatan,
   } = useSWR(
     `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${citySelect}.json`,
-    fetcher
+    fetcher,
+    { refreshInterval: 1000 }
   );
   const {
     data: dataProducts,
@@ -213,22 +216,21 @@ const MyStore = () => {
   useEffect(() => {
     if (dataProvince) {
       setProvince(dataProvince);
+      setProvinceSelect(storeProv);
       const prov = dataProvince.find((prov: any) => prov.id === storeProv);
       setProvinceName(prov?.name);
     }
     if (dataCity) {
       setCity(dataCity);
+      setCitySelect(storeCity);
       const city = dataCity.find((city: any) => city.id === storeCity);
       setCityName(city?.name);
     }
     if (dataKecamatan) {
       setKecamatan(dataKecamatan);
+      setKecamatanSelect(storeKec);
       const kec = dataKecamatan.find((kec: any) => kec.id === storeKec);
       setKecamatanName(kec?.name);
-    }
-    if (dataStore) {
-      setProvinceSelect(dataStore[0]?.province);
-      setCitySelect(dataStore[0]?.city);
     }
   }, [dataProvince, dataCity, dataKecamatan]);
 
