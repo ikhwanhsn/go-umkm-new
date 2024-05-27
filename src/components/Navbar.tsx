@@ -6,11 +6,12 @@ import Link from "next/link";
 import { IoPersonOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { MdOpenInNew } from "react-icons/md";
 
 const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const { status, data: session } = useSession();
 
   return (
@@ -70,35 +71,37 @@ const Navbar = () => {
         </Link>
       </div>
       {/* ===== Navbar Center ===== */}
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <Link href="/product">All Product</Link>
-          </li>
-          <li>
-            <Link href="/store">Store</Link>
-          </li>
-          <li>
-            <details>
-              <summary>Others</summary>
-              <ul className="p-2 bg-gray-50">
-                <li>
-                  <Link href="/maps">Maps</Link>
-                </li>
-                <li>
-                  <Link href="/forum">Forum</Link>
-                </li>
-                <li>
-                  <Link href="/learn">Learn</Link>
-                </li>
-                <li>
-                  <Link href="/about">About</Link>
-                </li>
-              </ul>
-            </details>
-          </li>
-        </ul>
-      </div>
+      {pathname !== "/" && (
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">
+            <li>
+              <Link href="/product">All Product</Link>
+            </li>
+            <li>
+              <Link href="/store">Store</Link>
+            </li>
+            <li>
+              <details>
+                <summary>Others</summary>
+                <ul className="p-2 bg-gray-50">
+                  <li>
+                    <Link href="/maps">Maps</Link>
+                  </li>
+                  <li>
+                    <Link href="/forum">Forum</Link>
+                  </li>
+                  <li>
+                    <Link href="/learn">Learn</Link>
+                  </li>
+                  <li>
+                    <Link href="/about">About</Link>
+                  </li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </div>
+      )}
       {/* ===== Navbar End ===== */}
       <div className="navbar-end md:space-x-4 space-x-2">
         <button
