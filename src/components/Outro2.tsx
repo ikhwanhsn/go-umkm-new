@@ -16,7 +16,7 @@ const Outro2 = () => {
           <br />
           dengan harga yang sangat murah.
         </p>
-        <Link href="/product">
+        <Link href="/product/k/barusari">
           <button className="btn bg-yellow-500 text-white mt-8 border-none shadow-md hover:bg-yellow-600">
             Coba sekarang
           </button>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import map from "../../public/img/map-location.png";
+import Link from "next/link";
 
 const Lokasi = () => {
   return (
@@ -23,12 +24,18 @@ const Lokasi = () => {
         </p>
       </section>
       <section className="flex md:flex-col flex-row md:gap-7 gap-3 z-10">
-        <p className=" bg-white md:w-44 w-40 border-none shadow-md px-5 py-3 rounded-md font-bold text-xl text-orange-500">
-          {`+100 Lokasi`}
-        </p>
-        <p className=" bg-white md:w-44 w-40 border-none shadow-md px-5 py-3 rounded-md font-bold text-xl text-orange-500">
-          {`+500 UMKM`}
-        </p>
+        <Link
+          href="/product/barusari"
+          className="btn bg-white hover:bg-gray-200 md:w-44 w-40 border-none shadow-md px-5 py-3 rounded-md font-bold text-xl text-orange-500"
+        >
+          Barusari
+        </Link>
+        <Link
+          href="/product/bulustalan"
+          className="btn bg-white hover:bg-gray-200 md:w-44 w-40 border-none shadow-md px-5 py-3 rounded-md font-bold text-xl text-orange-500"
+        >
+          Bulustalan
+        </Link>
       </section>
     </main>
   );

@@ -132,9 +132,9 @@ const Navbar = () => {
                 </p>
               </li>
             )}
-            <li>
+            {/* <li>
               <Link href="/my-store">My Store</Link>
-            </li>
+            </li> */}
             <li>
               <a href="https://google.com" target="_blank">
                 Documentation

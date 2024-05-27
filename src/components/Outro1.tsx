@@ -22,7 +22,7 @@ const Outro1 = () => {
           Lebih dari 100 UMKM dengan ribuan produk yang ada siap melayani
           pesanan Anda.
         </p>
-        <Link href="/store">
+        <Link href="/store/k/barusari">
           <button className="btn bg-orange-500 text-white lg:mt-12 md:mt-8 mt-6 border-none shadow-md hover:bg-orange-600">
             Cari sekarang
           </button>
