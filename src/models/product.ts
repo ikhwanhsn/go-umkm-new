@@ -2,7 +2,11 @@ import mongoose, { Schema } from "mongoose";
 
 const productSchema = new Schema(
   {
-    user_id: {
+    // user_id: {
+    //   type: String,
+    //   required: true,
+    // },
+    store_id: {
       type: String,
       required: true,
     },
@@ -21,7 +25,7 @@ const productSchema = new Schema(
     },
     image: {
       type: String,
-      required: true,
+      // required: true,
     },
     link: {
       type: String,

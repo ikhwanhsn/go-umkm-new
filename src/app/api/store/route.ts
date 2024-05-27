@@ -5,38 +5,27 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const {
-      email,
-      name,
-      description,
-      image,
-      province,
-      city,
-      kecamatan,
-      telephone,
-    } = await request.json();
-    const idUser = await User.findOne({ email: email });
-    const storeExists = await Store.findOne({ user_id: idUser.id });
+    const { name, description, image, kecamatan, telephone } =
+      await request.json();
+    // const idUser = await User.findOne({ email: email });
+    // const storeExists = await Store.findOne({ user_id: idUser.id });
 
-    if (storeExists) {
-      return NextResponse.json(
-        { message: "Store already exists" },
-        { status: 400 }
-      );
-    }
+    // if (storeExists) {
+    //   return NextResponse.json(
+    //     { message: "Store already exists" },
+    //     { status: 400 }
+    //   );
+    // }
 
-    if (!idUser) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
-    }
+    // if (!idUser) {
+    //   return NextResponse.json({ message: "User not found" }, { status: 404 });
+    // }
 
     await connectMongoDB();
     const added = await Store.create({
-      user_id: idUser.id,
       name,
       description,
       image,
-      province,
-      city,
       kecamatan,
       telephone,
     });

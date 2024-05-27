@@ -2,13 +2,11 @@
 
 import CardProduct from "@/components/CardProduct";
 import { fetcher } from "@/libs/swr/fetcher";
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import useSWR from "swr";
 
 const ProductKelurahan = () => {
-  const { kelurahan } = useParams();
   const [allProducts, setAllProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
@@ -47,7 +45,7 @@ const ProductKelurahan = () => {
       <section className="flex md:flex-row flex-col justify-between md:items-center">
         <section>
           <h1 className="text-xl font-bold mb-1 capitalize">
-            All Product ({kelurahan})
+            All Product (Barusari)
           </h1>
           <p>Welcome to all product page</p>
         </section>

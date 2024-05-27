@@ -25,13 +25,13 @@ const Lokasi = () => {
       </section>
       <section className="flex md:flex-col flex-row md:gap-7 gap-3 z-10">
         <Link
-          href="/product/barusari"
+          href="/product/k/barusari"
           className="btn bg-white hover:bg-gray-200 md:w-44 w-40 border-none shadow-md px-5 py-3 rounded-md font-bold text-xl text-orange-500"
         >
           Barusari
         </Link>
         <Link
-          href="/product/bulustalan"
+          href="/product/k/bulustalan"
           className="btn bg-white hover:bg-gray-200 md:w-44 w-40 border-none shadow-md px-5 py-3 rounded-md font-bold text-xl text-orange-500"
         >
           Bulustalan

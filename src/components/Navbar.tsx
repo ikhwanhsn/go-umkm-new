@@ -40,10 +40,30 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-50 rounded-box w-52"
           >
             <li>
-              <Link href="/product">All Product</Link>
+              <details>
+                <summary>All Product</summary>
+                <ul className="p-2 bg-gray-50">
+                  <li>
+                    <Link href="/product/k/barusari">Barusari</Link>
+                  </li>
+                  <li>
+                    <Link href="/product/k/bulustalan">Bulustalan</Link>
+                  </li>
+                </ul>
+              </details>
             </li>
             <li>
-              <Link href="/store">Store</Link>
+              <details>
+                <summary>Store</summary>
+                <ul className="p-2 bg-gray-50">
+                  <li>
+                    <Link href="/store/k/barusari">Barusari</Link>
+                  </li>
+                  <li>
+                    <Link href="/store/k/bulustalan">Bulustalan</Link>
+                  </li>
+                </ul>
+              </details>
             </li>
             <li>
               <details>
@@ -75,10 +95,30 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <Link href="/product">All Product</Link>
+              <details>
+                <summary>All Product</summary>
+                <ul className="p-2 bg-gray-50">
+                  <li>
+                    <Link href="/product/k/barusari">Barusari</Link>
+                  </li>
+                  <li>
+                    <Link href="/product/k/bulustalan">Bulustalan</Link>
+                  </li>
+                </ul>
+              </details>
             </li>
             <li>
-              <Link href="/store">Store</Link>
+              <details>
+                <summary>Store</summary>
+                <ul className="p-2 bg-gray-50">
+                  <li>
+                    <Link href="/store/k/barusari">Barusari</Link>
+                  </li>
+                  <li>
+                    <Link href="/store/k/bulustalan">Bulustalan</Link>
+                  </li>
+                </ul>
+              </details>
             </li>
             <li>
               <details>
@@ -132,9 +172,11 @@ const Navbar = () => {
                 </p>
               </li>
             )}
-            {/* <li>
-              <Link href="/my-store">My Store</Link>
-            </li> */}
+            {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_1 && (
+              <li>
+                <Link href="/admin/barusari">Dashboard</Link>
+              </li>
+            )}
             <li>
               <a href="https://google.com" target="_blank">
                 Documentation
