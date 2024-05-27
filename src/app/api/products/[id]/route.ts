@@ -1,5 +1,6 @@
 import connectMongoDB from "@/libs/mongodb";
 import Product from "@/models/product";
+import Store from "@/models/store";
 import User from "@/models/user";
 import { storage } from "@/services/firebase/firebase";
 import { deleteObject, ref } from "firebase/storage";
@@ -47,6 +48,7 @@ export async function GET(request: Request, { params }: any) {
     await connectMongoDB();
     if (!id) {
       const user = await User.findOne({ email });
+
       const product = await Product.find({ user_id: user?.id });
       if (product) {
         return NextResponse.json({ product }, { status: 200 });
@@ -61,8 +63,10 @@ export async function GET(request: Request, { params }: any) {
     }
     if (!email) {
       const product = await Product.findById(id);
+      const store = await Store.findOne({ user_id: product.user_id });
+      const telp = store?.telephone;
       if (product) {
-        return NextResponse.json({ product }, { status: 200 });
+        return NextResponse.json({ product, telp }, { status: 200 });
       } else {
         return NextResponse.json(
           { message: "Product not found" },
@@ -75,23 +79,6 @@ export async function GET(request: Request, { params }: any) {
   }
 }
 
-// export async function DELETE(request: Request, { params }: any) {
-//   try {
-//     const { id } = params;
-//     await connectMongoDB();
-//     const deleted = await Product.findByIdAndDelete(id);
-//     if (deleted) {
-//       return NextResponse.json({ message: "Product deleted" }, { status: 200 });
-//     } else {
-//       return NextResponse.json(
-//         { message: "Product not found" },
-//         { status: 404 }
-//       );
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 export async function DELETE(request: Request, { params }: any) {
   try {
     const { id, email } = await request.json();

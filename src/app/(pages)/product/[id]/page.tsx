@@ -11,7 +11,6 @@ import { useSession } from "next-auth/react";
 
 const DetailProduct = () => {
   const { id } = useParams();
-  const router = useRouter();
   const { data, status: session } = useSession();
   const [namaProduk, setNamaProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
@@ -19,6 +18,7 @@ const DetailProduct = () => {
   const [hargaProduk, setHargaProduk] = useState("");
   const [kategoriProduk, setKategoriProduk] = useState("Fashion");
   const [linkProduk, setLinkProduk] = useState("");
+  const [telephone, setTelephone] = useState("");
   const [isLiked, setIsLiked] = useState(false);
   const {
     data: dataProduct,
@@ -73,6 +73,10 @@ const DetailProduct = () => {
       setHargaProduk(product?.price);
       setKategoriProduk(product?.category);
       setLinkProduk(product?.link);
+      const phoneNumber = dataProduct?.telp;
+      const formattedNumber = phoneNumber?.replace(/^0/, "62");
+      const whatsappLink = `https://wa.me/${formattedNumber}`;
+      setTelephone(whatsappLink);
     }
   }, [dataProduct]);
   useEffect(() => {
@@ -100,9 +104,13 @@ const DetailProduct = () => {
           <h2 className="text-xl font-semibold mb-3">{namaProduk}</h2>
           <p>{deskripsiProduk}</p>
           <section className="flex items-center gap-1 mt-5">
-            <button className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">
+            <a
+              href={telephone}
+              target="_blank"
+              className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
+            >
               Chat penjual
-            </button>
+            </a>
             <a
               className="btn bg-orange-500 text-white border-none hover:bg-orange-600"
               href={linkProduk}

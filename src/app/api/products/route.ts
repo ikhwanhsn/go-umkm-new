@@ -1,6 +1,5 @@
 import connectMongoDB from "@/libs/mongodb";
 import Product from "@/models/product";
-import Store from "@/models/store";
 import User from "@/models/user";
 import "firebase/compat/storage";
 import { NextResponse } from "next/server";
@@ -49,33 +48,29 @@ export async function POST(request: Request) {
   }
 }
 
-// export async function GET(request: any) {
-//   try {
-//     await connectMongoDB();
-//     const { nextUrl } = request;
-//     const limit = nextUrl.searchParams.get("limit");
-//     const products = await Product.find().limit(limit);
-//     if (products.length > 0) {
-//       return NextResponse.json(products);
-//     } else {
-//       return NextResponse.json([]);
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     return NextResponse.json(
-//       { message: "Internal server error" },
-//       { status: 500 }
-//     );
-//   }
-// }
-
 export async function GET(request: any) {
   try {
     await connectMongoDB();
     const { nextUrl } = request;
-    const limit = parseInt(nextUrl.searchParams.get("limit"), 10) || 50; // Default limit to 10 if not specified
+    const limit = parseInt(nextUrl.searchParams.get("limit"), 10) || 50;
+    const search = nextUrl.searchParams.get("search") || "";
+    const location = nextUrl.searchParams.get("location") || "";
+    const productType = nextUrl.searchParams.get("productType") || "";
 
-    // Using aggregation to join products with store information
+    // Create filter object
+    const filter: any = {};
+
+    if (search) {
+      filter.name = { $regex: search, $options: "i" };
+    }
+    if (location) {
+      filter["store_info.location"] = { $regex: location, $options: "i" };
+    }
+    if (productType) {
+      filter.type = { $regex: productType, $options: "i" };
+    }
+
+    // Using aggregation to join products with store information and apply filters
     const products = await Product.aggregate([
       {
         $lookup: {
@@ -87,6 +82,9 @@ export async function GET(request: any) {
       },
       {
         $unwind: "$store_info", // Unwind to denormalize the array
+      },
+      {
+        $match: filter, // Apply filters
       },
       {
         $limit: limit,

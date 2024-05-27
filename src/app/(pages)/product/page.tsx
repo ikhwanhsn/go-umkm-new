@@ -8,17 +8,37 @@ import useSWR from "swr";
 
 const Product = () => {
   const [allProducts, setAllProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filters, setFilters] = useState({
+    location: "",
+    productType: "",
+  });
+
   const {
     data: dataProduct,
     error: errorProduct,
     isLoading: isLoadingProduct,
-  } = useSWR(`/api/products?limit=50`, fetcher);
+  } = useSWR(
+    `/api/products?limit=50&search=${searchTerm}&location=${filters.location}&productType=${filters.productType}`,
+    fetcher
+  );
 
   useEffect(() => {
     if (dataProduct) {
       setAllProducts(dataProduct);
     }
   }, [dataProduct]);
+
+  const handleSearchChange = (e: any) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = (e: any) => {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <main className="w-full min-h-screen lg:px-12 md:px-8 px-5 mt-5">
@@ -33,6 +53,8 @@ const Product = () => {
               type="text"
               className="w-full"
               placeholder="Search here..."
+              value={searchTerm}
+              onChange={handleSearchChange}
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +69,7 @@ const Product = () => {
               />
             </svg>
           </label>
-          <div className="dropdown dropdown-end">
+          {/* <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
@@ -61,24 +83,32 @@ const Product = () => {
             >
               <div className="form-control">
                 <label className="label cursor-pointer flex justify-between w-full">
-                  <span className="label-text text-black">Barusari</span>
+                  <span className="label-text text-black">Location</span>
                   <input
-                    type="checkbox"
-                    className="checkbox checkbox-primary"
+                    type="text"
+                    name="location"
+                    className="input input-bordered"
+                    placeholder="Location"
+                    value={filters.location}
+                    onChange={handleFilterChange}
                   />
                 </label>
               </div>
               <div className="form-control">
-                <label className="label cursor-pointer">
-                  <span className="label-text text-black">Bulustalan</span>
+                <label className="label cursor-pointer flex justify-between w-full">
+                  <span className="label-text text-black">Product Type</span>
                   <input
-                    type="checkbox"
-                    className="checkbox checkbox-primary"
+                    type="text"
+                    name="productType"
+                    className="input input-bordered"
+                    placeholder="Product Type"
+                    value={filters.productType}
+                    onChange={handleFilterChange}
                   />
                 </label>
               </div>
             </div>
-          </div>
+          </div> */}
         </section>
       </section>
       <section className="mt-7">

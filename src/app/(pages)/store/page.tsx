@@ -46,7 +46,7 @@ const Store = () => {
               />
             </svg>
           </label>
-          <div className="dropdown dropdown-end">
+          {/* <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
@@ -77,7 +77,7 @@ const Store = () => {
                 </label>
               </div>
             </div>
-          </div>
+          </div> */}
         </section>
       </section>
       {/* <AllStore /> */}

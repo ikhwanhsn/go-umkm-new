@@ -54,7 +54,9 @@ const CardProduct = ({
         {mitra}
       </p>
       {price && (
-        <p className="text-orange-500 text-lg font-semibold mt-3">Rp{price}</p>
+        <p className="text-orange-500 text-lg font-semibold mt-3">
+          Rp{price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+        </p>
       )}
     </main>
   );
