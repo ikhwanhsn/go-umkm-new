@@ -2,11 +2,13 @@
 
 import CardProduct from "@/components/CardProduct";
 import { fetcher } from "@/libs/swr/fetcher";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import useSWR from "swr";
 
-const Product = () => {
+const ProductKelurahan = () => {
+  const { kelurahan } = useParams();
   const [allProducts, setAllProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
@@ -44,7 +46,9 @@ const Product = () => {
     <main className="w-full min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <section className="flex md:flex-row flex-col justify-between md:items-center">
         <section>
-          <h1 className="text-xl font-bold mb-1">All Product</h1>
+          <h1 className="text-xl font-bold mb-1 capitalize">
+            All Product ({kelurahan})
+          </h1>
           <p>Welcome to all product page</p>
         </section>
         <section className="flex gap-2 justify-between items-center mt-3 md:mt-0">
@@ -135,4 +139,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default ProductKelurahan;

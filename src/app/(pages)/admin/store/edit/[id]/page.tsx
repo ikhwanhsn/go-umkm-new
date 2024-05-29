@@ -8,11 +8,12 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { storage } from "@/services/firebase/firebase";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Swal from "sweetalert2";
 
-const CreateStoreBarusari = () => {
+const CreateStore = () => {
+  const { id } = useParams();
   const router = useRouter();
   const { data, status: session } = useSession();
   const [storeName, setStoreName] = useState("");
@@ -95,7 +96,9 @@ const CreateStoreBarusari = () => {
     <main className="w-full min-h-screen">
       <section className="lg:w-1/2 md:w-3/4 w-full md:mx-auto md:px-0 px-5 text-center">
         <form onSubmit={submit}>
-          <h1 className="mt-5 text-xl text-orange-500 font-bold">Buat Toko</h1>
+          <h1 className="mt-5 text-xl text-orange-500 font-bold capitalize">
+            Edit Toko
+          </h1>
           <p className="text-left mt-12">Nama Toko :</p>
           <input
             type="text"
@@ -134,7 +137,7 @@ const CreateStoreBarusari = () => {
             type="text"
             placeholder="Kecamatan..."
             id="kecamatan"
-            value={"Barusari"}
+            value={"barusari"}
             readOnly
             className="input input-bordered w-full bg-gray-50 mt-2"
           />
@@ -169,4 +172,4 @@ const CreateStoreBarusari = () => {
   );
 };
 
-export default CreateStoreBarusari;
+export default CreateStore;

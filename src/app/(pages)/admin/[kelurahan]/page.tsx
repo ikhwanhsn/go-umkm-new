@@ -4,6 +4,9 @@ import Link from "next/link";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 const dataToko = [
   {
@@ -33,13 +36,25 @@ const dataToko = [
   },
 ];
 
-const AdminBarusari = () => {
+const Admin = () => {
+  const { kelurahan } = useParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (
+      !kelurahan ||
+      (kelurahan !== "barusari" && kelurahan !== "bulustalan")
+    ) {
+      router.push("/404");
+    }
+  }, [kelurahan]);
+
   return (
     <main className="w-full min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <section className="flex md:flex-row flex-col justify-between md:items-center">
         <section>
           <h1 className="text-xl font-bold mb-1 capitalize">
-            Dashboard Kel.Barusari
+            Dashboard Kel.{kelurahan}
           </h1>
           <p>Welcome to dashboard page</p>
         </section>
@@ -65,7 +80,7 @@ const AdminBarusari = () => {
             </svg>
           </label>
           <Link
-            href={"/admin/barusari/create-store"}
+            href={`/admin/store/create/${kelurahan}`}
             className="btn bg-orange-500 text-white border-none shadow-md hover:bg-orange-600"
           >
             Tambah Toko
@@ -83,7 +98,7 @@ const AdminBarusari = () => {
   );
 };
 
-export default AdminBarusari;
+export default Admin;
 
 type StoreCardProps = {
   name: string;
@@ -100,14 +115,17 @@ const StoreCard = ({ name, totalProduct }: StoreCardProps) => {
       </section>
       <section className="flex gap-2">
         <Link
-          href={""}
+          href={`/admin/store/1`}
           className="btn bg-blue-500 text-white border-none shadow-md hover:bg-blue-600"
         >
-          Lihat Toko
+          Lihat Produk
         </Link>
-        <button className="btn bg-yellow-500 text-white border-none shadow-md hover:bg-yellow-600">
+        <Link
+          href={`/admin/store/edit/1`}
+          className="btn bg-yellow-500 text-white border-none shadow-md hover:bg-yellow-600"
+        >
           <FaRegEdit size={20} />
-        </button>
+        </Link>
         <button className="btn bg-red-500 text-white border-none shadow-md hover:bg-red-600">
           <MdDeleteOutline size={23} />
         </button>

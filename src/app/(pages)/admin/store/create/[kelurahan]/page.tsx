@@ -8,11 +8,12 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { storage } from "@/services/firebase/firebase";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Swal from "sweetalert2";
 
-const CreateStoreBulustalan = () => {
+const CreateStore = () => {
+  const { kelurahan } = useParams();
   const router = useRouter();
   const { data, status: session } = useSession();
   const [storeName, setStoreName] = useState("");
@@ -67,7 +68,7 @@ const CreateStoreBulustalan = () => {
           name: storeName,
           description: storeDesc,
           image: imageUrl, // Use the appropriate image URL
-          kecamatan: "bulustalan",
+          kecamatan: "barusari",
           telephone: noTelp,
         }),
       });
@@ -95,7 +96,9 @@ const CreateStoreBulustalan = () => {
     <main className="w-full min-h-screen">
       <section className="lg:w-1/2 md:w-3/4 w-full md:mx-auto md:px-0 px-5 text-center">
         <form onSubmit={submit}>
-          <h1 className="mt-5 text-xl text-orange-500 font-bold">Buat Toko</h1>
+          <h1 className="mt-5 text-xl text-orange-500 font-bold capitalize">
+            Tambah Toko ({kelurahan})
+          </h1>
           <p className="text-left mt-12">Nama Toko :</p>
           <input
             type="text"
@@ -134,7 +137,7 @@ const CreateStoreBulustalan = () => {
             type="text"
             placeholder="Kecamatan..."
             id="kecamatan"
-            value={"Bulustalan"}
+            value={kelurahan}
             readOnly
             className="input input-bordered w-full bg-gray-50 mt-2"
           />
@@ -169,4 +172,4 @@ const CreateStoreBulustalan = () => {
   );
 };
 
-export default CreateStoreBulustalan;
+export default CreateStore;
