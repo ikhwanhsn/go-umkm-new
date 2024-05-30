@@ -254,12 +254,13 @@ const EditProduct = () => {
             >
               Simpan
             </button>
-            <Link
-              href={`/admin/store/1`}
+            <button
+              type="button"
+              onClick={() => router.back()}
               className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
             >
               Batal
-            </Link>
+            </button>
             <button
               className="btn bg-red-500 text-white border-none hover:bg-red-600"
               type="button"

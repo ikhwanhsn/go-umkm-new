@@ -159,12 +159,13 @@ const CreateStore = () => {
             >
               Simpan
             </button>
-            <Link
-              href={"/my-store"}
+            <button
+              type="button"
+              onClick={() => router.back()}
               className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white mt-5"
             >
               Batal
-            </Link>
+            </button>
           </section>
         </form>
       </section>
