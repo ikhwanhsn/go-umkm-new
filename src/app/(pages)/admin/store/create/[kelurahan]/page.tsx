@@ -9,7 +9,6 @@ import {
 } from "firebase/storage";
 import { storage } from "@/services/firebase/firebase";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
 import Swal from "sweetalert2";
 
 const CreateStore = () => {
@@ -68,7 +67,7 @@ const CreateStore = () => {
           name: storeName,
           description: storeDesc,
           image: imageUrl, // Use the appropriate image URL
-          kecamatan: "barusari",
+          kelurahan: "barusari",
           telephone: noTelp,
         }),
       });
@@ -132,11 +131,11 @@ const CreateStore = () => {
             className="w-full bg-gray-50 textarea textarea-bordered text-base mt-3"
           ></textarea>
           <br />
-          <p className="text-left mt-2">Kecamatan :</p>
+          <p className="text-left mt-2">Kelurahan :</p>
           <input
             type="text"
-            placeholder="Kecamatan..."
-            id="kecamatan"
+            placeholder="Kelurahan..."
+            id="kelurahan"
             value={kelurahan}
             readOnly
             className="input input-bordered w-full bg-gray-50 mt-2"

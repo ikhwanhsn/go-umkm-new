@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ref as storageRef,
   uploadBytes,
@@ -9,42 +9,53 @@ import {
 } from "firebase/storage";
 import { storage } from "@/services/firebase/firebase";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
 import Swal from "sweetalert2";
+import { fetcher } from "@/libs/swr/fetcher";
+import useSWR from "swr";
 
-const CreateStore = () => {
+const EditStore = () => {
   const { id } = useParams();
   const router = useRouter();
   const { data, status: session } = useSession();
   const [storeName, setStoreName] = useState("");
   const [storeDesc, setStoreDesc] = useState("");
-  const [image, setImage] = useState<File | null>(null);
+  const [storeImg, setStoreImg] = useState("");
+  const [kelurahan, setKelurahan] = useState("");
+  const [file, setFile] = useState<File>();
   const ref = useRef<HTMLInputElement>(null);
   const [noTelp, setNoTelp] = useState("");
+
+  const {
+    data: dataStore,
+    error: errorStore,
+    isLoading: isLoadingStore,
+  } = useSWR(`/api/store/id/${id}`, fetcher);
 
   const defaultImageUrl =
     "https://firebasestorage.googleapis.com/v0/b/go-umkm-9915e.appspot.com/o/default%2Fdefault-toko.png?alt=media&token=b5d4b965-99d0-4a13-85b0-09132333fc2a"; // Replace this with the actual URL
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let imageUrl = defaultImageUrl; // Use default image URL by default
+    if (!file && !storeImg) return;
+    if (file && file.size > 1048576) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Ukuran foto terlalu besar. Maksimal 1 MB!",
+      });
+      return;
+    }
 
-    if (image) {
-      if (image.size > 1048576) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Ukuran foto terlalu besar. Maksimal 1 MB!",
-        });
-        return;
-      }
+    let imageUrl = storeImg; // Use default image URL by default
+
+    if (file) {
       try {
         // Upload image to Firebase Storage
         const storageReference = storageRef(
           storage,
-          `images/store/${data?.user?.email}/${image.name}`
+          `images/store/${data?.user?.email}/${file.name}`
         );
-        await uploadBytes(storageReference, image);
+        await uploadBytes(storageReference, file);
         imageUrl = await getDownloadURL(storageReference); // Use uploaded image URL
       } catch (error) {
         console.error(error);
@@ -59,17 +70,18 @@ const CreateStore = () => {
 
     try {
       // Save store data to MongoDB
-      const res = await fetch("/api/store", {
-        method: "POST",
+      const res = await fetch(`/api/store/id/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: storeName,
-          description: storeDesc,
-          image: imageUrl, // Use the appropriate image URL
-          kecamatan: "barusari",
-          telephone: noTelp,
+          id: id,
+          NewName: storeName,
+          NewDescription: storeDesc,
+          NewImage: imageUrl,
+          NewKelurahan: kelurahan,
+          NewTelephone: noTelp,
         }),
       });
 
@@ -77,7 +89,7 @@ const CreateStore = () => {
       ref.current && (ref.current.value = "");
       await Swal.fire({
         title: "Success!",
-        text: "Toko berhasil ditambahkan!",
+        text: "Toko berhasil diubah!",
         icon: "success",
       });
       await router.refresh();
@@ -87,10 +99,21 @@ const CreateStore = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Toko gagal ditambahkan!",
+        text: "Toko gagal diubah!",
       });
     }
   };
+
+  useEffect(() => {
+    if (dataStore) {
+      const data = dataStore[0];
+      setStoreName(data.name);
+      setStoreDesc(data.description);
+      setStoreImg(data.image);
+      setNoTelp(data.telephone);
+      setKelurahan(data.kelurahan);
+    }
+  }, [dataStore]);
 
   return (
     <main className="w-full min-h-screen">
@@ -116,7 +139,7 @@ const CreateStore = () => {
               type="file"
               name="file"
               ref={ref}
-              onChange={(e: any) => setImage(e.target.files?.[0])}
+              onChange={(e: any) => setFile(e.target.files?.[0])}
               accept="image/png, image/jpeg, image/jpg"
               className="file-input file-input-bordered w-full max-w-xs bg-gray-50 mt-3"
             />
@@ -173,4 +196,4 @@ const CreateStore = () => {
   );
 };
 
-export default CreateStore;
+export default EditStore;

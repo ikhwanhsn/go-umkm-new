@@ -177,6 +177,11 @@ const Navbar = () => {
                 <Link href="/admin/barusari">Dashboard</Link>
               </li>
             )}
+            {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_2 && (
+              <li>
+                <Link href="/admin/bulustalan">Dashboard</Link>
+              </li>
+            )}
             <li>
               <a href="https://google.com" target="_blank">
                 Documentation

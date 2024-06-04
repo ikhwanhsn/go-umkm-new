@@ -5,40 +5,26 @@ import { IoStorefrontOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useSession } from "next-auth/react";
-
-const dataToko = [
-  {
-    id: 1,
-    name: "Toko 1",
-    totalProduct: 10,
-  },
-  {
-    id: 2,
-    name: "Toko 2",
-    totalProduct: 20,
-  },
-  {
-    id: 3,
-    name: "Toko 3",
-    totalProduct: 30,
-  },
-  {
-    id: 4,
-    name: "Toko 4",
-    totalProduct: 40,
-  },
-  {
-    id: 5,
-    name: "Toko 5",
-    totalProduct: 50,
-  },
-];
+import { useEffect, useState } from "react";
+import { fetcher } from "@/libs/swr/fetcher";
+import useSWR from "swr";
+import Swal from "sweetalert2";
 
 const Admin = () => {
+  const [store, setStore] = useState([]);
   const { kelurahan } = useParams();
   const router = useRouter();
+  const { data, error, isLoading } = useSWR(
+    `/api/store/k/${kelurahan}`,
+    fetcher
+  );
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      setStore(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (
@@ -48,6 +34,10 @@ const Admin = () => {
       router.push("/404");
     }
   }, [kelurahan]);
+
+  const handleDeleteStore = (id: any) => {
+    setStore((prevStore) => prevStore.filter((toko: any) => toko._id !== id));
+  };
 
   return (
     <main className="w-full min-h-screen lg:px-12 md:px-8 px-5 mt-5">
@@ -87,13 +77,16 @@ const Admin = () => {
           </Link>
         </section>
       </section>
-      {dataToko.map((toko) => (
-        <StoreCard
-          key={toko.id}
-          name={toko.name}
-          totalProduct={toko.totalProduct}
-        />
-      ))}
+      {store.length > 0 &&
+        store.map((toko: any) => (
+          <StoreCard
+            key={toko._id}
+            storeId={toko._id}
+            name={toko.name}
+            totalProduct={toko.totalProduct || 0}
+            onDelete={handleDeleteStore}
+          />
+        ))}
     </main>
   );
 };
@@ -103,9 +96,55 @@ export default Admin;
 type StoreCardProps = {
   name: string;
   totalProduct: number;
+  storeId: string;
+  onDelete: (id: string) => void;
 };
 
-const StoreCard = ({ name, totalProduct }: StoreCardProps) => {
+const StoreCard = ({
+  name,
+  totalProduct,
+  storeId,
+  onDelete,
+}: StoreCardProps) => {
+  const deleteStore = async (id: string) => {
+    try {
+      Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: `Toko ${name} akan di hapus secara permanen!`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Hapus!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await fetch(`/api/store?id=${id}`, {
+            method: "DELETE",
+          });
+          if (!res.ok) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Toko gagal di hapus!",
+            });
+            return;
+          }
+          if (res.ok) {
+            Swal.fire({
+              title: "Success!",
+              text: "Toko berhasil di hapus!",
+              icon: "success",
+            });
+            onDelete(id);
+          }
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete store");
+    }
+  };
+
   return (
     <main className="flex flex-row p-5 justify-between items-center mt-2 hover:bg-gray-100 card shadow-md">
       <section className="flex gap-3 items-center">
@@ -115,18 +154,22 @@ const StoreCard = ({ name, totalProduct }: StoreCardProps) => {
       </section>
       <section className="flex gap-2">
         <Link
-          href={`/admin/store/1`}
+          href={`/admin/store/${storeId}`}
           className="btn bg-blue-500 text-white border-none shadow-md hover:bg-blue-600"
         >
           Lihat Produk
         </Link>
         <Link
-          href={`/admin/store/edit/1`}
+          href={`/admin/store/edit/${storeId}`}
           className="btn bg-yellow-500 text-white border-none shadow-md hover:bg-yellow-600"
         >
           <FaRegEdit size={20} />
         </Link>
-        <button className="btn bg-red-500 text-white border-none shadow-md hover:bg-red-600">
+        <button
+          className="btn bg-red-500 text-white border-none shadow-md hover:bg-red-600"
+          type="button"
+          onClick={() => deleteStore(storeId)}
+        >
           <MdDeleteOutline size={23} />
         </button>
       </section>

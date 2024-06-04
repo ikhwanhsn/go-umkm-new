@@ -1,11 +1,10 @@
 import connectMongoDB from "@/libs/mongodb";
 import Store from "@/models/store";
-import User from "@/models/user";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { name, description, image, kecamatan, telephone } =
+    const { name, description, image, kelurahan, telephone } =
       await request.json();
     // const idUser = await User.findOne({ email: email });
     // const storeExists = await Store.findOne({ user_id: idUser.id });
@@ -26,7 +25,7 @@ export async function POST(request: Request) {
       name,
       description,
       image,
-      kecamatan,
+      kelurahan,
       telephone,
     });
     if (added) {
@@ -50,7 +49,8 @@ export async function GET(request: any) {
     await connectMongoDB();
     const { nextUrl } = request;
     const limit = nextUrl.searchParams.get("limit");
-    const stores = await Store.find().limit(limit);
+    const kelurahan = nextUrl.searchParams.get("kelurahan");
+    const stores = await Store.find({ kelurahan: kelurahan }).limit(limit);
     if (stores.length > 0) {
       return NextResponse.json(stores);
     } else {

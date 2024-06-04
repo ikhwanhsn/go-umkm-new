@@ -15,7 +15,7 @@ const storeSchema = new Schema(
       type: String,
       required: true,
     },
-    kecamatan: {
+    kelurahan: {
       type: String,
       enum: ["barusari", "bulustalan"],
       default: "barusari",

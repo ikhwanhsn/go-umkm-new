@@ -20,3 +20,37 @@ export async function GET(request: any, { params }: any) {
     );
   }
 }
+
+export async function PUT(request: Request, { params }: any) {
+  try {
+    const {
+      id,
+      NewName: name,
+      NewDescription: description,
+      NewImage: image,
+      NewKelurahan: kelurahan,
+      NewTelephone: telephone,
+    } = await request.json();
+    await connectMongoDB();
+    const updated = await Store.findByIdAndUpdate(
+      { _id: id },
+      {
+        name,
+        description,
+        image,
+        kelurahan,
+        telephone,
+      }
+    );
+    if (updated) {
+      return NextResponse.json({ message: "Store updated" }, { status: 200 });
+    } else {
+      return NextResponse.json(
+        { message: "Failed to updated store" },
+        { status: 500 }
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

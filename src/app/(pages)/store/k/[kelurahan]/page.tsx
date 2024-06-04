@@ -14,7 +14,7 @@ const StoreKelurahan = () => {
     data: dataStore,
     error: errorStore,
     isLoading: isLoadingStore,
-  } = useSWR(`/api/store?limit=50`, fetcher);
+  } = useSWR(`/api/store?limit=50&kelurahan=${kelurahan}`, fetcher);
   useEffect(() => {
     if (dataStore) {
       setAllStore(dataStore);

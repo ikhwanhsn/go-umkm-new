@@ -21,12 +21,13 @@ const ProductKelurahan = () => {
     error: errorProduct,
     isLoading: isLoadingProduct,
   } = useSWR(
-    `/api/products?limit=50&search=${searchTerm}&location=${filters.location}&productType=${filters.productType}`,
+    `/api/products?limit=50&search=${searchTerm}&kelurahan=${kelurahan}&location=${filters.location}&productType=${filters.productType}`,
     fetcher
   );
 
   useEffect(() => {
     if (dataProduct) {
+      console.log(dataProduct);
       setAllProducts(dataProduct);
     }
   }, [dataProduct]);
@@ -119,6 +120,9 @@ const ProductKelurahan = () => {
         {allProducts.length === 0 && !isLoadingProduct && (
           <p className="text-center mt-12 text-sm italic">Tidak ada produk</p>
         )}
+        {isLoadingProduct && (
+          <p className="text-center mt-12 text-sm italic">Loading...</p>
+        )}
         <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 lg:gap-5 md:gap-4 gap-3">
           {allProducts.length > 0 &&
             !isLoadingProduct &&
@@ -129,7 +133,8 @@ const ProductKelurahan = () => {
                 myRef={"product"}
                 src={item.image}
                 name={item.name}
-                mitra={item.store_info.name}
+                // mitra={item.store_info.name}
+                mitra={"Mitra UMKM"}
                 price={item.price}
               />
             ))}
