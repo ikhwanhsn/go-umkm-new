@@ -96,7 +96,7 @@ const StoreKelurahan = () => {
               <CardProduct
                 key={item._id}
                 id={item._id}
-                city={"Indonesia"}
+                city={item.kelurahan}
                 src={item.image}
                 name={item.name}
                 mitra={item.mitra}

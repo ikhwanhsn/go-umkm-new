@@ -64,8 +64,8 @@ const DetailStore = () => {
           />
         </section>
         <aside>
-          <h2 className="text-xl font-semibold mb-3">{namaToko}</h2>
-          <p>{deskripsiToko}</p>
+          <h2 className="text-xl font-semibold mb-3 capitalize">{namaToko}</h2>
+          <p className="normal-case">{deskripsiToko}</p>
           <section className="space-x-1 mt-5">
             <button className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">
               Chat toko

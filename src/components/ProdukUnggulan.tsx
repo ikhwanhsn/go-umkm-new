@@ -6,18 +6,29 @@ import useSWR from "swr";
 import { fetcher } from "@/libs/swr/fetcher";
 
 const ProdukUnggulan = () => {
-  const [allProducts, setAllProducts] = useState([]);
+  const [productsBarusari, setProductsBarusari] = useState([]);
+  const [productsBulustalan, setProductsBulustalan] = useState([]);
   const {
-    data: dataProduct,
-    error: errorProduct,
-    isLoading: isLoadingProduct,
-  } = useSWR(`/api/products?limit=8`, fetcher);
+    data: dataBarusari,
+    error: errorBarusari,
+    isLoading: isLoadingBarusari,
+  } = useSWR(`/api/products?limit=4&kelurahan=barusari`, fetcher);
+  const {
+    data: dataBulustalan,
+    error: errorBulustalan,
+    isLoading: isLoadingBulustalan,
+  } = useSWR(`/api/products?limit=4&kelurahan=bulustalan`, fetcher);
 
   useEffect(() => {
-    if (dataProduct) {
-      setAllProducts(dataProduct);
+    if (dataBarusari) {
+      setProductsBarusari(dataBarusari);
     }
-  }, [dataProduct]);
+  }, [dataBarusari]);
+  useEffect(() => {
+    if (dataBulustalan) {
+      setProductsBulustalan(dataBulustalan);
+    }
+  }, [dataBulustalan]);
 
   return (
     <main>
@@ -28,16 +39,29 @@ const ProdukUnggulan = () => {
         Produk Unggulan
       </h1>
       <section className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:px-24 md:px-12 px-5 mx-auto mt-7 lg:gap-7 md:gap-5 gap-3">
-        {allProducts.length > 0 &&
-          !isLoadingProduct &&
-          allProducts.map((item: any) => (
+        {productsBarusari.length > 0 &&
+          !isLoadingBarusari &&
+          productsBarusari.map((item: any) => (
             <CardProduct
               key={item._id}
               id={item._id}
               myRef="product"
               src={item.image}
               name={item.name}
-              mitra={item.store_info.name}
+              mitra={"Mitra UMKM"}
+              price={item.price}
+            />
+          ))}
+        {productsBulustalan.length > 0 &&
+          !isLoadingBulustalan &&
+          productsBulustalan.map((item: any) => (
+            <CardProduct
+              key={item._id}
+              id={item._id}
+              myRef="product"
+              src={item.image}
+              name={item.name}
+              mitra={"Mitra UMKM"}
               price={item.price}
             />
           ))}

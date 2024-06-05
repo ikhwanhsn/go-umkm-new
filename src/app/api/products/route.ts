@@ -53,7 +53,9 @@ export async function GET(request: any) {
   try {
     await connectMongoDB();
     const { nextUrl } = request;
+    const url = new URL(request.url);
     const kelurahan = nextUrl.searchParams.get("kelurahan");
+    const limit = parseInt(url.searchParams.get("limit") || "50", 10);
 
     // Dapatkan semua data toko dari koleksi Store
     const stores = await Store.find({ kelurahan: kelurahan });
@@ -66,7 +68,9 @@ export async function GET(request: any) {
     const storeIds = stores.map((store) => store._id);
 
     // Dapatkan semua data produk dari koleksi Product
-    const products = await Product.find({ store_id: { $in: storeIds } });
+    const products = await Product.find({ store_id: { $in: storeIds } }).limit(
+      limit
+    );
 
     if (products.length > 0) {
       return NextResponse.json(products);

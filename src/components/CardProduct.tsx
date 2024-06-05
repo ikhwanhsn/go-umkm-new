@@ -42,8 +42,8 @@ const CardProduct = ({
         height={300}
         className="mx-auto w-full lg:h-44 md:h-40 h-32 rounded-sm mb-3 object-cover"
       />
-      <h3 className="text-lg font-semibold">{name}</h3>
-      <p className="flex items-center gap-1">
+      <h3 className="text-lg font-semibold capitalize">{name}</h3>
+      <p className="flex items-center gap-1 capitalize">
         {myRef === "store" && (
           <>
             <FiMapPin />

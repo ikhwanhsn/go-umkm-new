@@ -21,7 +21,6 @@ const Admin = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       setStore(data);
     }
   }, [data]);
@@ -149,12 +148,15 @@ const StoreCard = ({
     <main className="flex flex-row p-5 justify-between items-center mt-2 hover:bg-gray-100 card shadow-md">
       <section className="flex gap-3 items-center">
         <IoStorefrontOutline size={30} />
-        <h1>{name}</h1>
+        <h1 className="capitalize">{name}</h1>
         <p>({totalProduct} Produk)</p>
       </section>
       <section className="flex gap-2">
         <Link
-          href={`/admin/store/${storeId}`}
+          href={{
+            pathname: `/admin/store/${storeId}`,
+            query: { name },
+          }}
           className="btn bg-blue-500 text-white border-none shadow-md hover:bg-blue-600"
         >
           Lihat Produk

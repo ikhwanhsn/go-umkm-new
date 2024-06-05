@@ -41,7 +41,7 @@ const Navbar = () => {
           >
             <li>
               <details>
-                <summary>All Product</summary>
+                <summary>Product</summary>
                 <ul className="p-2 bg-gray-50">
                   <li>
                     <Link href="/product/k/barusari">Barusari</Link>
@@ -96,7 +96,7 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">
             <li>
               <details>
-                <summary>All Product</summary>
+                <summary>Product</summary>
                 <ul className="p-2 bg-gray-50">
                   <li>
                     <Link href="/product/k/barusari">Barusari</Link>
