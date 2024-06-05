@@ -47,14 +47,14 @@ const ListProduct = () => {
         </section>
         <section>
           <Link
-            href="/admin/product/create/1"
+            href={`/admin/product/create/${id}`}
             className="btn bg-orange-500 text-white border-none hover:bg-orange-600"
           >
             Tambah Produk
           </Link>
         </section>
       </section>
-      {dataProducts && !isLoadingProducts && (
+      {products.length === 0 && !isLoadingProducts && (
         <p className="text-center mt-12 text-sm italic">Tidak ada produk</p>
       )}
       {isLoadingProducts && (
@@ -92,7 +92,7 @@ const MyProducts = ({ id, src, name, price }: MyProductsProps) => {
   return (
     <main
       className="shadow-md p-5 rounded-lg hover:bg-gray-100 transition-all cursor-pointer overflow-hidden"
-      onClick={() => router.push(`/admin/product/edit/1`)}
+      onClick={() => router.push(`/admin/product/edit/${id}`)}
     >
       <Image
         src={src}
@@ -101,9 +101,11 @@ const MyProducts = ({ id, src, name, price }: MyProductsProps) => {
         height={300}
         className="mx-auto w-full lg:h-44 md:h-52 h-32 rounded-sm mb-3 object-cover"
       />
-      <h3 className="text-lg font-semibold">{name}</h3>
+      <h3 className="text-lg font-semibold capitalize">{name}</h3>
       {price && (
-        <p className="text-orange-500 text-lg font-semibold mt-1">Rp{price}</p>
+        <p className="text-orange-500 text-lg font-semibold mt-1">
+          Rp{price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+        </p>
       )}
     </main>
   );

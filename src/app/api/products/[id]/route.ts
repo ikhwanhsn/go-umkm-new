@@ -10,7 +10,7 @@ export async function PUT(request: Request, { params }: any) {
   try {
     const { id } = params;
     const {
-      email,
+      store_id,
       NewName: name,
       NewDescription: description,
       NewPrice: price,
@@ -18,10 +18,9 @@ export async function PUT(request: Request, { params }: any) {
       NewLink: link,
       NewCategory: category,
     } = await request.json();
-    const user = await User.findOne({ email });
     await connectMongoDB();
     const updated = await Product.findByIdAndUpdate(id, {
-      user_id: user?._id,
+      store_id,
       name,
       description,
       price,
@@ -81,18 +80,12 @@ export async function GET(request: Request, { params }: any) {
 
 export async function DELETE(request: Request, { params }: any) {
   try {
-    const { id, email } = await request.json();
+    const { id } = await request.json();
 
     await connectMongoDB();
-    const idUser = await User.findOne({ email });
-
-    if (!idUser) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
-    }
 
     const product = await Product.findOne({
       _id: id,
-      user_id: idUser.id,
     });
 
     if (!product) {
@@ -111,7 +104,7 @@ export async function DELETE(request: Request, { params }: any) {
     await deleteObject(imageRef);
 
     // Hapus produk dari MongoDB
-    await Product.deleteOne({ _id: id, user_id: idUser.id });
+    await Product.deleteOne({ _id: id });
 
     return NextResponse.json({ message: "Product deleted" }, { status: 200 });
   } catch (error) {

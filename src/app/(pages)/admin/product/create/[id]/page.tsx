@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ref as storageRef,
   uploadBytes,
@@ -10,8 +10,10 @@ import {
 } from "firebase/storage";
 import { storage } from "@/services/firebase/firebase";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { fetcher } from "@/libs/swr/fetcher";
+import useSWR from "swr";
 
 const category = [
   "Makanan dan Minuman",
@@ -28,7 +30,9 @@ const category = [
 
 const AddProduct = () => {
   const router = useRouter();
+  const { id } = useParams();
   const { data, status: session } = useSession();
+  const [storeName, setStoreName] = useState("");
   const [namaProduk, setNamaProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [hargaProduk, setHargaProduk] = useState("");
@@ -36,6 +40,11 @@ const AddProduct = () => {
   const [linkProduk, setLinkProduk] = useState("");
   const [file, setFile] = useState<File>();
   const ref = useRef<HTMLInputElement>(null);
+  const {
+    data: dataStore,
+    error: errorStore,
+    isLoading: isLoadingStore,
+  } = useSWR(`/api/store/id/${id}`, fetcher);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,7 +73,7 @@ const AddProduct = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: data?.user?.email,
+          store_id: id,
           name: namaProduk,
           description: deskripsiProduk,
           image: imageUrl,
@@ -87,18 +96,25 @@ const AddProduct = () => {
         icon: "success",
       });
       await router.refresh();
-      await router.push("/my-store");
+      await router.back();
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (dataStore) {
+      const data = dataStore[0];
+      setStoreName(data.name);
+    }
+  }, [dataStore]);
 
   return (
     <main className="w-full min-h-screen">
       <section className="lg:w-1/2 md:w-3/4 w-full md:px-0 px-5 mx-auto text-center">
         <form onSubmit={submit}>
           <h1 className="mt-5 text-xl text-orange-500 font-bold capitalize">
-            Tambah Produk (toko barokah)
+            Tambah Produk (Toko {storeName})
           </h1>
           <p className="text-left mt-12">Nama Produk :</p>
           <input
@@ -176,12 +192,13 @@ const AddProduct = () => {
             >
               Simpan
             </button>
-            <Link
-              href={`/admin/store/1`}
+            <button
+              type="button"
+              onClick={() => router.back()}
               className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white mt-5"
             >
               Batal
-            </Link>
+            </button>
           </section>
         </form>
       </section>

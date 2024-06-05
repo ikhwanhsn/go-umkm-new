@@ -10,7 +10,6 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { MdOutlineDelete } from "react-icons/md";
@@ -34,6 +33,7 @@ const EditProduct = () => {
   const { id } = useParams();
   const router = useRouter();
   const { data, status: session } = useSession();
+  const [storeID, setStoreID] = useState("");
   const [namaProduk, setNamaProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [imageURL, setImageURL] = useState("");
@@ -86,7 +86,7 @@ const EditProduct = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: data?.user?.email,
+          store_id: storeID,
           NewName: namaProduk,
           NewDescription: deskripsiProduk,
           NewImage: imageUrl,
@@ -116,7 +116,7 @@ const EditProduct = () => {
         icon: "success",
       });
       await router.refresh();
-      await router.push("/my-store");
+      await router.back();
     } catch (error) {
       console.error(error);
     }
@@ -138,14 +138,14 @@ const EditProduct = () => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id, email: data?.user?.email }),
+            body: JSON.stringify({ id }),
           });
 
           if (!res.ok) {
             alert(await res.text());
             return;
           }
-          router.push("/my-store");
+          router.back();
           Swal.fire({
             title: "Deleted!",
             text: "Produk Anda telah di hapus!",
@@ -162,7 +162,7 @@ const EditProduct = () => {
   useEffect(() => {
     if (dataProduct) {
       const data = dataProduct?.product;
-      // console.log(data);
+      setStoreID(data.store_id);
       setNamaProduk(data.name);
       setDeskripsiProduk(data.description);
       setImageURL(data.image);

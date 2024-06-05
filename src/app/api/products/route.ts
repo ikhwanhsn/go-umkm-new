@@ -1,16 +1,15 @@
 import connectMongoDB from "@/libs/mongodb";
 import Product from "@/models/product";
 import Store from "@/models/store";
-import User from "@/models/user";
 import "firebase/compat/storage";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { email, name, description, image, price, link, category } =
+    const { store_id, name, description, image, price, link, category } =
       await request.json();
-    const idUser = await User.findOne({ email: email });
-    const amountProduct = await Product.find({ user_id: idUser?.id });
+    const store = await Store.findOne({ _id: store_id });
+    const amountProduct = await Product.find({ store_id: store?._id });
 
     if (amountProduct.length >= 5) {
       return NextResponse.json(
@@ -19,13 +18,13 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!idUser) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    if (!store) {
+      return NextResponse.json({ message: "Store not found" }, { status: 404 });
     }
 
     await connectMongoDB();
     const added = await Product.create({
-      user_id: idUser.id,
+      store_id: store._id,
       name,
       description,
       image,
