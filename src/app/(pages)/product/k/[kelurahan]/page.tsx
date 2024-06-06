@@ -27,7 +27,6 @@ const ProductKelurahan = () => {
 
   useEffect(() => {
     if (dataProduct) {
-      console.log(dataProduct);
       setAllProducts(dataProduct);
     }
   }, [dataProduct]);
@@ -48,9 +47,9 @@ const ProductKelurahan = () => {
       <section className="flex md:flex-row flex-col justify-between md:items-center">
         <section>
           <h1 className="text-xl font-bold mb-1 capitalize">
-            All Product ({kelurahan})
+            Product ({kelurahan})
           </h1>
-          <p>Welcome to all product page</p>
+          <p>Welcome to product page</p>
         </section>
         <section className="flex gap-2 justify-between items-center mt-3 md:mt-0">
           <label className="input input-bordered flex items-center gap-2 bg-gray-50 w-full">
@@ -74,46 +73,6 @@ const ProductKelurahan = () => {
               />
             </svg>
           </label>
-          {/* <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn m-1 btn-outline border-gray-200 hover:bg-gray-100"
-            >
-              <FiFilter className="text-black" />
-            </div>
-            <div
-              tabIndex={0}
-              className="dropdown-content z-[1] menu px-3 py-2 shadow bg-gray-50 rounded-box w-44"
-            >
-              <div className="form-control">
-                <label className="label cursor-pointer flex justify-between w-full">
-                  <span className="label-text text-black">Location</span>
-                  <input
-                    type="text"
-                    name="location"
-                    className="input input-bordered"
-                    placeholder="Location"
-                    value={filters.location}
-                    onChange={handleFilterChange}
-                  />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="label cursor-pointer flex justify-between w-full">
-                  <span className="label-text text-black">Product Type</span>
-                  <input
-                    type="text"
-                    name="productType"
-                    className="input input-bordered"
-                    placeholder="Product Type"
-                    value={filters.productType}
-                    onChange={handleFilterChange}
-                  />
-                </label>
-              </div>
-            </div>
-          </div> */}
         </section>
       </section>
       <section className="mt-7">
@@ -133,8 +92,7 @@ const ProductKelurahan = () => {
                 myRef={"product"}
                 src={item.image}
                 name={item.name}
-                // mitra={item.store_info.name}
-                mitra={"Mitra UMKM"}
+                mitra={item.storeName}
                 price={item.price}
               />
             ))}

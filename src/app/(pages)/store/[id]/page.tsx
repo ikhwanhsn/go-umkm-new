@@ -10,7 +10,6 @@ import { useSession } from "next-auth/react";
 
 const DetailStore = () => {
   const { id } = useParams();
-  const { data, status: session } = useSession();
   const [namaToko, setNamaToko] = useState("");
   const [deskripsiToko, setDeskripsiToko] = useState("");
   const [logoToko, setlogoToko] = useState("");
@@ -29,7 +28,7 @@ const DetailStore = () => {
     data: dataProducts,
     error: errorProducts,
     isLoading: isLoadingProducts,
-  } = useSWR(`/api/products/store/${userID}`, fetcher);
+  } = useSWR(`/api/my-products/${id}`, fetcher);
 
   useEffect(() => {
     if (dataStore) {
@@ -76,14 +75,23 @@ const DetailStore = () => {
           </section>
         </aside>
       </section>
-      <ProductOnStore data={product.length > 0 ? product : []} />
+      <ProductOnStore
+        data={product.length > 0 ? product : []}
+        namaToko={namaToko}
+      />
     </main>
   );
 };
 
 export default DetailStore;
 
-const ProductOnStore = ({ data = [] }: { data: any[] }) => {
+const ProductOnStore = ({
+  data = [],
+  namaToko,
+}: {
+  data: any[];
+  namaToko: string;
+}) => {
   return (
     <main>
       <h1 className="text-xl font-bold mb-1">Product</h1>
@@ -94,9 +102,10 @@ const ProductOnStore = ({ data = [] }: { data: any[] }) => {
             <CardProduct
               key={item._id}
               id={item._id}
+              myRef="product"
               src={item.image}
               name={item.name}
-              mitra={item.mitra}
+              mitra={namaToko}
               price={item.price}
             />
           ))}

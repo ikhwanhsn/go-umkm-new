@@ -64,8 +64,9 @@ export async function GET(request: Request, { params }: any) {
       const product = await Product.findById(id);
       const store = await Store.findOne({ user_id: product.user_id });
       const telp = store?.telephone;
+      const kelurahan = store?.kelurahan;
       if (product) {
-        return NextResponse.json({ product, telp }, { status: 200 });
+        return NextResponse.json({ product, telp, kelurahan }, { status: 200 });
       } else {
         return NextResponse.json(
           { message: "Product not found" },

@@ -48,14 +48,18 @@ export async function GET(request: any) {
   try {
     await connectMongoDB();
     const { nextUrl } = request;
-    const limit = nextUrl.searchParams.get("limit");
+    const url = new URL(request.url);
     const kelurahan = nextUrl.searchParams.get("kelurahan");
-    const stores = await Store.find({ kelurahan: kelurahan }).limit(limit);
-    if (stores.length > 0) {
-      return NextResponse.json(stores);
-    } else {
-      return NextResponse.json([]);
-    }
+    const search = nextUrl.searchParams.get("search") || "";
+    const limit = parseInt(url.searchParams.get("limit") || "50", 10);
+
+    // Dapatkan semua data toko dari koleksi Store dan filter berdasarkan search term
+    const stores = await Store.find({
+      kelurahan: kelurahan,
+      name: { $regex: search, $options: "i" }, // Menggunakan regex untuk pencarian case-insensitive
+    }).limit(limit);
+
+    return NextResponse.json(stores);
   } catch (error) {
     console.log(error);
     return NextResponse.json(

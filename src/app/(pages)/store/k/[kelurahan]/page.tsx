@@ -10,16 +10,26 @@ import useSWR from "swr";
 const StoreKelurahan = () => {
   const { kelurahan } = useParams();
   const [allStore, setAllStore] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const {
     data: dataStore,
     error: errorStore,
     isLoading: isLoadingStore,
-  } = useSWR(`/api/store?limit=50&kelurahan=${kelurahan}`, fetcher);
+  } = useSWR(
+    `/api/store?limit=50&kelurahan=${kelurahan}&search=${searchTerm}`,
+    fetcher
+  );
+
   useEffect(() => {
     if (dataStore) {
       setAllStore(dataStore);
     }
   }, [dataStore]);
+
+  const handleSearchChange = (e: any) => {
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <main className="w-full min-h-screen lg:px-12 md:px-8 px-5 mt-5">
@@ -36,6 +46,8 @@ const StoreKelurahan = () => {
               type="text"
               className="w-full"
               placeholder="Search here..."
+              value={searchTerm}
+              onChange={handleSearchChange}
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,44 +62,14 @@ const StoreKelurahan = () => {
               />
             </svg>
           </label>
-          {/* <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn m-1 btn-outline border-gray-200 hover:bg-gray-100"
-            >
-              <FiFilter className="text-black" />
-            </div>
-            <div
-              tabIndex={0}
-              className="dropdown-content z-[1] menu px-3 py-2 shadow bg-gray-50 rounded-box w-44"
-            >
-              <div className="form-control">
-                <label className="label cursor-pointer flex justify-between w-full">
-                  <span className="label-text text-black">Barusari</span>
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-primary"
-                  />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="label cursor-pointer">
-                  <span className="label-text text-black">Bulustalan</span>
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-primary"
-                  />
-                </label>
-              </div>
-            </div>
-          </div> */}
         </section>
       </section>
-      {/* <AllStore /> */}
       <section className="mt-7">
         {allStore.length === 0 && !isLoadingStore && (
           <p className="text-center mt-12 text-sm italic">Tidak ada toko</p>
+        )}
+        {isLoadingStore && (
+          <p className="text-center mt-12 text-sm italic">Loading...</p>
         )}
         <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 gap-5">
           {allStore.length > 0 &&

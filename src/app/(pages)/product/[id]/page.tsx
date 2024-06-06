@@ -8,10 +8,13 @@ import { fetcher } from "@/libs/swr/fetcher";
 import { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useSession } from "next-auth/react";
+import { MdOutlineArrowBack } from "react-icons/md";
 
 const DetailProduct = () => {
   const { id } = useParams();
+  const router = useRouter();
   const { data, status: session } = useSession();
+  const [kelurahan, setKelurahan] = useState("");
   const [namaProduk, setNamaProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [imageURL, setImageURL] = useState("");
@@ -77,6 +80,7 @@ const DetailProduct = () => {
       const formattedNumber = phoneNumber?.replace(/^0/, "62");
       const whatsappLink = `https://wa.me/${formattedNumber}`;
       setTelephone(whatsappLink);
+      setKelurahan(dataProduct?.kelurahan);
     }
   }, [dataProduct]);
   useEffect(() => {
@@ -89,8 +93,8 @@ const DetailProduct = () => {
 
   return (
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
-      <h1 className="text-xl font-bold mb-1">Detail Product</h1>
-      <section className="flex md:flex-row flex-col mt-3 mb-5 gap-x-10 gap-y-5">
+      <h1 className="text-xl font-bold mb-5">Detail Product</h1>
+      <section className="flex md:flex-row flex-col mt-3 mb-8 gap-x-10 gap-y-5">
         <section className="md:w-fit w-full">
           <Image
             src={imageURL}
@@ -127,20 +131,25 @@ const DetailProduct = () => {
           </section>
         </aside>
       </section>
-      <SimilarProduct id={id} />
+      <SimilarProduct id={id} kelurahan={kelurahan} />
     </main>
   );
 };
 
 export default DetailProduct;
 
-const SimilarProduct = ({ id }: { id: any }) => {
+type SimilarProductProps = {
+  id: any;
+  kelurahan: string;
+};
+
+const SimilarProduct = ({ id, kelurahan }: SimilarProductProps) => {
   const [product, setproduct] = useState([]);
   const {
     data: dataProduct,
     error: errorProduct,
     isLoading: isLoadingProduct,
-  } = useSWR(`/api/products`, fetcher);
+  } = useSWR(`/api/products?kelurahan=${kelurahan}&limit=10`, fetcher);
   useEffect(() => {
     if (dataProduct) {
       setproduct(dataProduct);
@@ -159,7 +168,7 @@ const SimilarProduct = ({ id }: { id: any }) => {
               myRef="product"
               src={item.image}
               name={item.name}
-              mitra={item.store_info.name}
+              mitra={item.storeName}
               price={item.price}
             />
           ))}

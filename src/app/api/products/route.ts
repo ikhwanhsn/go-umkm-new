@@ -54,6 +54,7 @@ export async function GET(request: any) {
     const { nextUrl } = request;
     const url = new URL(request.url);
     const kelurahan = nextUrl.searchParams.get("kelurahan");
+    const search = nextUrl.searchParams.get("search") || "";
     const limit = parseInt(url.searchParams.get("limit") || "50", 10);
 
     // Dapatkan semua data toko dari koleksi Store
@@ -63,19 +64,27 @@ export async function GET(request: any) {
       return NextResponse.json([]);
     }
 
-    // Ambil id toko yang memiliki kelurahan sesuai
-    const storeIds = stores.map((store) => store._id);
+    // Ambil id dan nama toko yang memiliki kelurahan sesuai
+    const storeMap = new Map();
+    stores.forEach((store) => {
+      storeMap.set(store._id.toString(), store.name);
+    });
 
-    // Dapatkan semua data produk dari koleksi Product
-    const products = await Product.find({ store_id: { $in: storeIds } }).limit(
-      limit
-    );
+    const storeIds = Array.from(storeMap.keys());
 
-    if (products.length > 0) {
-      return NextResponse.json(products);
-    } else {
-      return NextResponse.json([]);
-    }
+    // Dapatkan semua data produk dari koleksi Product dan filter berdasarkan search term
+    const products = await Product.find({
+      store_id: { $in: storeIds },
+      name: { $regex: search, $options: "i" }, // Menggunakan regex untuk pencarian case-insensitive
+    }).limit(limit);
+
+    // Gabungkan data produk dengan nama toko
+    const productsWithStoreName: any = products.map((product) => ({
+      ...product.toObject(),
+      storeName: storeMap.get(product.store_id.toString()),
+    }));
+
+    return NextResponse.json(productsWithStoreName);
   } catch (error) {
     console.log(error);
     return NextResponse.json(
