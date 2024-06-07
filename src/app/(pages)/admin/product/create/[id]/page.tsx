@@ -38,7 +38,7 @@ const AddProduct = () => {
   const [hargaProduk, setHargaProduk] = useState("");
   const [kategoriProduk, setKategoriProduk] = useState("Fashion");
   const [linkProduk, setLinkProduk] = useState("");
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<File | null>(null);
   const ref = useRef<HTMLInputElement>(null);
   const {
     data: dataStore,
@@ -46,27 +46,40 @@ const AddProduct = () => {
     isLoading: isLoadingStore,
   } = useSWR(`/api/store/id/${id}`, fetcher);
 
+  const defaultImageUrl =
+    "https://firebasestorage.googleapis.com/v0/b/go-umkm-9915e.appspot.com/o/default%2Fdefault-product.jpg?alt=media&token=2dcef5bb-f341-445c-9e9d-5b1c40b074e6";
+
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!file) return;
-    if (file.size > 1048576) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Ukuran foto terlalu besar. Maksimal 1 MB!",
-      });
-      return;
-    }
-    try {
-      // Upload image to Firebase Storage
-      const storageReference = storageRef(
-        storage,
-        `images/product/${data?.user?.email}/${file.name}`
-      );
-      await uploadBytes(storageReference, file);
-      const imageUrl = await getDownloadURL(storageReference);
 
-      // Save store data to MongoDB
+    let imageUrl = defaultImageUrl;
+
+    if (file) {
+      if (file.size > 1048576) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ukuran foto terlalu besar. Maksimal 1 MB!",
+        });
+        return;
+      }
+
+      try {
+        // Upload image to Firebase Storage
+        const storageReference = storageRef(
+          storage,
+          `images/product/${data?.user?.email}/${file.name}`
+        );
+        await uploadBytes(storageReference, file);
+        imageUrl = await getDownloadURL(storageReference);
+      } catch (error) {
+        console.error(error);
+        return;
+      }
+    }
+
+    try {
+      // Save product data to MongoDB
       const res = await fetch("/api/products", {
         method: "POST",
         headers: {
@@ -83,20 +96,19 @@ const AddProduct = () => {
         }),
       });
 
-      // if (!res.ok) throw new Error(await res.text());
       if (!res.ok) {
-        await deleteObject(storageReference);
         alert(await res.text());
         return;
       }
+
       ref.current && (ref.current.value = "");
       await Swal.fire({
         title: "Success!",
         text: "Produk berhasil ditambahkan!",
         icon: "success",
       });
-      await router.refresh();
       await router.back();
+      await router.refresh();
     } catch (error) {
       console.error(error);
     }
@@ -114,7 +126,7 @@ const AddProduct = () => {
       <section className="lg:w-1/2 md:w-3/4 w-full md:px-0 px-5 mx-auto text-center">
         <form onSubmit={submit}>
           <h1 className="mt-5 text-xl text-orange-500 font-bold capitalize">
-            Tambah Produk (Toko {storeName})
+            Tambah Produk ({storeName})
           </h1>
           <p className="text-left mt-12">Nama Produk :</p>
           <input
@@ -132,9 +144,8 @@ const AddProduct = () => {
               type="file"
               name="file"
               ref={ref}
-              onChange={(e) => setFile(e.target.files?.[0])}
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
               accept="image/png, image/jpeg, image/jpg"
-              required
               className="file-input file-input-bordered w-full max-w-xs bg-gray-50 mt-3"
             />
           </section>

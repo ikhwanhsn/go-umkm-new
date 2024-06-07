@@ -9,32 +9,13 @@ import { useEffect, useState } from "react";
 import { fetcher } from "@/libs/swr/fetcher";
 import useSWR from "swr";
 import Swal from "sweetalert2";
+import { AiOutlineProduct } from "react-icons/ai";
 
 const statsData = [
   {
     title: "Pengunjung",
-    value: "31K",
+    value: "52K",
     desc: "Jan 1st - Feb 1st",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        className="inline-block w-8 h-8 stroke-current"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        ></path>
-      </svg>
-    ),
-  },
-  {
-    title: "Pengguna Baru",
-    value: "4,200",
-    desc: "↗︎ 400 (22%)",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -52,9 +33,9 @@ const statsData = [
     ),
   },
   {
-    title: "Total Pengguna",
-    value: "1,200",
-    desc: "↘︎ 90 (14%)",
+    title: "Pengguna Baru",
+    value: "7,800",
+    desc: "↗︎ 1,200 (18%)",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -66,15 +47,35 @@ const statsData = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="2"
-          d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+          d="M12 11V5m0 0L7.05 9.95M12 5l4.95 4.95M12 19a7 7 0 100-14 7 7 0 000 14z"
+        ></path>
+      </svg>
+    ),
+  },
+  {
+    title: "Total Pengguna",
+    value: "32,000",
+    desc: "↘︎ 1,500 (4%)",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        className="inline-block w-8 h-8 stroke-current"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M12 11c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-2a3 3 0 100-6 3 3 0 000 6zm0 7c1.66 0 3-1.34 3-3S13.66 10 12 10 9 11.34 9 13s1.34 3 3 3z"
         ></path>
       </svg>
     ),
   },
   {
     title: "Total Toko",
-    value: "1,200",
-    desc: "↘︎ 90 (14%)",
+    value: "2,150",
+    desc: "↗︎ 50 (2%)",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -86,15 +87,15 @@ const statsData = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="2"
-          d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+          d="M4 4h16v2H4V4zm0 4h16v2H4V8zm0 4h16v6H4v-6zm2 6h12v2H6v-2z"
         ></path>
       </svg>
     ),
   },
   {
     title: "Total Produk",
-    value: "1,200",
-    desc: "↘︎ 90 (14%)",
+    value: "10,320",
+    desc: "↗︎ 300 (3%)",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +107,7 @@ const statsData = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="2"
-          d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+          d="M12 2L2 7l10 5 10-5-10-5zm0 18l-10-5V9l10 5 10-5v6l-10 5zm-10-9.5v6L12 20l10-6v-6L12 11 2 10.5z"
         ></path>
       </svg>
     ),
@@ -129,6 +130,7 @@ const Admin = () => {
 
   useEffect(() => {
     if (data) {
+      console.log(data);
       setStore(data);
     }
   }, [data]);
@@ -197,13 +199,18 @@ const Admin = () => {
           ))}
         </div>
       </section>
+      {isLoading && <p className="text-center mt-12">Loading...</p>}
+      {store.length === 0 && !isLoading && (
+        <p className="text-center mt-12">Toko tidak ditemukan</p>
+      )}
       {store.length > 0 &&
+        !isLoading &&
         store.map((toko: any) => (
           <StoreCard
             key={toko._id}
             storeId={toko._id}
             name={toko.name}
-            totalProduct={toko.totalProduct || 0}
+            totalProduct={toko.totalProducts}
             onDelete={handleDeleteStore}
           />
         ))}
@@ -270,7 +277,7 @@ const StoreCard = ({
       <section className="flex gap-3 items-center">
         <IoStorefrontOutline size={30} />
         <h1 className="capitalize">{name}</h1>
-        <p>({totalProduct} Produk)</p>
+        <p className="hidden md:block">({totalProduct} Produk)</p>
       </section>
       <section className="flex gap-2">
         <Link
@@ -280,7 +287,8 @@ const StoreCard = ({
           }}
           className="btn bg-blue-500 text-white border-none shadow-md hover:bg-blue-600"
         >
-          Lihat Produk
+          <p className="hidden md:block">Lihat Produk</p>
+          <AiOutlineProduct className="md:hidden block" size={20} />
         </Link>
         <Link
           href={`/admin/store/edit/${storeId}`}

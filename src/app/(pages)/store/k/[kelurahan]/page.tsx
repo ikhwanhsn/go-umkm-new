@@ -36,9 +36,9 @@ const StoreKelurahan = () => {
       <section className="flex md:flex-row flex-col justify-between md:items-center">
         <section>
           <h1 className="text-xl font-bold mb-1 capitalize">
-            All Store ({kelurahan})
+            Store ({kelurahan})
           </h1>
-          <p>Welcome to all store page</p>
+          <p>Welcome to store page</p>
         </section>
         <section className="flex gap-2 justify-between items-center mt-3 md:mt-0">
           <label className="input input-bordered flex items-center gap-2 bg-gray-50 w-full">
@@ -66,7 +66,9 @@ const StoreKelurahan = () => {
       </section>
       <section className="mt-7">
         {allStore.length === 0 && !isLoadingStore && (
-          <p className="text-center mt-12 text-sm italic">Tidak ada toko</p>
+          <p className="text-center mt-12 text-sm italic">
+            Toko tidak ditemukan
+          </p>
         )}
         {isLoadingStore && (
           <p className="text-center mt-12 text-sm italic">Loading...</p>

@@ -11,6 +11,9 @@ import bg4 from "../../../../public/img/bg-team-4.jpg";
 import { MdOutlineMail } from "react-icons/md";
 import { TbBrandTelegram } from "react-icons/tb";
 import { IoLogoInstagram } from "react-icons/io5";
+import barusari from "../../../../public/img/barusari.jpg";
+import bulustalan from "../../../../public/img/bulustalan.jpg";
+import Link from "next/link";
 
 const team = [
   {
@@ -41,8 +44,8 @@ const team = [
 
 const About = () => {
   return (
-    <main className="w-full min-h-screen mt-5 px-5 rounded-md">
-      <center className="bg-orange-500 text-white lg:px-12 md:px-5 lg:py-28 md:py-24 py-20 rounded-md relative w-full h-3/4">
+    <main className="w-full min-h-screen mt-5 rounded-md">
+      <center className="bg-orange-500 mx-5 text-white lg:px-12 md:px-5 lg:py-28 md:py-24 py-20 rounded-md relative h-3/4">
         <p className="uppercase text-sm">About Us</p>
         <h1 className="lg:text-5xl md:text-4xl text-3xl font-semibold mt-7 lg:max-w-4xl md:max-w-2xl max-w-sm">
           Misi kami adalah membantu UMKM tumbuh bersama kami
@@ -54,6 +57,7 @@ const About = () => {
           untuk berjualan dengan menyediakan aplikasi yang mudah digunakan.
         </p>
       </center>
+      {/* Our Mentor */}
       <section>
         <h1 className="text-2xl font-bold text-center mt-12 text-orange-600">
           Our Mentor
@@ -91,7 +95,8 @@ const About = () => {
           </aside>
         </section>
       </section>
-      <section className="mt-24">
+      {/* Our Team */}
+      <section className="mt-24 mx-5">
         <h1 className="text-2xl font-bold text-center text-orange-600">
           Our Team
         </h1>
@@ -135,6 +140,135 @@ const About = () => {
             ))}
           </section>
         </center>
+      </section>
+      {/* Our Partner */}
+      <section className="mt-24 mx-5">
+        <h1 className="text-2xl font-bold text-center text-orange-600">
+          Our Partner
+        </h1>
+        <section className="md:grid flex flex-col grid-cols-2 p-5 gap-5 mt-5">
+          <section id="barusari">
+            <Image
+              src={barusari}
+              alt="barusari"
+              width={500}
+              height={500}
+              className="object-cover w-full h-[20em] rounded-lg shadow-md"
+            />
+            <h1 className="text-center text-xl mt-5 font-semibold">
+              Kelurahan Barusari
+            </h1>
+            <aside className="flex gap-2 justify-center items-center">
+              <Link
+                href="/store/k/barusari"
+                className="btn bg-gray-50 border border-orange-500 text-orange-500 mt-5 shadow-md hover:bg-orange-500 hover:border-orange-500 hover:text-white"
+              >
+                Lihat Toko
+              </Link>
+              <Link
+                href="/product/k/barusari"
+                className="btn bg-orange-500 text-white mt-5 border-none shadow-md hover:bg-orange-600"
+              >
+                Lihat Produk
+              </Link>
+            </aside>
+          </section>
+          <section id="bulustalan">
+            <Image
+              src={bulustalan}
+              alt="bulustalan"
+              width={500}
+              height={500}
+              className="object-cover w-full h-[20em] rounded-lg shadow-md"
+            />
+            <h1 className="text-center text-xl mt-5 font-semibold">
+              Kelurahan Bulustalan
+            </h1>
+            <aside className="flex gap-2 justify-center items-center">
+              <Link
+                href="/store/k/bulustalan"
+                className="btn bg-gray-50 border border-orange-500 text-orange-500 mt-5 shadow-md hover:bg-orange-500 hover:border-orange-500 hover:text-white"
+              >
+                Lihat Toko
+              </Link>
+              <Link
+                href="/product/k/bulustalan"
+                className="btn bg-orange-500 text-white mt-5 border-none shadow-md hover:bg-orange-600"
+              >
+                Lihat Produk
+              </Link>
+            </aside>
+          </section>
+        </section>
+      </section>
+      {/* Documentation */}
+      <section className="mt-24 mx-5">
+        <h1 className="text-2xl font-bold text-center text-orange-600">
+          Documentation
+        </h1>
+        <div className="carousel carousel-center rounded-box mt-8 mx-5">
+          <div className="carousel-item">
+            <img
+              src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
+              alt="Pizza"
+            />
+          </div>
+          <div className="carousel-item">
+            <img
+              src="https://img.daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg"
+              alt="Pizza"
+            />
+          </div>
+          <div className="carousel-item">
+            <img
+              src="https://img.daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg"
+              alt="Pizza"
+            />
+          </div>
+          <div className="carousel-item">
+            <img
+              src="https://img.daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg"
+              alt="Pizza"
+            />
+          </div>
+          <div className="carousel-item">
+            <img
+              src="https://img.daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg"
+              alt="Pizza"
+            />
+          </div>
+          <div className="carousel-item">
+            <img
+              src="https://img.daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg"
+              alt="Pizza"
+            />
+          </div>
+          <div className="carousel-item">
+            <img
+              src="https://img.daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg"
+              alt="Pizza"
+            />
+          </div>
+        </div>
+      </section>
+      {/* Hero */}
+      <section className="mt-24 bg-orange-500">
+        <div className="hero min-h-screen">
+          {/* <div className="hero-overlay bg-opacity-60"></div> */}
+          <div className="hero-content text-center text-neutral-content">
+            <div className="max-w-xl">
+              <h1 className="mb-5 text-5xl font-bold text-white">
+                Bantu Kami Tumbuh dan Berkembang
+              </h1>
+              <p className="mb-5 text-white">
+                Masukan, saran, dan support Anda sangat membantu banyak UMKM
+                diluaran sana khususnya di kelurahan Barusari dan Bulustalan di
+                kecamatan Semarang Selatan.
+              </p>
+              <button className="btn btn-primary">Get Started</button>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );

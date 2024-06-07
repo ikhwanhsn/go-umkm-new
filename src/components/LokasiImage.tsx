@@ -5,12 +5,12 @@ import Link from "next/link";
 
 const LokasiImage = () => {
   return (
-    <main className="mt-16" id="kelurahan">
+    <main className="pt-16" id="kelurahan">
       <h1 className="text-center text-2xl text-orange-500 font-bold lg:mb-7 md:mb-6 mb-5">
         Kelurahan
       </h1>
-      <section className="grid grid-cols-2 p-5 gap-5">
-        <section>
+      <section className="md:grid flex flex-col grid-cols-2 p-5 gap-5">
+        <section id="barusari">
           <Image
             src={barusari}
             alt="barusari"
@@ -36,7 +36,7 @@ const LokasiImage = () => {
             </Link>
           </aside>
         </section>
-        <section>
+        <section id="bulustalan">
           <Image
             src={bulustalan}
             alt="bulustalan"

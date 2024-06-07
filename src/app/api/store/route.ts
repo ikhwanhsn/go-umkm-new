@@ -44,6 +44,33 @@ export async function POST(request: Request) {
   }
 }
 
+// export async function GET(request: any) {
+//   try {
+//     await connectMongoDB();
+//     const { nextUrl } = request;
+//     const url = new URL(request.url);
+//     const kelurahan = nextUrl.searchParams.get("kelurahan");
+//     const search = nextUrl.searchParams.get("search") || "";
+//     const limit = parseInt(url.searchParams.get("limit") || "50", 10);
+
+//     // Dapatkan semua data toko dari koleksi Store dan filter berdasarkan search term
+//     const stores = await Store.find({
+//       kelurahan: kelurahan,
+//       name: { $regex: search, $options: "i" }, // Menggunakan regex untuk pencarian case-insensitive
+//     }).limit(limit);
+
+//     return NextResponse.json(stores);
+//   } catch (error) {
+//     console.log(error);
+//     return NextResponse.json(
+//       { message: "Internal server error" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
+const test = "hello";
+
 export async function GET(request: any) {
   try {
     await connectMongoDB();
@@ -53,11 +80,42 @@ export async function GET(request: any) {
     const search = nextUrl.searchParams.get("search") || "";
     const limit = parseInt(url.searchParams.get("limit") || "50", 10);
 
-    // Dapatkan semua data toko dari koleksi Store dan filter berdasarkan search term
-    const stores = await Store.find({
-      kelurahan: kelurahan,
-      name: { $regex: search, $options: "i" }, // Menggunakan regex untuk pencarian case-insensitive
-    }).limit(limit);
+    // Aggregation query to get stores with the count of products
+    const stores = await Store.aggregate([
+      {
+        $match: {
+          kelurahan: kelurahan,
+          name: { $regex: search, $options: "i" },
+        },
+      },
+      {
+        $addFields: {
+          storeIdStr: { $toString: "$_id" }, // Convert ObjectId to string
+        },
+      },
+      {
+        $lookup: {
+          from: "products", // The collection name for products
+          localField: "storeIdStr",
+          foreignField: "store_id",
+          as: "products",
+        },
+      },
+      {
+        $addFields: {
+          totalProducts: { $size: "$products" },
+        },
+      },
+      {
+        $project: {
+          products: 0, // Exclude products array from the final result
+          storeIdStr: 0, // Exclude storeIdStr field from the final result
+        },
+      },
+      {
+        $limit: limit,
+      },
+    ]);
 
     return NextResponse.json(stores);
   } catch (error) {
@@ -68,6 +126,56 @@ export async function GET(request: any) {
     );
   }
 }
+
+// export async function GET(request: any) {
+//   try {
+//     await connectMongoDB();
+//     const { nextUrl } = request;
+//     const url = new URL(request.url);
+//     const kelurahan = nextUrl.searchParams.get("kelurahan");
+//     const search = nextUrl.searchParams.get("search") || "";
+//     const limit = parseInt(url.searchParams.get("limit") || "50", 10);
+
+//     // Aggregation query to get stores with the count of products
+//     const stores = await Store.aggregate([
+//       {
+//         $match: {
+//           kelurahan: kelurahan,
+//           name: { $regex: search, $options: "i" },
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "products", // The collection name for products
+//           localField: "_id",
+//           foreignField: "store_id",
+//           as: "products",
+//         },
+//       },
+//       {
+//         $addFields: {
+//           totalProducts: { $size: "$products" },
+//         },
+//       },
+//       {
+//         $project: {
+//           products: 0, // Exclude products array from the final result
+//         },
+//       },
+//       {
+//         $limit: limit,
+//       },
+//     ]);
+
+//     return NextResponse.json(stores);
+//   } catch (error) {
+//     console.log(error);
+//     return NextResponse.json(
+//       { message: "Internal server error" },
+//       { status: 500 }
+//     );
+//   }
+// }
 
 export async function DELETE(request: any) {
   try {

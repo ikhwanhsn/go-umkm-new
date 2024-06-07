@@ -18,74 +18,76 @@ const Navbar = () => {
     <nav className="navbar bg-gray-50 shadow-md text-black h-16 md:px-5 lg:px-8 px-3 fixed top-0 w-full z-50">
       {/* ===== Navbar Start ===== */}
       <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        {pathname !== "/" && (
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-50 rounded-box w-52"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
+              <li>
+                <details>
+                  <summary>Product</summary>
+                  <ul className="p-2 bg-gray-50">
+                    <li>
+                      <Link href="/product/k/barusari">Barusari</Link>
+                    </li>
+                    <li>
+                      <Link href="/product/k/bulustalan">Bulustalan</Link>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <details>
+                  <summary>Store</summary>
+                  <ul className="p-2 bg-gray-50">
+                    <li>
+                      <Link href="/store/k/barusari">Barusari</Link>
+                    </li>
+                    <li>
+                      <Link href="/store/k/bulustalan">Bulustalan</Link>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <details>
+                  <summary>Others</summary>
+                  <ul className="p-2 bg-gray-50">
+                    <li>
+                      <Link href="/maps">Maps</Link>
+                    </li>
+                    <li>
+                      <Link href="/forum">Forum</Link>
+                    </li>
+                    <li>
+                      <Link href="/learn">Learn</Link>
+                    </li>
+                    <li>
+                      <Link href="/about">About</Link>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-50 rounded-box w-52"
-          >
-            <li>
-              <details>
-                <summary>Product</summary>
-                <ul className="p-2 bg-gray-50">
-                  <li>
-                    <Link href="/product/k/barusari">Barusari</Link>
-                  </li>
-                  <li>
-                    <Link href="/product/k/bulustalan">Bulustalan</Link>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <details>
-                <summary>Store</summary>
-                <ul className="p-2 bg-gray-50">
-                  <li>
-                    <Link href="/store/k/barusari">Barusari</Link>
-                  </li>
-                  <li>
-                    <Link href="/store/k/bulustalan">Bulustalan</Link>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <details>
-                <summary>Others</summary>
-                <ul className="p-2 bg-gray-50">
-                  <li>
-                    <Link href="/maps">Maps</Link>
-                  </li>
-                  <li>
-                    <Link href="/forum">Forum</Link>
-                  </li>
-                  <li>
-                    <Link href="/learn">Learn</Link>
-                  </li>
-                  <li>
-                    <Link href="/about">About</Link>
-                  </li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-        </div>
+        )}
         <Link href="/" className="-ml-3 md:ml-0">
           <Image src={logo} alt="Logo" width={110} height={110} />
         </Link>

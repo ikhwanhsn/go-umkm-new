@@ -48,7 +48,7 @@ const ProdukUnggulan = () => {
               myRef="product"
               src={item.image}
               name={item.name}
-              mitra={"Mitra UMKM"}
+              mitra={item.storeName}
               price={item.price}
             />
           ))}
@@ -61,7 +61,7 @@ const ProdukUnggulan = () => {
               myRef="product"
               src={item.image}
               name={item.name}
-              mitra={"Mitra UMKM"}
+              mitra={item.storeName}
               price={item.price}
             />
           ))}

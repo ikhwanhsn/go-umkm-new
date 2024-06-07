@@ -77,7 +77,9 @@ const ProductKelurahan = () => {
       </section>
       <section className="mt-7">
         {allProducts.length === 0 && !isLoadingProduct && (
-          <p className="text-center mt-12 text-sm italic">Tidak ada produk</p>
+          <p className="text-center mt-12 text-sm italic">
+            Produk tidak ditemukan
+          </p>
         )}
         {isLoadingProduct && (
           <p className="text-center mt-12 text-sm italic">Loading...</p>
