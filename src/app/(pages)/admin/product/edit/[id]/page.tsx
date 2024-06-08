@@ -241,10 +241,9 @@ const EditProduct = () => {
           </p>
           <input
             type="text"
-            placeholder="Link..."
+            placeholder="Optional, kosongkan jika tidak ada"
             value={linkProduk}
             onChange={(e) => setLinkProduk(e.target.value)}
-            required
             className="input input-bordered w-full bg-gray-50 mt-2"
           />
           <section className="flex items-center gap-1 justify-center mt-5">

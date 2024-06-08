@@ -138,7 +138,7 @@ const AddProduct = () => {
             className="input input-bordered w-full bg-gray-50 mt-2"
           />
           <br />
-          <section className="text-left space-x-3">
+          <section className="text-left">
             <p className="text-left mt-3">Foto Produk :</p>
             <input
               type="file"
@@ -190,10 +190,9 @@ const AddProduct = () => {
           </p>
           <input
             type="text"
-            placeholder="Link..."
+            placeholder="Optional, kosongkan jika tidak ada"
             value={linkProduk}
             onChange={(e) => setLinkProduk(e.target.value)}
-            required
             className="input input-bordered w-full bg-gray-50 mt-2"
           />
           <section className="space-x-2">

@@ -1,19 +1,21 @@
 import Image from "next/image";
-import mentor from "../../../../public/img/mentor.png";
-import team1 from "../../../../public/img/team-p-1.jpg";
-import team2 from "../../../../public/img/team-l-1.jpg";
-import team3 from "../../../../public/img/team-p-2.jpg";
-import team4 from "../../../../public/img/team-l-2.jpg";
-import bg1 from "../../../../public/img/bg-team-1.jpg";
-import bg2 from "../../../../public/img/bg-team-2.jpg";
-import bg3 from "../../../../public/img/bg-team-3.jpg";
-import bg4 from "../../../../public/img/bg-team-4.jpg";
+import mentor from "../../../../public/img/mentor.webp";
+import team1 from "../../../../public/img/team-p-1.webp";
+import team2 from "../../../../public/img/team-l-1.webp";
+import team3 from "../../../../public/img/team-p-2.webp";
+import team4 from "../../../../public/img/team-l-2.webp";
+import bg1 from "../../../../public/img/bg-team-1.webp";
+import bg2 from "../../../../public/img/bg-team-2.webp";
+import bg3 from "../../../../public/img/bg-team-3.webp";
+import bg4 from "../../../../public/img/bg-team-4.webp";
 import { MdOutlineMail } from "react-icons/md";
 import { TbBrandTelegram } from "react-icons/tb";
-import { IoLogoInstagram } from "react-icons/io5";
-import barusari from "../../../../public/img/barusari.jpg";
-import bulustalan from "../../../../public/img/bulustalan.jpg";
-import Link from "next/link";
+import { IoChatbubbleEllipsesOutline, IoLogoInstagram } from "react-icons/io5";
+import barusari from "../../../../public/img/barusari.webp";
+import bulustalan from "../../../../public/img/bulustalan.webp";
+import { SiGooglemaps } from "react-icons/si";
+import { BsTelephone } from "react-icons/bs";
+import { FaInstagram } from "react-icons/fa";
 
 const team = [
   {
@@ -36,7 +38,7 @@ const team = [
   },
   {
     image: team4,
-    name: "Pramudya Shaka",
+    name: "Pramudya Shaka Nugraha",
     role: "Anggota",
     background: bg4,
   },
@@ -158,19 +160,19 @@ const About = () => {
             <h1 className="text-center text-xl mt-5 font-semibold">
               Kelurahan Barusari
             </h1>
-            <aside className="flex gap-2 justify-center items-center">
-              <Link
-                href="/store/k/barusari"
-                className="btn bg-gray-50 border border-orange-500 text-orange-500 mt-5 shadow-md hover:bg-orange-500 hover:border-orange-500 hover:text-white"
-              >
-                Lihat Toko
-              </Link>
-              <Link
-                href="/product/k/barusari"
-                className="btn bg-orange-500 text-white mt-5 border-none shadow-md hover:bg-orange-600"
-              >
-                Lihat Produk
-              </Link>
+            <h3 className="text-center text-lg mt-1">
+              Kecamatan Semarang Selatan, Semarang <br /> Jawa Tengah
+            </h3>
+            <aside className="flex gap-2 justify-center items-center mt-3">
+              <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+                <SiGooglemaps />
+              </section>
+              <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+                <MdOutlineMail size={18} />
+              </section>
+              <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+                <BsTelephone />
+              </section>
             </aside>
           </section>
           <section id="bulustalan">
@@ -184,19 +186,19 @@ const About = () => {
             <h1 className="text-center text-xl mt-5 font-semibold">
               Kelurahan Bulustalan
             </h1>
-            <aside className="flex gap-2 justify-center items-center">
-              <Link
-                href="/store/k/bulustalan"
-                className="btn bg-gray-50 border border-orange-500 text-orange-500 mt-5 shadow-md hover:bg-orange-500 hover:border-orange-500 hover:text-white"
-              >
-                Lihat Toko
-              </Link>
-              <Link
-                href="/product/k/bulustalan"
-                className="btn bg-orange-500 text-white mt-5 border-none shadow-md hover:bg-orange-600"
-              >
-                Lihat Produk
-              </Link>
+            <h3 className="text-center text-lg mt-1">
+              Kecamatan Semarang Selatan, Semarang <br /> Jawa Tengah
+            </h3>
+            <aside className="flex gap-2 justify-center items-center mt-3">
+              <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+                <SiGooglemaps />
+              </section>
+              <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+                <MdOutlineMail size={18} />
+              </section>
+              <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+                <BsTelephone />
+              </section>
             </aside>
           </section>
         </section>
@@ -265,7 +267,17 @@ const About = () => {
                 diluaran sana khususnya di kelurahan Barusari dan Bulustalan di
                 kecamatan Semarang Selatan.
               </p>
-              <button className="btn btn-primary">Get Started</button>
+              <section className="flex gap-2 justify-center items-center">
+                <aside className="p-3 cursor-pointer hover:bg-gray-100 hover:scale-105 transition-all border bg-white text-orange-500 rounded-full w-fit">
+                  <IoChatbubbleEllipsesOutline size={20} />
+                </aside>
+                <aside className="p-3 cursor-pointer hover:bg-gray-100 hover:scale-105 transition-all border bg-white text-orange-500 rounded-full w-fit">
+                  <MdOutlineMail size={20} />
+                </aside>
+                <aside className="p-3 cursor-pointer hover:bg-gray-100 hover:scale-105 transition-all border bg-white text-orange-500 rounded-full w-fit">
+                  <FaInstagram size={20} />
+                </aside>
+              </section>
             </div>
           </div>
         </div>

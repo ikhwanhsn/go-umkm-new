@@ -1,6 +1,6 @@
 import Image from "next/image";
-import barusari from "../../public/img/barusari.jpg";
-import bulustalan from "../../public/img/bulustalan.jpg";
+import barusari from "../../public/img/barusari.webp";
+import bulustalan from "../../public/img/bulustalan.webp";
 import Link from "next/link";
 
 const LokasiImage = () => {
