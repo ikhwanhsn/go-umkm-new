@@ -8,6 +8,15 @@ import bg1 from "../../../../public/img/bg-team-1.webp";
 import bg2 from "../../../../public/img/bg-team-2.webp";
 import bg3 from "../../../../public/img/bg-team-3.webp";
 import bg4 from "../../../../public/img/bg-team-4.webp";
+import dok1 from "../../../../public/img/dok1.jpg";
+import dok2 from "../../../../public/img/dok2.jpg";
+import dok3 from "../../../../public/img/dok3.jpg";
+import dok4 from "../../../../public/img/dok4.jpg";
+import dok5 from "../../../../public/img/dok5.jpg";
+import dok6 from "../../../../public/img/dok6.jpg";
+import dok7 from "../../../../public/img/dok7.jpg";
+import dok8 from "../../../../public/img/dok8.jpg";
+import dok9 from "../../../../public/img/dok9.jpg";
 import { MdOutlineMail } from "react-icons/md";
 import { TbBrandTelegram } from "react-icons/tb";
 import { IoChatbubbleEllipsesOutline, IoLogoInstagram } from "react-icons/io5";
@@ -41,6 +50,37 @@ const team = [
     name: "Pramudya Shaka Nugraha",
     role: "Anggota",
     background: bg4,
+  },
+];
+
+const documentation = [
+  {
+    image: dok2,
+    name: "Dokumentasi 1",
+  },
+  {
+    image: dok3,
+    name: "Dokumentasi 2",
+  },
+  {
+    image: dok4,
+    name: "Dokumentasi 3",
+  },
+  {
+    image: dok5,
+    name: "Dokumentasi 4",
+  },
+  {
+    image: dok7,
+    name: "Dokumentasi 5",
+  },
+  {
+    image: dok1,
+    name: "Dokumentasi 6",
+  },
+  {
+    image: dok9,
+    name: "Dokumentasi 7",
   },
 ];
 
@@ -209,48 +249,15 @@ const About = () => {
           Documentation
         </h1>
         <div className="carousel carousel-center rounded-box mt-8 mx-5">
-          <div className="carousel-item">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg"
-              alt="Pizza"
-            />
-          </div>
+          {documentation.map((item: any) => (
+            <div className="carousel-item" key={item.id}>
+              <Image
+                src={item.image}
+                alt={item.name}
+                className="w-full h-64 object-cover"
+              />
+            </div>
+          ))}
         </div>
       </section>
       {/* Hero */}

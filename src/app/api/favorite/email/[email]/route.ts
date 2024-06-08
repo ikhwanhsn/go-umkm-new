@@ -41,39 +41,3 @@ export async function GET(request: any, { params }: any) {
     );
   }
 }
-
-// export async function GET(request: any, { params }: any) {
-//   try {
-//     await connectMongoDB();
-//     const { email } = params;
-
-//     // Temukan pengguna berdasarkan email
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return NextResponse.json({ message: "User not found" }, { status: 404 });
-//     }
-
-//     // Aggregate favorit dengan detail produk dan nama toko
-//     const favoriteAggregated = await Favorite.aggregate([
-//       { $match: { user_id: user?._id } },
-//       {
-//         $lookup: {
-//           from: "stores", // Nama koleksi toko
-//           localField: "user_id", // Sesuaikan dengan kolom yang menyimpan ID toko pada koleksi produk
-//           foreignField: "user_id",
-//           as: "storeDetails",
-//         },
-//       },
-//       { $unwind: "$storeDetails" }, // Unwind agar tiap produk terpisah
-//     ]);
-
-//     // Kembalikan respon dengan data agregat
-//     return NextResponse.json(favoriteAggregated);
-//   } catch (error) {
-//     console.log(error);
-//     return NextResponse.json(
-//       { message: "Internal server error" },
-//       { status: 500 }
-//     );
-//   }
-// }

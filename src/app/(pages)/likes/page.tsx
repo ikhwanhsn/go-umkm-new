@@ -9,6 +9,8 @@ import useSWR from "swr";
 const ProductLiked = () => {
   const { data, status: session } = useSession();
   const [productLiked, setProductLiked] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const {
     data: dataLiked,
     error: errorLiked,
@@ -17,10 +19,17 @@ const ProductLiked = () => {
 
   useEffect(() => {
     if (dataLiked) {
-      console.log(dataLiked);
       setProductLiked(dataLiked);
     }
   }, [dataLiked]);
+
+  const handleSearchChange = (event: any) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredProducts = productLiked.filter((product: any) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
@@ -30,7 +39,12 @@ const ProductLiked = () => {
           <p>Welcome to favorite page</p>
         </section>
         <label className="input input-bordered mt-3 md:mt-0 flex items-center gap-2 bg-gray-50">
-          <input type="text" placeholder="Search here..." />
+          <input
+            type="text"
+            placeholder="Search here..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -46,15 +60,24 @@ const ProductLiked = () => {
         </label>
       </section>
       <main className="mt-7">
+        {session === "unauthenticated" && (
+          <p className="text-center mt-12 text-sm italic">
+            Silahkan login dulu...
+          </p>
+        )}
         {productLiked.length === 0 && !isLoadingLiked && (
           <p className="text-center mt-12 text-sm italic">
             Tidak ada produk yang disukai
           </p>
         )}
+        {filteredProducts.length === 0 && !isLoadingLiked && (
+          <p className="text-center mt-12 text-sm italic">
+            Produk tidak ditemukan
+          </p>
+        )}
         <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 gap-5">
-          {productLiked.length > 0 &&
-            !isLoadingLiked &&
-            productLiked.map((item: any) => (
+          {filteredProducts.length > 0 &&
+            filteredProducts.map((item: any) => (
               <CardProduct
                 key={item._id}
                 id={item._id}
