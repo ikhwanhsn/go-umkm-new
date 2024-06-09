@@ -11,15 +11,18 @@ export async function POST(request: Request) {
     const store = await Store.findOne({ _id: store_id });
     const amountProduct = await Product.find({ store_id: store?._id });
 
-    if (amountProduct.length >= 5) {
+    if (amountProduct.length >= 10) {
       return NextResponse.json(
-        { message: "Product limit reached 5 products" },
+        { message: "Maksimal 10 produk di setiap toko" },
         { status: 400 }
       );
     }
 
     if (!store) {
-      return NextResponse.json({ message: "Store not found" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Toko tidak ditemukan" },
+        { status: 404 }
+      );
     }
 
     await connectMongoDB();
@@ -34,12 +37,12 @@ export async function POST(request: Request) {
     });
     if (added) {
       return NextResponse.json(
-        { message: "New product has been added!" },
+        { message: "Produk ditambahkan!" },
         { status: 201 }
       );
     } else {
       return NextResponse.json(
-        { message: "Failed to added product" },
+        { message: "Produk gagal ditambahkan" },
         { status: 500 }
       );
     }

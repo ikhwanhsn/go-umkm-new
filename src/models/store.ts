@@ -9,7 +9,7 @@ const storeSchema = new Schema(
     description: {
       type: String,
       required: true,
-      max: 1000,
+      max: 700,
     },
     image: {
       type: String,

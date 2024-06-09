@@ -6,7 +6,6 @@ import {
   ref as storageRef,
   uploadBytes,
   getDownloadURL,
-  deleteObject,
 } from "firebase/storage";
 import { storage } from "@/services/firebase/firebase";
 import { useSession } from "next-auth/react";
@@ -97,7 +96,12 @@ const AddProduct = () => {
       });
 
       if (!res.ok) {
-        alert(await res.text());
+        // alert(await res.text());
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: await res.text(),
+        });
         return;
       }
 
@@ -154,7 +158,7 @@ const AddProduct = () => {
             placeholder="Deskripsi..."
             value={deskripsiProduk}
             onChange={(e) => setDeskripsiProduk(e.target.value)}
-            maxLength={300}
+            maxLength={700}
             required
             className="w-full bg-gray-50 textarea textarea-bordered text-base mt-2"
           ></textarea>

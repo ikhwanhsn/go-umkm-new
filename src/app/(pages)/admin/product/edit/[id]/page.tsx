@@ -38,7 +38,7 @@ const EditProduct = () => {
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [hargaProduk, setHargaProduk] = useState("");
-  const [kategoriProduk, setKategoriProduk] = useState("Fashion");
+  const [kategoriProduk, setKategoriProduk] = useState("");
   const [linkProduk, setLinkProduk] = useState("");
   const [file, setFile] = useState<File>();
   const ref = useRef<HTMLInputElement>(null);
@@ -205,7 +205,7 @@ const EditProduct = () => {
             placeholder="Deskripsi..."
             value={deskripsiProduk}
             onChange={(e) => setDeskripsiProduk(e.target.value)}
-            maxLength={300}
+            maxLength={700}
             required
             className="w-full bg-gray-50 textarea textarea-bordered text-base mt-2"
           ></textarea>
@@ -226,8 +226,8 @@ const EditProduct = () => {
             onChange={(e) => setKategoriProduk(e.target.value)}
             required
           >
-            <option disabled selected value={"Fashion"}>
-              Fashion
+            <option disabled selected value={kategoriProduk}>
+              {kategoriProduk}
             </option>
             {category.map((item: any, index) => (
               <option value={item} key={index}>

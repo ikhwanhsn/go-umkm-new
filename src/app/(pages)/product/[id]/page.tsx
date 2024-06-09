@@ -95,7 +95,7 @@ const DetailProduct = () => {
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <h1 className="text-xl font-bold mb-5">Detail Product</h1>
       <section className="flex md:flex-row flex-col mt-3 mb-8 gap-x-10 gap-y-5">
-        <section className="md:w-fit w-full">
+        <section className="md:w-80 w-full">
           <Image
             src={imageURL}
             alt="image-product"

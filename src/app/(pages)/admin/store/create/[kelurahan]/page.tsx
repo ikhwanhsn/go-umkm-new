@@ -123,7 +123,7 @@ const CreateStore = () => {
           <p className="text-left mt-3">Deskripsi :</p>
           <textarea
             placeholder="Deskripsi..."
-            maxLength={300}
+            maxLength={700}
             rows={4}
             value={storeDesc}
             onChange={(e) => setStoreDesc(e.target.value)}
