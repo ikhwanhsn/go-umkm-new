@@ -57,15 +57,15 @@ const Forum = () => {
   return (
     <main className="w-full h-full">
       <section className="grid grid-cols-5 relative">
-        <aside className="w-1/5 bg-gray-100 min-h-screen fixed top-16 left-0 z-20">
+        <aside className="w-1/5 bg-gray-100 min-h-screen fixed top-16 left-0 z-20 hidden md:block">
           <section className="flex gap-2 items-center px-8 py-6 cursor-pointer hover:bg-gray-200">
             <SiLivechat />
             <h1>Global Chat Forum</h1>
           </section>
         </aside>
-        <aside className="w-4/5 min-h-screen z-20 bg-white fixed top-16 right-0">
+        <aside className="md:w-4/5 w-full min-h-screen z-20 bg-white fixed top-16 right-0">
           <section className="flex items-center gap-3 p-3 border-b-2">
-            <CgProfile size={32} />
+            <CgProfile size={32} className="profile-icon" />
             <section>
               <h1>Global Chat Forum</h1>
               <p className="text-sm">78 Online</p>
@@ -74,7 +74,7 @@ const Forum = () => {
           <section className="overflow-y-scroll h-[calc(100vh-4rem)] p-3">
             {dataMessage.map((message) => (
               <section key={message.id} className="flex items-center gap-3 p-3">
-                <CgProfile size={32} />
+                <CgProfile size={32} className="profile-icon" />
                 <section>
                   <h1>
                     {message.name}{" "}
@@ -88,7 +88,7 @@ const Forum = () => {
             ))}
             <section className="bg-white h-32 w-full"></section>
             <section className="relative w-full">
-              <label className="input input-bordered bg-white flex items-center gap-2 fixed bottom-3 z-30 w-[61em]">
+              <label className="input input-bordered bg-white flex items-center gap-2 fixed bottom-3 z-30 w-full md:w-[61em]">
                 <input
                   type="text"
                   className="grow"

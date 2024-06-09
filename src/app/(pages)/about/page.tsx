@@ -8,15 +8,15 @@ import bg1 from "../../../../public/img/bg-team-1.webp";
 import bg2 from "../../../../public/img/bg-team-2.webp";
 import bg3 from "../../../../public/img/bg-team-3.webp";
 import bg4 from "../../../../public/img/bg-team-4.webp";
-import dok1 from "../../../../public/img/dok1.jpg";
-import dok2 from "../../../../public/img/dok2.jpg";
-import dok3 from "../../../../public/img/dok3.jpg";
-import dok4 from "../../../../public/img/dok4.jpg";
-import dok5 from "../../../../public/img/dok5.jpg";
-import dok6 from "../../../../public/img/dok6.jpg";
-import dok7 from "../../../../public/img/dok7.jpg";
-import dok8 from "../../../../public/img/dok8.jpg";
-import dok9 from "../../../../public/img/dok9.jpg";
+import dok1 from "../../../../public/img/dok1.webp";
+import dok2 from "../../../../public/img/dok2.webp";
+import dok3 from "../../../../public/img/dok3.webp";
+import dok4 from "../../../../public/img/dok4.webp";
+import dok5 from "../../../../public/img/dok5.webp";
+import dok6 from "../../../../public/img/dok6.webp";
+import dok7 from "../../../../public/img/dok7.webp";
+import dok8 from "../../../../public/img/dok8.webp";
+import dok9 from "../../../../public/img/dok9.webp";
 import { MdOutlineMail } from "react-icons/md";
 import { TbBrandTelegram } from "react-icons/tb";
 import { IoChatbubbleEllipsesOutline, IoLogoInstagram } from "react-icons/io5";
@@ -104,15 +104,15 @@ const About = () => {
         <h1 className="text-2xl font-bold text-center mt-12 text-orange-600">
           Our Mentor
         </h1>
-        <section className="flex md:flex-row flex-col gap-12 md:mt-12 mt-5 lg:w-1/2 w-full mx-auto">
+        <section className="flex md:flex-row flex-col gap-12 md:mt-12 mt-5 lg:w-1/2 w-full mx-auto px-5 md:px-0">
           <aside>
-            <section className="bg-white p-5 rounded-md w-64 shadow-md mx-auto md:mx-0">
+            <section className="bg-white p-5 rounded-md md:w-64 w-full shadow-md mx-auto md:mx-0">
               <Image
                 src={mentor}
                 alt="mentor"
                 width={210}
                 height={210}
-                className="scale-x-[-1] -mt-5"
+                className="scale-x-[-1] -mt-5 md:ml-0 ml-12"
               />
               <section className="text-center mt-5">
                 <h2 className="font-semibold">Puri Muliandhi, S.T., M.T.</h2>
@@ -188,7 +188,7 @@ const About = () => {
         <h1 className="text-2xl font-bold text-center text-orange-600">
           Our Partner
         </h1>
-        <section className="md:grid flex flex-col grid-cols-2 p-5 gap-5 mt-5">
+        <section className="md:grid flex flex-col grid-cols-2 md:p-5 p-2 gap-5 mt-5">
           <section id="barusari">
             <Image
               src={barusari}
@@ -248,7 +248,7 @@ const About = () => {
         <h1 className="text-2xl font-bold text-center text-orange-600">
           Documentation
         </h1>
-        <div className="carousel carousel-center rounded-box mt-8 mx-5">
+        <div className="carousel carousel-center rounded-box mt-8 md:mx-5 mx-0">
           {documentation.map((item: any) => (
             <div className="carousel-item" key={item.id}>
               <Image
@@ -266,7 +266,7 @@ const About = () => {
           {/* <div className="hero-overlay bg-opacity-60"></div> */}
           <div className="hero-content text-center text-neutral-content">
             <div className="max-w-xl">
-              <h1 className="mb-5 text-5xl font-bold text-white">
+              <h1 className="mb-5 md:text-5xl text-3xl font-bold text-white">
                 Bantu Kami Tumbuh dan Berkembang
               </h1>
               <p className="mb-5 text-white">

@@ -57,7 +57,7 @@ const Learn: React.FC = () => {
   );
 
   return (
-    <main className="w-full min-h-screen px-12">
+    <main className="w-full min-h-screen md:px-12 px-5">
       <section className="mt-5 flex justify-between items-center">
         <section>
           <h1 className="text-xl font-bold mb-1 capitalize">Learn</h1>

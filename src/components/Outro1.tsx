@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Outro1 = () => {
   return (
-    <main className="lg:mx-24 md:px-12 px-12 mt-24 flex md:flex-row flex-col md:gap-16 gap-12">
+    <main className="lg:mx-24 md:px-12 px-7 mt-24 flex md:flex-row flex-col md:gap-16 gap-12">
       <Image
         src={umkm}
         alt="umkm"
