@@ -52,8 +52,8 @@ const DetailStore = () => {
   return (
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <h1 className="text-xl font-bold mb-1">Detail Store</h1>
-      <section className="flex md:flex-row flex-col mt-3 mb-5 gap-x-10 gap-y-5">
-        <section>
+      <section className="flex md:grid grid-cols-12 flex-col mt-3 mb-5 gap-y-5">
+        <section className="col-span-4">
           <Image
             src={logoToko}
             alt="image-product"
@@ -62,16 +62,16 @@ const DetailStore = () => {
             className="md:w-80 w-full h-80 object-cover rounded-sm"
           />
         </section>
-        <aside>
+        <aside className="col-span-8">
           <h2 className="text-xl font-semibold mb-3 capitalize">{namaToko}</h2>
           <p className="normal-case">{deskripsiToko}</p>
           <section className="space-x-1 mt-5">
             <button className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">
-              Chat toko
+              Hubungi via Whatsapp
             </button>
-            <button className="btn bg-orange-500 text-white border-none hover:bg-orange-600">
+            {/* <button className="btn bg-orange-500 text-white border-none hover:bg-orange-600">
               Beli sekarang
-            </button>
+            </button> */}
           </section>
         </aside>
       </section>

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
   ref as storageRef,
@@ -38,6 +37,8 @@ const AddProduct = () => {
   const [kategoriProduk, setKategoriProduk] = useState("Fashion");
   const [linkProduk, setLinkProduk] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
   const {
     data: dataStore,
@@ -46,7 +47,11 @@ const AddProduct = () => {
   } = useSWR(`/api/store/id/${id}`, fetcher);
 
   const defaultImageUrl =
-    "https://firebasestorage.googleapis.com/v0/b/go-umkm-9915e.appspot.com/o/default%2Fdefault-product.jpg?alt=media&token=2dcef5bb-f341-445c-9e9d-5b1c40b074e6";
+    "https://firebasestorage.googleapis.com/v0/b/go-umkm-9915e.appspot.com/o/default%2Fdefault-product.jpg?alt=media&token=6851eead-bb5a-4883-b93f-a4a319085c9d";
+
+  useEffect(() => {
+    setImagePreview(defaultImageUrl);
+  }, []);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,7 +72,7 @@ const AddProduct = () => {
         // Upload image to Firebase Storage
         const storageReference = storageRef(
           storage,
-          `images/product/${data?.user?.email}/${file.name}`
+          `images/product/${Math.floor(Math.random() * 1000000)}/${file.name}`
         );
         await uploadBytes(storageReference, file);
         imageUrl = await getDownloadURL(storageReference);
@@ -96,7 +101,6 @@ const AddProduct = () => {
       });
 
       if (!res.ok) {
-        // alert(await res.text());
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -106,6 +110,8 @@ const AddProduct = () => {
       }
 
       ref.current && (ref.current.value = "");
+      setImagePreview(defaultImageUrl);
+      setIsImageUploaded(false);
       await Swal.fire({
         title: "Success!",
         text: "Produk berhasil ditambahkan!",
@@ -115,6 +121,28 @@ const AddProduct = () => {
       await router.refresh();
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFile(file);
+      setIsImageUploaded(true);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFile(null);
+    setIsImageUploaded(false);
+    setImagePreview(defaultImageUrl);
+    if (ref.current) {
+      ref.current.value = "";
     }
   };
 
@@ -144,11 +172,29 @@ const AddProduct = () => {
           <br />
           <section className="text-left">
             <p className="text-left mt-3">Foto Produk :</p>
+            {imagePreview && (
+              <div className="mt-3">
+                <img
+                  src={imagePreview}
+                  alt="Image Preview"
+                  className="w-32 h-32 object-cover mb-3 mt-3"
+                />
+                {isImageUploaded && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="btn btn-error btn-outline mt-2"
+                  >
+                    Hapus Gambar
+                  </button>
+                )}
+              </div>
+            )}
             <input
               type="file"
               name="file"
               ref={ref}
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              onChange={handleFileChange}
               accept="image/png, image/jpeg, image/jpg"
               className="file-input file-input-bordered w-full max-w-xs bg-gray-50 mt-3"
             />

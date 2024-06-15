@@ -20,6 +20,14 @@ const storeSchema = new Schema(
       enum: ["barusari", "bulustalan"],
       default: "barusari",
     },
+    alamat: {
+      type: String,
+      required: true,
+    },
+    nib: {
+      type: String,
+      required: true,
+    },
     telephone: {
       type: String,
       required: true,

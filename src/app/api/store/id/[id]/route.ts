@@ -21,7 +21,7 @@ export async function GET(request: any, { params }: any) {
   }
 }
 
-export async function PUT(request: Request, { params }: any) {
+export async function PUT(request: Request) {
   try {
     const {
       id,
@@ -29,6 +29,8 @@ export async function PUT(request: Request, { params }: any) {
       NewDescription: description,
       NewImage: image,
       NewKelurahan: kelurahan,
+      NewAlamat: alamat,
+      NewNib: nib,
       NewTelephone: telephone,
     } = await request.json();
     await connectMongoDB();
@@ -39,6 +41,8 @@ export async function PUT(request: Request, { params }: any) {
         description,
         image,
         kelurahan,
+        alamat,
+        nib,
         telephone,
       }
     );

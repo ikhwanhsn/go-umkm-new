@@ -10,6 +10,12 @@ import { fetcher } from "@/libs/swr/fetcher";
 import useSWR from "swr";
 import Swal from "sweetalert2";
 import { AiOutlineProduct } from "react-icons/ai";
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 
 const statsData = [
   {
@@ -130,7 +136,7 @@ const Admin = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
+      // console.log(data);
       setStore(data);
     }
   }, [data]);

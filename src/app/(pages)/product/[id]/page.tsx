@@ -8,11 +8,9 @@ import { fetcher } from "@/libs/swr/fetcher";
 import { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useSession } from "next-auth/react";
-import { MdOutlineArrowBack } from "react-icons/md";
 
 const DetailProduct = () => {
   const { id } = useParams();
-  const router = useRouter();
   const { data, status: session } = useSession();
   const [kelurahan, setKelurahan] = useState("");
   const [namaProduk, setNamaProduk] = useState("");
@@ -94,17 +92,17 @@ const DetailProduct = () => {
   return (
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <h1 className="text-xl font-bold mb-5">Detail Product</h1>
-      <section className="flex md:flex-row flex-col mt-3 mb-8 gap-x-10 gap-y-5">
-        <section className="md:w-80 w-full">
+      <section className="flex md:grid grid-cols-12 flex-col mt-3 mb-8 gap-y-5">
+        <section className="md:w-80 w-full col-span-4">
           <Image
             src={imageURL}
             alt="image-product"
             width={200}
             height={200}
-            className="md:w-80 w-full h-80 object-cover rounded-sm"
+            className="md:w-80 w-full h-80 rounded-sm object-cover"
           />
         </section>
-        <aside className="md:mt-0 mt-3">
+        <aside className="md:mt-0 mt-3 col-span-8">
           <h2 className="text-xl font-semibold mb-3">{namaProduk}</h2>
           <p>{deskripsiProduk}</p>
           <section className="flex items-center gap-1 mt-5">
@@ -113,7 +111,7 @@ const DetailProduct = () => {
               target="_blank"
               className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
             >
-              Chat penjual
+              Hubungi via Whatsapp
             </a>
             <a
               className="btn bg-orange-500 text-white border-none hover:bg-orange-600"

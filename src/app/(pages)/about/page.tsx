@@ -104,8 +104,8 @@ const About = () => {
         <h1 className="text-2xl font-bold text-center mt-12 text-orange-600">
           Our Mentor
         </h1>
-        <section className="flex md:flex-row flex-col gap-12 md:mt-12 mt-5 lg:w-1/2 w-full mx-auto px-5 md:px-0">
-          <aside>
+        <section className="mt-8">
+          <center>
             <section className="bg-white p-5 rounded-md md:w-64 w-full shadow-md mx-auto md:mx-0">
               <Image
                 src={mentor}
@@ -120,8 +120,8 @@ const About = () => {
                 <p className="text-sm">Universitas Semarang</p>
               </section>
             </section>
-          </aside>
-          <aside className="mx-3 md:mx-0">
+          </center>
+          {/* <aside className="mx-3 md:mx-0">
             <h2 className="text-xl font-semibold">Visi GoUMKM</h2>
             <p className="mt-1">
               GoUMKM sebagai platform yang membantu para UMKM untuk
@@ -134,7 +134,7 @@ const About = () => {
               Membantu para UMKM untuk tumbuh dan berkembang dengan memanfaatkan
               teknologi yang ada.
             </p>
-          </aside>
+          </aside> */}
         </section>
       </section>
       {/* Our Team */}
@@ -201,7 +201,7 @@ const About = () => {
               Kelurahan Barusari
             </h1>
             <h3 className="text-center text-lg mt-1">
-              Kecamatan Semarang Selatan, Semarang <br /> Jawa Tengah
+              Kecamatan Semarang Selatan, Kota Semarang <br /> Jawa Tengah
             </h3>
             <aside className="flex gap-2 justify-center items-center mt-3">
               <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
@@ -227,7 +227,7 @@ const About = () => {
               Kelurahan Bulustalan
             </h1>
             <h3 className="text-center text-lg mt-1">
-              Kecamatan Semarang Selatan, Semarang <br /> Jawa Tengah
+              Kecamatan Semarang Selatan, Kota Semarang <br /> Jawa Tengah
             </h3>
             <aside className="flex gap-2 justify-center items-center mt-3">
               <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
@@ -272,7 +272,7 @@ const About = () => {
               <p className="mb-5 text-white">
                 Masukan, saran, dan support Anda sangat membantu banyak UMKM
                 diluaran sana khususnya di kelurahan Barusari dan Bulustalan di
-                kecamatan Semarang Selatan.
+                Kecamatan Semarang Selatan, Kota Semarang, Jawa Tengah.
               </p>
               <section className="flex gap-2 justify-center items-center">
                 <aside className="p-3 cursor-pointer hover:bg-gray-100 hover:scale-105 transition-all border bg-white text-orange-500 rounded-full w-fit">

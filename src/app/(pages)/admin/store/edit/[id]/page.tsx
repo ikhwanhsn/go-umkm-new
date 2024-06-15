@@ -6,6 +6,7 @@
 //   ref as storageRef,
 //   uploadBytes,
 //   getDownloadURL,
+//   deleteObject,
 // } from "firebase/storage";
 // import { storage } from "@/services/firebase/firebase";
 // import { useParams, useRouter } from "next/navigation";
@@ -20,10 +21,15 @@
 //   const [storeName, setStoreName] = useState("");
 //   const [storeDesc, setStoreDesc] = useState("");
 //   const [storeImg, setStoreImg] = useState("");
+//   const [imagePreview, setImagePreview] = useState<string | null>(null);
 //   const [kelurahan, setKelurahan] = useState("");
-//   const [file, setFile] = useState<File>();
+//   const [file, setFile] = useState<File | null>(null);
 //   const ref = useRef<HTMLInputElement>(null);
+//   const [alamat, setAlamat] = useState("");
+//   const [nib, setNib] = useState("");
 //   const [noTelp, setNoTelp] = useState("");
+//   const [isImageDeleted, setIsImageDeleted] = useState(false);
+//   const [isImageUploaded, setIsImageUploaded] = useState(false);
 
 //   const {
 //     data: dataStore,
@@ -36,7 +42,7 @@
 
 //   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
 //     e.preventDefault();
-//     if (!file && !storeImg) return;
+//     if (!file && !storeImg && !isImageDeleted) return;
 //     if (file && file.size > 1048576) {
 //       Swal.fire({
 //         icon: "error",
@@ -46,7 +52,7 @@
 //       return;
 //     }
 
-//     let imageUrl = storeImg; // Use default image URL by default
+//     let imageUrl = storeImg; // Use current image URL by default
 
 //     if (file) {
 //       try {
@@ -68,6 +74,10 @@
 //       }
 //     }
 
+//     if (isImageDeleted) {
+//       imageUrl = defaultImageUrl; // Set image URL to default if the image was deleted and no new image was uploaded
+//     }
+
 //     try {
 //       // Save store data to MongoDB
 //       const res = await fetch(`/api/store/id/${id}`, {
@@ -81,6 +91,8 @@
 //           NewDescription: storeDesc,
 //           NewImage: imageUrl,
 //           NewKelurahan: kelurahan,
+//           NewAlamat: alamat,
+//           NewNib: nib,
 //           NewTelephone: noTelp,
 //         }),
 //       });
@@ -104,6 +116,29 @@
 //     }
 //   };
 
+//   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const file = e.target.files?.[0];
+//     if (file) {
+//       setFile(file);
+//       setIsImageUploaded(true);
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//         setImagePreview(reader.result as string);
+//       };
+//       reader.readAsDataURL(file);
+//     }
+//   };
+
+//   const handleRemoveImage = () => {
+//     setFile(null);
+//     setIsImageUploaded(false);
+//     setImagePreview(defaultImageUrl);
+//     setIsImageDeleted(true);
+//     if (ref.current) {
+//       ref.current.value = "";
+//     }
+//   };
+
 //   useEffect(() => {
 //     if (dataStore) {
 //       const data = dataStore[0];
@@ -112,6 +147,10 @@
 //       setStoreImg(data.image);
 //       setNoTelp(data.telephone);
 //       setKelurahan(data.kelurahan);
+//       setAlamat(data.alamat);
+//       setNib(data.nib);
+//       setIsImageDeleted(false);
+//       setImagePreview(data.image);
 //     }
 //   }, [dataStore]);
 
@@ -135,11 +174,29 @@
 //           <br />
 //           <section className="text-left">
 //             <p className="text-left mt-3">Logo Toko :</p>
+//             {imagePreview && (
+//               <div className="mt-3">
+//                 <img
+//                   src={imagePreview}
+//                   alt="Image Preview"
+//                   className="w-32 h-32 object-cover mb-3 mt-3"
+//                 />
+//                 {isImageUploaded && (
+//                   <button
+//                     type="button"
+//                     onClick={handleRemoveImage}
+//                     className="btn btn-error btn-outline mt-2"
+//                   >
+//                     Hapus Gambar
+//                   </button>
+//                 )}
+//               </div>
+//             )}
 //             <input
 //               type="file"
 //               name="file"
 //               ref={ref}
-//               onChange={(e: any) => setFile(e.target.files?.[0])}
+//               onChange={handleFileChange}
 //               accept="image/png, image/jpeg, image/jpg"
 //               className="file-input file-input-bordered w-full max-w-xs bg-gray-50 mt-3"
 //             />
@@ -162,6 +219,24 @@
 //             id="kelurahan"
 //             value={"barusari"}
 //             readOnly
+//             className="input input-bordered w-full bg-gray-50 mt-2"
+//           />
+//           <p className="text-left mt-3">Alamat :</p>
+//           <input
+//             type="text"
+//             placeholder="Alamat..."
+//             id="alamat"
+//             value={alamat}
+//             onChange={(e) => setAlamat(e.target.value)}
+//             className="input input-bordered w-full bg-gray-50 mt-2"
+//           />
+//           <p className="text-left mt-2">NIB :</p>
+//           <input
+//             type="text"
+//             placeholder="NIB..."
+//             id="nib"
+//             value={nib}
+//             onChange={(e) => setNib(e.target.value)}
 //             className="input input-bordered w-full bg-gray-50 mt-2"
 //           />
 //           <p className="text-left mt-3">No Telp :</p>
@@ -217,16 +292,18 @@ import useSWR from "swr";
 const EditStore = () => {
   const { id } = useParams();
   const router = useRouter();
-  const { data, status: session } = useSession();
   const [storeName, setStoreName] = useState("");
   const [storeDesc, setStoreDesc] = useState("");
   const [storeImg, setStoreImg] = useState("");
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [kelurahan, setKelurahan] = useState("");
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<File | null>(null);
   const ref = useRef<HTMLInputElement>(null);
+  const [alamat, setAlamat] = useState("");
+  const [nib, setNib] = useState("");
   const [noTelp, setNoTelp] = useState("");
   const [isImageDeleted, setIsImageDeleted] = useState(false);
-  const [isPreviewImage, setIsPreviewImage] = useState(false);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   const {
     data: dataStore,
@@ -256,7 +333,7 @@ const EditStore = () => {
         // Upload image to Firebase Storage
         const storageReference = storageRef(
           storage,
-          `images/store/${data?.user?.email}/${file.name}`
+          `images/store/${Math.floor(Math.random() * 1000000)}/${file.name}`
         );
         await uploadBytes(storageReference, file);
         imageUrl = await getDownloadURL(storageReference); // Use uploaded image URL
@@ -288,6 +365,8 @@ const EditStore = () => {
           NewDescription: storeDesc,
           NewImage: imageUrl,
           NewKelurahan: kelurahan,
+          NewAlamat: alamat,
+          NewNib: nib,
           NewTelephone: noTelp,
         }),
       });
@@ -311,36 +390,26 @@ const EditStore = () => {
     }
   };
 
-  const deleteImage = async () => {
-    if (!isPreviewImage) {
-      try {
-        const storageReference = storageRef(storage, storeImg);
-        await deleteObject(storageReference);
-        setStoreImg(defaultImageUrl);
-        setIsImageDeleted(true);
-        ref.current && (ref.current.value = "");
-      } catch (error) {
-        console.error(error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Gagal menghapus gambar!",
-        });
-      }
-    } else {
-      setStoreImg(defaultImageUrl);
-      setIsImageDeleted(true);
-      ref.current && (ref.current.value = "");
-    }
-  };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setFile(file);
-      const previewUrl = URL.createObjectURL(file);
-      setStoreImg(previewUrl);
-      setIsPreviewImage(true);
+      setIsImageUploaded(true);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFile(null);
+    setIsImageUploaded(false);
+    setImagePreview(defaultImageUrl);
+    setIsImageDeleted(true);
+    if (ref.current) {
+      ref.current.value = "";
     }
   };
 
@@ -352,7 +421,10 @@ const EditStore = () => {
       setStoreImg(data.image);
       setNoTelp(data.telephone);
       setKelurahan(data.kelurahan);
-      setIsPreviewImage(false); // Reset preview image state
+      setAlamat(data.alamat);
+      setNib(data.nib);
+      setIsImageDeleted(false);
+      setImagePreview(data.image);
     }
   }, [dataStore]);
 
@@ -376,20 +448,22 @@ const EditStore = () => {
           <br />
           <section className="text-left">
             <p className="text-left mt-3">Logo Toko :</p>
-            <img
-              src={storeImg}
-              alt="Store Logo"
-              className="w-32 h-32 object-cover mb-3 mt-3"
-            />
-            {storeImg && storeImg !== defaultImageUrl && !isImageDeleted && (
+            {imagePreview && (
               <div className="mt-3">
-                <button
-                  type="button"
-                  onClick={deleteImage}
-                  className="btn btn-outline border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-                >
-                  Hapus Gambar
-                </button>
+                <img
+                  src={imagePreview}
+                  alt="Image Preview"
+                  className="w-32 h-32 object-cover mb-3 mt-3"
+                />
+                {imagePreview !== defaultImageUrl && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="btn btn-error btn-outline mt-2"
+                  >
+                    Hapus Gambar
+                  </button>
+                )}
               </div>
             )}
             <input
@@ -421,6 +495,24 @@ const EditStore = () => {
             readOnly
             className="input input-bordered w-full bg-gray-50 mt-2"
           />
+          <p className="text-left mt-3">Alamat :</p>
+          <input
+            type="text"
+            placeholder="Alamat..."
+            id="alamat"
+            value={alamat}
+            onChange={(e) => setAlamat(e.target.value)}
+            className="input input-bordered w-full bg-gray-50 mt-2"
+          />
+          <p className="text-left mt-2">NIB :</p>
+          <input
+            type="text"
+            placeholder="NIB..."
+            id="nib"
+            value={nib}
+            onChange={(e) => setNib(e.target.value)}
+            className="input input-bordered w-full bg-gray-50 mt-2"
+          />
           <p className="text-left mt-3">No Telp :</p>
           <input
             type="text"
@@ -442,7 +534,7 @@ const EditStore = () => {
             <button
               type="button"
               onClick={() => router.back()}
-              className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white mt-5"
+              className="btn btn-outline border-orange-500 text-orange-500 hover:border-orange-600 hover:bg-orange-600 hover:text-white mt-5"
             >
               Batal
             </button>

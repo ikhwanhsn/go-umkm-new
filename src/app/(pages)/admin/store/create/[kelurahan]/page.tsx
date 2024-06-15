@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   ref as storageRef,
   uploadBytes,
@@ -14,15 +14,44 @@ import Swal from "sweetalert2";
 const CreateStore = () => {
   const { kelurahan } = useParams();
   const router = useRouter();
-  const { data, status: session } = useSession();
   const [storeName, setStoreName] = useState("");
   const [storeDesc, setStoreDesc] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
+  const [alamat, setAlamat] = useState("");
+  const [nib, setNib] = useState("");
   const [noTelp, setNoTelp] = useState("");
 
   const defaultImageUrl =
     "https://firebasestorage.googleapis.com/v0/b/go-umkm-9915e.appspot.com/o/default%2Fdefault-toko.png?alt=media&token=b5d4b965-99d0-4a13-85b0-09132333fc2a"; // Replace this with the actual URL
+
+  useEffect(() => {
+    setImagePreview(defaultImageUrl);
+  }, []);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(file);
+      setIsImageUploaded(true);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImage(null);
+    setIsImageUploaded(false);
+    setImagePreview(defaultImageUrl);
+    if (ref.current) {
+      ref.current.value = "";
+    }
+  };
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,7 +70,7 @@ const CreateStore = () => {
         // Upload image to Firebase Storage
         const storageReference = storageRef(
           storage,
-          `images/store/${data?.user?.email}/${image.name}`
+          `images/store/${Math.floor(Math.random() * 1000000)}/${image.name}`
         );
         await uploadBytes(storageReference, image);
         imageUrl = await getDownloadURL(storageReference); // Use uploaded image URL
@@ -68,6 +97,8 @@ const CreateStore = () => {
           description: storeDesc,
           image: imageUrl, // Use the appropriate image URL
           kelurahan: "barusari",
+          alamat: alamat,
+          nib: nib,
           telephone: noTelp,
         }),
       });
@@ -111,11 +142,29 @@ const CreateStore = () => {
           <br />
           <section className="text-left">
             <p className="text-left mt-3">Logo Toko :</p>
+            {imagePreview && (
+              <div className="mt-3">
+                <img
+                  src={imagePreview}
+                  alt="Image Preview"
+                  className="w-32 h-32 object-cover"
+                />
+                {isImageUploaded && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="btn btn-error btn-outline mt-2"
+                  >
+                    Hapus Gambar
+                  </button>
+                )}
+              </div>
+            )}
             <input
               type="file"
               name="file"
               ref={ref}
-              onChange={(e: any) => setImage(e.target.files?.[0])}
+              onChange={handleImageChange}
               accept="image/png, image/jpeg, image/jpg"
               className="file-input file-input-bordered w-full max-w-xs bg-gray-50 mt-3"
             />
@@ -138,6 +187,24 @@ const CreateStore = () => {
             id="kelurahan"
             value={kelurahan}
             readOnly
+            className="input input-bordered w-full bg-gray-50 mt-2"
+          />
+          <p className="text-left mt-3">Alamat :</p>
+          <input
+            type="text"
+            placeholder="Alamat..."
+            id="alamat"
+            value={alamat}
+            onChange={(e) => setAlamat(e.target.value)}
+            className="input input-bordered w-full bg-gray-50 mt-2"
+          />
+          <p className="text-left mt-3">NIB :</p>
+          <input
+            type="text"
+            placeholder="NIB..."
+            id="nib"
+            value={nib}
+            onChange={(e) => setNib(e.target.value)}
             className="input input-bordered w-full bg-gray-50 mt-2"
           />
           <p className="text-left mt-3">No Telp :</p>
