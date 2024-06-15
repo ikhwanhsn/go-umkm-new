@@ -104,7 +104,7 @@ const About = () => {
         <h1 className="text-2xl font-bold text-center mt-12 text-orange-600">
           Our Mentor
         </h1>
-        <section className="mt-8">
+        <section className="mt-8 px-5 md:px-0">
           <center>
             <section className="bg-white p-5 rounded-md md:w-64 w-full shadow-md mx-auto md:mx-0">
               <Image
@@ -112,7 +112,7 @@ const About = () => {
                 alt="mentor"
                 width={210}
                 height={210}
-                className="rounded-sm md:ml-0 ml-12"
+                className="rounded-sm w-full"
               />
               <section className="text-center mt-5">
                 <h2 className="font-semibold">Puri Muliandhi, S.T., M.T.</h2>
@@ -282,7 +282,7 @@ const About = () => {
       </section>
       {/* Hero */}
       <section className="mt-24 bg-orange-500">
-        <div className="hero min-h-screen">
+        <div className="hero lg:min-h-screen md:h-[30em] h-[30em]">
           {/* <div className="hero-overlay bg-opacity-60"></div> */}
           <div className="hero-content text-center text-neutral-content">
             <div className="max-w-xl">

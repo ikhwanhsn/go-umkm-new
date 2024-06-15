@@ -146,55 +146,59 @@ const Navbar = () => {
       )}
       {/* ===== Navbar End ===== */}
       <div className="navbar-end md:space-x-4 space-x-2">
-        <button
-          className="btn btn-ghost -mr-3 btn-circle"
-          onClick={() => router.push("/likes")}
-        >
-          <FaRegHeart size={20} className="text-center" />
-        </button>
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
+        {status === "authenticated" && (
+          <button
+            className="btn btn-ghost -mr-3 btn-circle"
+            onClick={() => router.push("/likes")}
           >
-            <div className="">
-              <IoPersonOutline size={20} className="text-center" />
+            <FaRegHeart size={20} className="text-center" />
+          </button>
+        )}
+        {status === "authenticated" && (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="">
+                <IoPersonOutline size={20} className="text-center" />
+              </div>
             </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-50 rounded-box w-52 bg-white"
-          >
-            {session && (
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-50 rounded-box w-52 bg-white"
+            >
+              {session && (
+                <li>
+                  <p>
+                    {session.user?.name}
+                    <span className="badge">User</span>
+                  </p>
+                </li>
+              )}
+              {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_1 && (
+                <li>
+                  <Link href="/admin/barusari">Dashboard</Link>
+                </li>
+              )}
+              {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_2 && (
+                <li>
+                  <Link href="/admin/bulustalan">Dashboard</Link>
+                </li>
+              )}
               <li>
-                <p>
-                  {session.user?.name}
-                  <span className="badge">User</span>
-                </p>
+                <a href="https://google.com" target="_blank">
+                  Documentation
+                  <MdOpenInNew size={15} className="text-black -ml-1" />
+                </a>
               </li>
-            )}
-            {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_1 && (
-              <li>
-                <Link href="/admin/barusari">Dashboard</Link>
-              </li>
-            )}
-            {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_2 && (
-              <li>
-                <Link href="/admin/bulustalan">Dashboard</Link>
-              </li>
-            )}
-            <li>
-              <a href="https://google.com" target="_blank">
-                Documentation
-                <MdOpenInNew size={15} className="text-black -ml-1" />
-              </a>
-            </li>
-            {/* <li>
+              {/* <li>
               <Link href="/settings">Settings</Link>
             </li> */}
-          </ul>
-        </div>
+            </ul>
+          </div>
+        )}
         <button
           className="btn bg-orange-500 border-none hover:bg-orange-600 text-white"
           onClick={() =>

@@ -103,7 +103,7 @@ const DetailProduct = () => {
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <h1 className="text-xl font-bold mb-5">Detail Product</h1>
       <section className="flex md:grid grid-cols-12 flex-col mt-3 mb-8 gap-y-5">
-        <section className="md:w-80 w-full col-span-4">
+        <section className="md:w-80 w-full lg:col-span-4 md:col-span-6">
           <Image
             src={imageURL}
             alt="image-product"
@@ -112,7 +112,7 @@ const DetailProduct = () => {
             className="md:w-80 w-full h-80 rounded-sm object-cover"
           />
         </section>
-        <aside className="md:mt-0 mt-3 col-span-8">
+        <aside className="mt-0 col-span-8 md:col-span-6">
           <h2 className="text-xl font-semibold mb-3">{namaProduk}</h2>
           <p>{deskripsiProduk}</p>
           <h2 className="mt-1">
@@ -139,7 +139,7 @@ const DetailProduct = () => {
               target="_blank"
               className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
             >
-              Hubungi via Whatsapp
+              Whatsapp
             </a>
             <a
               className="btn bg-orange-500 text-white border-none hover:bg-orange-600"

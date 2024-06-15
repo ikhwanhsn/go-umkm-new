@@ -47,7 +47,7 @@ const AddProduct = () => {
   } = useSWR(`/api/store/id/${id}`, fetcher);
 
   const defaultImageUrl =
-    "https://firebasestorage.googleapis.com/v0/b/go-umkm-9915e.appspot.com/o/default%2Fdefault-product.jpg?alt=media&token=6851eead-bb5a-4883-b93f-a4a319085c9d";
+    "https://firebasestorage.googleapis.com/v0/b/go-umkm-9915e.appspot.com/o/default%2Fdefault-product.jpg?alt=media&token=8f519d60-5f76-4b47-921a-72b5fff871b8";
 
   useEffect(() => {
     setImagePreview(defaultImageUrl);

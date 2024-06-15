@@ -59,7 +59,7 @@ const DetailStore = () => {
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <h1 className="text-xl font-bold mb-1">Detail Store</h1>
       <section className="flex md:grid grid-cols-12 flex-col mt-3 mb-5 gap-y-5">
-        <section className="col-span-4">
+        <section className="lg:col-span-4 md:col-span-6">
           <Image
             src={logoToko}
             alt="image-product"
@@ -68,7 +68,7 @@ const DetailStore = () => {
             className="md:w-80 w-full h-80 object-cover rounded-sm"
           />
         </section>
-        <aside className="col-span-8">
+        <aside className="lg:col-span-8 md:col-span-6">
           <h2 className="text-xl font-semibold mb-3 capitalize">{namaToko}</h2>
           <p className="normal-case">{deskripsiToko}</p>
           <h2 className="mt-1 capitalize">

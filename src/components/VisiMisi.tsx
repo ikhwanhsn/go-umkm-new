@@ -10,7 +10,7 @@ const VisiMisi = () => {
         keberlanjutan, kami berkomitmen untuk menjadi mitra terpercaya bagi para
         UMKM.
       </p>
-      <section className="grid grid-cols-2 gap-5 mt-7 w-4/5 mx-auto">
+      <section className="md:grid block space-y-2 md:space-y-0 grid-cols-2 gap-5 mt-7 lg:w-4/5 md:w-full w-full mx-auto px-5 lg:px-0">
         <aside className="gap-5 bg-white shadow-md rounded-xl p-8 flex">
           <section>
             <h3 className="text-lg font-bold">Visi</h3>
