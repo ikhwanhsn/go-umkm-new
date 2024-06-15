@@ -40,14 +40,14 @@ const CardProduct = ({
         alt="image-product"
         width={300}
         height={300}
-        className="mx-auto w-full lg:h-44 md:h-40 h-32 rounded-sm mb-3 object-cover"
+        className="mx-auto w-full h-auto rounded-sm mb-3 object-cover"
       />
       <h3 className="text-lg font-semibold capitalize line-clamp-2">{name}</h3>
       <p className="grid grid-cols-12 items-center gap-1 capitalize line-clamp-1">
         {myRef === "store" && (
           <>
-            <FiMapPin />
-            {city}
+            <FiMapPin size={17} />
+            <span className="col-span-11 ml-3 md:ml-2">{city}</span>
           </>
         )}
         {myRef === "product" && (
