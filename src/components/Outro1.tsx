@@ -19,7 +19,7 @@ const Outro1 = () => {
           hanya disini
         </h3>
         <p>
-          Lebih dari 100 UMKM dengan ribuan produk yang ada siap melayani
+          Lebih dari 100 UMKM dengan puluhan produk yang ada siap melayani
           pesanan Anda.
         </p>
         <Link href="/store/k/barusari">

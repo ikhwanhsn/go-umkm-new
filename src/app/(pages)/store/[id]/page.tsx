@@ -6,11 +6,13 @@ import useSWR from "swr";
 import { fetcher } from "@/libs/swr/fetcher";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 
 const DetailStore = () => {
   const { id } = useParams();
   const [namaToko, setNamaToko] = useState("");
+  const [alamat, setAlamat] = useState("");
+  const [nib, setNib] = useState("");
+  const [kelurahan, setKelurahan] = useState("");
   const [deskripsiToko, setDeskripsiToko] = useState("");
   const [logoToko, setlogoToko] = useState("");
   const [provinsi, setProvinsi] = useState("");
@@ -32,6 +34,7 @@ const DetailStore = () => {
 
   useEffect(() => {
     if (dataStore) {
+      // console.log(dataStore);
       const data = dataStore[0];
       setUserID(data.user_id);
       setNamaToko(data.name);
@@ -41,6 +44,9 @@ const DetailStore = () => {
       setKota(data.city);
       setKecamatan(data.kecamatan);
       setTelpToko(data.telephone);
+      setAlamat(data.alamat);
+      setKelurahan(data.kelurahan);
+      setNib(data.nib);
     }
   }, [dataStore, dataProducts]);
   useEffect(() => {
@@ -65,6 +71,15 @@ const DetailStore = () => {
         <aside className="col-span-8">
           <h2 className="text-xl font-semibold mb-3 capitalize">{namaToko}</h2>
           <p className="normal-case">{deskripsiToko}</p>
+          <h2 className="mt-1 capitalize">
+            <span className="font-semibold">Alamat :</span> {alamat}
+          </h2>
+          <h2 className="mt-1 capitalize">
+            <span className="font-semibold">Kelurahan :</span> {kelurahan}
+          </h2>
+          <h2 className="mt-1">
+            <span className="font-semibold">NIB :</span> {nib}
+          </h2>
           <section className="space-x-1 mt-5">
             <button className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">
               Hubungi via Whatsapp

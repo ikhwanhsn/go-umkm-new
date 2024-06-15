@@ -120,11 +120,14 @@ const DetailProduct = () => {
           </h2>
           <h2 className="mt-1">
             <span className="font-semibold">Toko :</span>{" "}
-            <Link href={`/store/${idToko}`} className="hover:text-blue-500">
+            <Link
+              href={`/store/${idToko}`}
+              className="hover:text-blue-500 capitalize"
+            >
               {namaToko}
             </Link>
           </h2>
-          <h2 className="mt-1">
+          <h2 className="mt-1 capitalize">
             <span className="font-semibold">Alamat :</span> {alamat}
           </h2>
           <h2 className="mt-1">

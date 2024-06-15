@@ -28,15 +28,25 @@ const LokasiImage = () => {
             Kecamatan Semarang Selatan, Kota Semarang <br /> Jawa Tengah
           </h3>
           <aside className="flex gap-2 justify-center items-center mt-3">
-            <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+            <a
+              href="https://maps.app.goo.gl/yuQLqLMct6pN9jB69"
+              target="_blank"
+              className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white"
+            >
               <SiGooglemaps />
-            </section>
-            <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+            </a>
+            <a
+              href="mailto:kelurahan.barusarisemsel6a@gmail.com"
+              className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white"
+            >
               <MdOutlineMail size={18} />
-            </section>
-            <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+            </a>
+            <a
+              href="tel:+62243540433"
+              className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white"
+            >
               <BsTelephone />
-            </section>
+            </a>
           </aside>
           <aside className="flex gap-2 justify-center items-center">
             <Link
@@ -68,15 +78,25 @@ const LokasiImage = () => {
             Kecamatan Semarang Selatan, Kota Semarang <br /> Jawa Tengah
           </h3>
           <aside className="flex gap-2 justify-center items-center mt-3">
-            <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+            <a
+              href="https://maps.app.goo.gl/HqsacDxfaNHBVizQ9"
+              target="_blank"
+              className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white"
+            >
               <SiGooglemaps />
-            </section>
-            <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+            </a>
+            <a
+              href="mailto:kelurahanbulustalan@gmail.com"
+              className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white"
+            >
               <MdOutlineMail size={18} />
-            </section>
-            <section className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white">
+            </a>
+            <a
+              href="tel:+62243540433"
+              className="border border-orange-500 p-3 text-orange-500 cursor-pointer rounded-full hover:bg-orange-500 hover:text-white"
+            >
               <BsTelephone />
-            </section>
+            </a>
           </aside>
           <aside className="flex gap-2 justify-center items-center">
             <Link

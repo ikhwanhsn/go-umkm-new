@@ -7,8 +7,8 @@ const VisiMisi = () => {
       <p className="text-center w-3/4 mx-auto">
         Kami bertekad untuk membantu UMKM berkembang dengan memberikan solusi
         digital yang inovatif. Melalui kolaborasi, kreativitas, dan
-        keberlanjutan, kami berkomitmen untuk menjadi mitra terpercaya bagi UMKM
-        di Indonesia.
+        keberlanjutan, kami berkomitmen untuk menjadi mitra terpercaya bagi para
+        UMKM.
       </p>
       <section className="grid grid-cols-2 gap-5 mt-7 w-4/5 mx-auto">
         <aside className="gap-5 bg-white shadow-md rounded-xl p-8 flex">
