@@ -1,6 +1,5 @@
 import Image from "next/image";
 import map from "../../public/img/map-location.png";
-import Link from "next/link";
 
 const Lokasi = () => {
   return (

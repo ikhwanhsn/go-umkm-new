@@ -190,9 +190,9 @@ const Navbar = () => {
                 <MdOpenInNew size={15} className="text-black -ml-1" />
               </a>
             </li>
-            <li>
+            {/* <li>
               <Link href="/settings">Settings</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         <button

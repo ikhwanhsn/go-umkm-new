@@ -62,11 +62,17 @@ export async function GET(request: Request, { params }: any) {
     }
     if (!email) {
       const product = await Product.findById(id);
-      const store = await Store.findOne({ user_id: product.user_id });
+      const store = await Store.findOne({ _id: product.store_id });
+      const namaToko = store?.name;
       const telp = store?.telephone;
       const kelurahan = store?.kelurahan;
+      const alamat = store?.alamat;
+      const nib = store?.nib;
       if (product) {
-        return NextResponse.json({ product, telp, kelurahan }, { status: 200 });
+        return NextResponse.json(
+          { product, namaToko, telp, kelurahan, alamat, nib },
+          { status: 200 }
+        );
       } else {
         return NextResponse.json(
           { message: "Product not found" },

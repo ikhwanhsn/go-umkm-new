@@ -8,11 +8,16 @@ import { fetcher } from "@/libs/swr/fetcher";
 import { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const DetailProduct = () => {
   const { id } = useParams();
   const { data, status: session } = useSession();
+  const [idToko, setIdToko] = useState("");
+  const [namaToko, setNamaToko] = useState("");
   const [kelurahan, setKelurahan] = useState("");
+  const [alamat, setAlamat] = useState("");
+  const [nib, setNib] = useState("");
   const [namaProduk, setNamaProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [imageURL, setImageURL] = useState("");
@@ -67,7 +72,9 @@ const DetailProduct = () => {
 
   useEffect(() => {
     if (dataProduct) {
+      // console.log(dataProduct);
       const product = dataProduct.product;
+      setIdToko(product?.store_id);
       setNamaProduk(product?.name);
       setDeskripsiProduk(product?.description);
       setImageURL(product?.image);
@@ -78,7 +85,10 @@ const DetailProduct = () => {
       const formattedNumber = phoneNumber?.replace(/^0/, "62");
       const whatsappLink = `https://wa.me/${formattedNumber}`;
       setTelephone(whatsappLink);
+      setNamaToko(dataProduct?.namaToko);
       setKelurahan(dataProduct?.kelurahan);
+      setAlamat(dataProduct?.alamat);
+      setNib(dataProduct?.nib);
     }
   }, [dataProduct]);
   useEffect(() => {
@@ -105,6 +115,21 @@ const DetailProduct = () => {
         <aside className="md:mt-0 mt-3 col-span-8">
           <h2 className="text-xl font-semibold mb-3">{namaProduk}</h2>
           <p>{deskripsiProduk}</p>
+          <h2 className="mt-1">
+            <span className="font-semibold">Harga :</span> {hargaProduk}
+          </h2>
+          <h2 className="mt-1">
+            <span className="font-semibold">Toko :</span>{" "}
+            <Link href={`/store/${idToko}`} className="hover:text-blue-500">
+              {namaToko}
+            </Link>
+          </h2>
+          <h2 className="mt-1">
+            <span className="font-semibold">Alamat :</span> {alamat}
+          </h2>
+          <h2 className="mt-1">
+            <span className="font-semibold">NIB :</span> {nib}
+          </h2>
           <section className="flex items-center gap-1 mt-5">
             <a
               href={telephone}
