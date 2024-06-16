@@ -28,7 +28,7 @@ const CardProduct = ({
 
   return (
     <main
-      className="shadow-md p-5 rounded-lg hover:bg-gray-100 transition-all cursor-pointer overflow-hidden"
+      className="shadow-md md:p-5 p-4 rounded-lg hover:bg-gray-100 transition-all cursor-pointer overflow-hidden"
       onClick={() =>
         myRef === "store"
           ? router.push(`/store/${id}`)
@@ -40,7 +40,7 @@ const CardProduct = ({
         alt="image-product"
         width={300}
         height={300}
-        className="mx-auto w-full h-auto rounded-sm mb-3 object-cover"
+        className="mx-auto w-full lg:h-48 md:h-40 h-32 rounded-sm mb-3 object-cover"
       />
       <h3 className="text-lg font-semibold capitalize line-clamp-2">{name}</h3>
       <p className="grid grid-cols-12 items-center gap-1 capitalize line-clamp-1">
