@@ -8,6 +8,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { MdOpenInNew } from "react-icons/md";
+import { IoIosArrowDown } from "react-icons/io";
 
 const Navbar = () => {
   const router = useRouter();
@@ -95,7 +96,73 @@ const Navbar = () => {
       {/* ===== Navbar Center ===== */}
       {pathname !== "/" && (
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <div className="dropdown">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost bg-gray-50 font-normal"
+            >
+              Product
+              <IoIosArrowDown />
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-gray-50 rounded-box w-40 mt-2"
+            >
+              <li>
+                <Link href="/product/k/barusari">Barusari</Link>
+              </li>
+              <li>
+                <Link href="/product/k/bulustalan">Bulustalan</Link>
+              </li>
+            </ul>
+          </div>
+          <div className="dropdown">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost bg-gray-50 font-normal"
+            >
+              Store
+              <IoIosArrowDown />
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-gray-50 rounded-box w-40 mt-2"
+            >
+              <li>
+                <Link href="/store/k/barusari">Barusari</Link>
+              </li>
+              <li>
+                <Link href="/store/k/bulustalan">Bulustalan</Link>
+              </li>
+            </ul>
+          </div>
+          <div className="dropdown">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost bg-gray-50 font-normal"
+            >
+              Others
+              <IoIosArrowDown />
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-gray-50 rounded-box w-32 mt-2"
+            >
+              <li>
+                <Link href="/maps">Maps</Link>
+              </li>
+              <li>
+                <Link href="/learn">Learn</Link>
+              </li>
+              <li>
+                <Link href="/about">About</Link>
+              </li>
+            </ul>
+          </div>
+          {/* <ul className="menu menu-horizontal px-1">
             <li>
               <details>
                 <summary>Product</summary>
@@ -129,9 +196,9 @@ const Navbar = () => {
                   <li>
                     <Link href="/maps">Maps</Link>
                   </li>
-                  {/* <li>
+                  <li>
                     <Link href="/forum">Forum</Link>
-                  </li> */}
+                  </li>
                   <li>
                     <Link href="/learn">Learn</Link>
                   </li>
@@ -141,7 +208,7 @@ const Navbar = () => {
                 </ul>
               </details>
             </li>
-          </ul>
+          </ul> */}
         </div>
       )}
       {/* ===== Navbar End ===== */}

@@ -100,7 +100,7 @@ const About = () => {
         </p>
       </center>
       {/* Our Mentor */}
-      <section>
+      <section id="mentor">
         <h1 className="text-2xl font-bold text-center mt-12 text-orange-600">
           Our Mentor
         </h1>
@@ -138,7 +138,7 @@ const About = () => {
         </section>
       </section>
       {/* Our Team */}
-      <section className="mt-24 mx-5">
+      <section className="mt-24 mx-5" id="team">
         <h1 className="text-2xl font-bold text-center text-orange-600">
           Our Team
         </h1>
@@ -184,7 +184,7 @@ const About = () => {
         </center>
       </section>
       {/* Our Partner */}
-      <section className="mt-24 mx-5">
+      <section className="mt-24 mx-5" id="partner">
         <h1 className="text-2xl font-bold text-center text-orange-600">
           Our Partner
         </h1>
@@ -295,15 +295,26 @@ const About = () => {
                 Kecamatan Semarang Selatan, Kota Semarang, Jawa Tengah.
               </p>
               <section className="flex gap-2 justify-center items-center">
-                <aside className="p-3 cursor-pointer hover:bg-gray-100 hover:scale-105 transition-all border bg-white text-orange-500 rounded-full w-fit">
+                <a
+                  href="tel:+6289668703494"
+                  target="_blank"
+                  className="p-3 cursor-pointer hover:bg-gray-100 hover:scale-105 transition-all border bg-white text-orange-500 rounded-full w-fit"
+                >
                   <IoChatbubbleEllipsesOutline size={20} />
-                </aside>
-                <aside className="p-3 cursor-pointer hover:bg-gray-100 hover:scale-105 transition-all border bg-white text-orange-500 rounded-full w-fit">
+                </a>
+                <a
+                  href="mailto:goumkmpkmpi@gmail.com"
+                  className="p-3 cursor-pointer hover:bg-gray-100 hover:scale-105 transition-all border bg-white text-orange-500 rounded-full w-fit"
+                >
                   <MdOutlineMail size={20} />
-                </aside>
-                <aside className="p-3 cursor-pointer hover:bg-gray-100 hover:scale-105 transition-all border bg-white text-orange-500 rounded-full w-fit">
+                </a>
+                <a
+                  href="https://www.instagram.com/goumkm.pkmpi/"
+                  target="_blank"
+                  className="p-3 cursor-pointer hover:bg-gray-100 hover:scale-105 transition-all border bg-white text-orange-500 rounded-full w-fit"
+                >
                   <FaInstagram size={20} />
-                </aside>
+                </a>
               </section>
             </div>
           </div>

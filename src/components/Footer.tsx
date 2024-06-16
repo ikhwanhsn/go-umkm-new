@@ -1,5 +1,6 @@
 import Image from "next/image";
 import logo from "../../public/img/logo-png.png";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -14,23 +15,53 @@ const Footer = () => {
       </aside>
       <nav>
         <h6 className="footer-title">Services</h6>
-        <a className="link link-hover">Branding</a>
-        <a className="link link-hover">Design</a>
-        <a className="link link-hover">Marketing</a>
-        <a className="link link-hover">Advertisement</a>
+        <Link href="/product/k/barusari" className="link link-hover">
+          Products
+        </Link>
+        <Link href="/store/k/barusari" className="link link-hover">
+          Stores
+        </Link>
+        <Link href="/maps" className="link link-hover">
+          Maps
+        </Link>
+        <Link href="/learn" className="link link-hover">
+          Learn
+        </Link>
       </nav>
       <nav>
         <h6 className="footer-title">Company</h6>
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <a className="link link-hover">Press kit</a>
+        <Link href="/about" className="link link-hover">
+          About us
+        </Link>
+        <Link href="/about#mentor" className="link link-hover">
+          Mentor
+        </Link>
+        <Link href="/about#team" className="link link-hover">
+          Team
+        </Link>
+        <Link href="/about#partner" className="link link-hover">
+          Partner
+        </Link>
       </nav>
       <nav>
-        <h6 className="footer-title">Legal</h6>
-        <a className="link link-hover">Terms of use</a>
-        <a className="link link-hover">Privacy policy</a>
-        <a className="link link-hover">Cookie policy</a>
+        <h6 className="footer-title">Social</h6>
+        <a
+          href="https://www.instagram.com/goumkm.pkmpi/"
+          target="_blank"
+          className="link link-hover"
+        >
+          Instagram
+        </a>
+        <a href="mailto:goumkmpkmpi@gmail.com" className="link link-hover">
+          Email
+        </a>
+        <a
+          href="tel:+6289668703494"
+          target="_blank"
+          className="link link-hover"
+        >
+          Whatsapp
+        </a>
       </nav>
     </footer>
   );
