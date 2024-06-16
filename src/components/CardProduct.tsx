@@ -40,7 +40,7 @@ const CardProduct = ({
         alt="image-product"
         width={300}
         height={300}
-        className="mx-auto w-full lg:h-48 md:h-40 h-32 rounded-sm mb-3 object-cover"
+        className="mx-auto w-full aspect-square rounded-sm mb-3 object-cover"
       />
       <h3 className="text-lg font-semibold capitalize line-clamp-2">{name}</h3>
       <p className="grid grid-cols-12 items-center gap-1 capitalize line-clamp-1">

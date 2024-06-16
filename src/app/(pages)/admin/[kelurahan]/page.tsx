@@ -10,18 +10,14 @@ import { fetcher } from "@/libs/swr/fetcher";
 import useSWR from "swr";
 import Swal from "sweetalert2";
 import { AiOutlineProduct } from "react-icons/ai";
-import {
-  ref as storageRef,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from "firebase/storage";
+import CountUp from "react-countup";
 
 const statsData = [
   {
     title: "Pengunjung",
-    value: "52K",
-    desc: "Jan 1st - Feb 1st",
+    start: 700,
+    end: 1000,
+    desc: "June 1st - Jul 1st",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -39,29 +35,10 @@ const statsData = [
     ),
   },
   {
-    title: "Pengguna Baru",
-    value: "7,800",
-    desc: "↗︎ 1,200 (18%)",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        className="inline-block w-8 h-8 stroke-current"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M12 11V5m0 0L7.05 9.95M12 5l4.95 4.95M12 19a7 7 0 100-14 7 7 0 000 14z"
-        ></path>
-      </svg>
-    ),
-  },
-  {
     title: "Total Pengguna",
-    value: "32,000",
-    desc: "↘︎ 1,500 (4%)",
+    start: 150,
+    end: 200,
+    desc: "↘︎ 5 (4%)",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -79,9 +56,10 @@ const statsData = [
     ),
   },
   {
-    title: "Total Toko",
-    value: "2,150",
-    desc: "↗︎ 50 (2%)",
+    title: "Pengguna Baru",
+    start: 75,
+    end: 100,
+    desc: "↗︎ 25 (18%)",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -93,15 +71,16 @@ const statsData = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="2"
-          d="M4 4h16v2H4V4zm0 4h16v2H4V8zm0 4h16v6H4v-6zm2 6h12v2H6v-2z"
+          d="M12 11V5m0 0L7.05 9.95M12 5l4.95 4.95M12 19a7 7 0 100-14 7 7 0 000 14z"
         ></path>
       </svg>
     ),
   },
   {
     title: "Total Produk",
-    value: "10,320",
-    desc: "↗︎ 300 (3%)",
+    start: 5,
+    end: 10,
+    desc: "↗︎ 3 (3%)",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -114,6 +93,27 @@ const statsData = [
           strokeLinejoin="round"
           strokeWidth="2"
           d="M12 2L2 7l10 5 10-5-10-5zm0 18l-10-5V9l10 5 10-5v6l-10 5zm-10-9.5v6L12 20l10-6v-6L12 11 2 10.5z"
+        ></path>
+      </svg>
+    ),
+  },
+  {
+    title: "Total Toko",
+    start: 2,
+    end: 5,
+    desc: "↗︎ 2 (2%)",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        className="inline-block w-8 h-8 stroke-current"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M4 4h16v2H4V4zm0 4h16v2H4V8zm0 4h16v6H4v-6zm2 6h12v2H6v-2z"
         ></path>
       </svg>
     ),
@@ -199,7 +199,15 @@ const Admin = () => {
             <div key={index} className="stat">
               <div className="stat-figure text-gray-100">{stat.icon}</div>
               <div className="stat-title text-gray-100">{stat.title}</div>
-              <div className="stat-value text-white">{stat.value}</div>
+              <div className="stat-value text-white">
+                <CountUp
+                  start={stat.start}
+                  end={stat.end}
+                  duration={3}
+                  scrollSpyOnce={true}
+                  enableScrollSpy={true}
+                />
+              </div>
               <div className="stat-desc text-gray-100">{stat.desc}</div>
             </div>
           ))}

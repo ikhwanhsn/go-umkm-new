@@ -71,8 +71,20 @@ const StoreKelurahan = () => {
           </p>
         )}
         {isLoadingStore && (
-          <p className="text-center mt-12 text-sm italic">Loading...</p>
+          <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 lg:gap-5 md:gap-4 gap-3">
+            {Array.from({ length: 10 }).map((_, index) => (
+              <aside
+                key={index}
+                className="w-full h-fit p-5 bg-white rounded-md"
+              >
+                <section className="w-full rounded-sm lg:h-48 md:h-44 h-32 bg-gray-200 animate-pulse"></section>
+                <section className="md:w-32 w-24 rounded-sm h-5 mt-2 bg-gray-200 animate-pulse"></section>
+                <section className="md:w-24 w-16 rounded-sm h-5 mt-2 bg-gray-200 animate-pulse"></section>
+              </aside>
+            ))}
+          </section>
         )}
+
         <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 gap-5">
           {allStore.length > 0 &&
             !isLoadingStore &&

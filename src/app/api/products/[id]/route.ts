@@ -2,8 +2,6 @@ import connectMongoDB from "@/libs/mongodb";
 import Product from "@/models/product";
 import Store from "@/models/store";
 import User from "@/models/user";
-import { storage } from "@/services/firebase/firebase";
-import { deleteObject, ref } from "firebase/storage";
 import { NextResponse } from "next/server";
 
 export async function PUT(request: Request, { params }: any) {
@@ -103,12 +101,12 @@ export async function DELETE(request: Request, { params }: any) {
     }
 
     // Hapus gambar dari Firebase Storage
-    const imageUrl = product.image;
-    const decodedUrl = decodeURIComponent(
-      imageUrl.split("/o/")[1].split("?")[0]
-    );
-    const imageRef = ref(storage, decodedUrl);
-    await deleteObject(imageRef);
+    // const imageUrl = product.image;
+    // const decodedUrl = decodeURIComponent(
+    //   imageUrl.split("/o/")[1].split("?")[0]
+    // );
+    // const imageRef = ref(storage, decodedUrl);
+    // await deleteObject(imageRef);
 
     // Hapus produk dari MongoDB
     await Product.deleteOne({ _id: id });
