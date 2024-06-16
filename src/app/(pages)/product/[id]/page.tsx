@@ -102,61 +102,95 @@ const DetailProduct = () => {
   return (
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
       <h1 className="text-xl font-bold mb-5">Detail Product</h1>
-      <section className="flex md:grid grid-cols-12 flex-col mt-3 mb-8 gap-y-5">
-        <section className="md:w-80 w-full lg:col-span-4 md:col-span-6">
-          <Image
-            src={imageURL}
-            alt="image-product"
-            width={200}
-            height={200}
-            className="md:w-80 w-full h-80 rounded-sm object-cover"
-          />
-        </section>
-        <aside className="mt-0 col-span-8 md:col-span-6">
-          <h2 className="text-xl font-semibold mb-3">{namaProduk}</h2>
-          <p>{deskripsiProduk}</p>
-          <h2 className="mt-1">
-            <span className="font-semibold">Harga :</span> {hargaProduk}
-          </h2>
-          <h2 className="mt-1">
-            <span className="font-semibold">Toko :</span>{" "}
-            <Link
-              href={`/store/${idToko}`}
-              className="hover:text-blue-500 capitalize"
-            >
-              {namaToko}
-            </Link>
-          </h2>
-          <h2 className="mt-1 capitalize">
-            <span className="font-semibold">Alamat :</span> {alamat}
-          </h2>
-          <h2 className="mt-1">
-            <span className="font-semibold">NIB :</span> {nib}
-          </h2>
-          <section className="flex items-center gap-1 mt-5">
-            <a
-              href={telephone}
-              target="_blank"
-              className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
-            >
-              Whatsapp
-            </a>
-            <a
-              className="btn bg-orange-500 text-white border-none hover:bg-orange-600"
-              href={linkProduk}
-              target="_blank"
-            >
-              Beli sekarang
-            </a>
-            <button
-              className="btn btn-outline btn-error"
-              onClick={addLikedProduct}
-            >
-              {isLiked ? <GoHeartFill size={20} /> : <GoHeart size={20} />}
-            </button>
+      {isLoadingProduct && (
+        <>
+          <section className="flex md:grid grid-cols-12 flex-col mt-3 mb-8 gap-y-5">
+            <section className="md:w-80 w-full lg:col-span-4 md:col-span-6">
+              <aside className="md:w-80 w-full aspect-square rounded-sm object-cover bg-gray-200 animate-pulse"></aside>
+            </section>
+            <aside className="mt-0 col-span-8 md:col-span-6">
+              <h2 className="text-xl font-semibold mb-3 bg-gray-200 animate-pulse w-24 h-6 rounded-sm"></h2>
+              <p className="bg-gray-200 animate-pulse w-full h-24 rounded-sm"></p>
+              <h2 className="mt-1 bg-gray-200 animate-pulse w-24 h-6 rounded-sm"></h2>
+              <h2 className="mt-1 bg-gray-200 animate-pulse w-32 h-6 rounded-sm"></h2>
+              <h2 className="mt-1 bg-gray-200 animate-pulse w-28 h-6 rounded-sm"></h2>
+              <h2 className="mt-1 bg-gray-200 animate-pulse w-20 h-6 rounded-sm"></h2>
+              <section className="flex items-center gap-1 mt-5">
+                <aside className="bg-gray-200 animate-pulse w-24 h-10 rounded-md"></aside>
+                <aside className="bg-gray-200 animate-pulse w-24 h-10 rounded-md"></aside>
+                <aside className="bg-gray-200 animate-pulse w-12 h-10 rounded-md"></aside>
+              </section>
+            </aside>
           </section>
-        </aside>
-      </section>
+        </>
+      )}
+      {!isLoadingProduct && dataProduct && (
+        <>
+          <section className="flex md:grid grid-cols-12 flex-col mt-3 mb-8 gap-y-5">
+            <section className="md:w-80 w-full lg:col-span-4 md:col-span-6">
+              <Image
+                src={imageURL}
+                alt="image-product"
+                width={200}
+                height={200}
+                className="md:w-80 w-full aspect-square rounded-sm object-cover"
+              />
+            </section>
+            <aside className="mt-0 col-span-8 md:col-span-6">
+              <h2 className="text-xl font-semibold mb-3">{namaProduk}</h2>
+              <p>{deskripsiProduk}</p>
+              <h2 className="mt-1">
+                <span className="font-semibold">Harga :</span> Rp{hargaProduk}
+              </h2>
+              <h2 className="mt-1">
+                <span className="font-semibold">Toko :</span>{" "}
+                <Link
+                  href={`/store/${idToko}`}
+                  className="hover:text-blue-500 capitalize"
+                >
+                  {namaToko}
+                </Link>
+              </h2>
+              <h2 className="mt-1 capitalize">
+                <span className="font-semibold">Alamat :</span> {alamat}
+              </h2>
+              <h2 className="mt-1">
+                <span className="font-semibold">NIB :</span> {nib}
+              </h2>
+              <section className="flex items-center gap-1 mt-5">
+                <a
+                  href={telephone}
+                  target="_blank"
+                  className="btn btn-outline border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
+                >
+                  Hubungi Whatsapp
+                </a>
+                {linkProduk !== "" && (
+                  <a
+                    className="btn bg-orange-500 text-white border-none hover:bg-orange-600"
+                    href={linkProduk}
+                    target="_blank"
+                  >
+                    Beli sekarang
+                  </a>
+                )}
+                {session === "authenticated" && (
+                  <button
+                    className="btn btn-outline btn-error"
+                    onClick={addLikedProduct}
+                  >
+                    {isLiked ? (
+                      <GoHeartFill size={20} />
+                    ) : (
+                      <GoHeart size={20} />
+                    )}
+                  </button>
+                )}
+              </section>
+            </aside>
+          </section>
+        </>
+      )}
       <SimilarProduct id={id} kelurahan={kelurahan} />
     </main>
   );
@@ -185,8 +219,21 @@ const SimilarProduct = ({ id, kelurahan }: SimilarProductProps) => {
   return (
     <main>
       <h1 className="text-xl font-bold mb-1">Other Product</h1>
+      {isLoadingProduct && (
+        <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 lg:gap-5 md:gap-4 gap-3">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <aside key={index} className="w-full h-fit p-5 bg-white rounded-md">
+              <section className="w-full rounded-sm aspect-square bg-gray-200 animate-pulse"></section>
+              <section className="md:w-32 w-24 rounded-sm h-5 mt-2 bg-gray-200 animate-pulse"></section>
+              <section className="md:w-24 w-16 rounded-sm h-5 mt-2 bg-gray-200 animate-pulse"></section>
+              <section className="md:w-16 w-12 rounded-sm h-5 mt-3 bg-gray-200 animate-pulse"></section>
+            </aside>
+          ))}
+        </section>
+      )}
       <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-3 gap-5">
         {product.length > 0 &&
+          !isLoadingProduct &&
           product.map((item: any) => (
             <CardProduct
               key={item._id}

@@ -77,7 +77,7 @@ const StoreKelurahan = () => {
                 key={index}
                 className="w-full h-fit p-5 bg-white rounded-md"
               >
-                <section className="w-full rounded-sm lg:h-48 md:h-44 h-32 bg-gray-200 animate-pulse"></section>
+                <section className="w-full rounded-sm aspect-square bg-gray-200 animate-pulse"></section>
                 <section className="md:w-32 w-24 rounded-sm h-5 mt-2 bg-gray-200 animate-pulse"></section>
                 <section className="md:w-24 w-16 rounded-sm h-5 mt-2 bg-gray-200 animate-pulse"></section>
               </aside>
