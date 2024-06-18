@@ -30,6 +30,7 @@ const ProductLiked = () => {
   const filteredProducts = productLiked.filter((product: any) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  console.log(productLiked);
 
   return (
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
