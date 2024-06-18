@@ -43,7 +43,7 @@ const Navbar = () => {
             >
               <li>
                 <details>
-                  <summary>Product</summary>
+                  <summary>Produk</summary>
                   <ul className="p-2 bg-gray-50">
                     <li>
                       <Link href="/product/k/barusari">Barusari</Link>
@@ -56,7 +56,7 @@ const Navbar = () => {
               </li>
               <li>
                 <details>
-                  <summary>Store</summary>
+                  <summary>Toko</summary>
                   <ul className="p-2 bg-gray-50">
                     <li>
                       <Link href="/store/k/barusari">Barusari</Link>
@@ -69,7 +69,7 @@ const Navbar = () => {
               </li>
               <li>
                 <details>
-                  <summary>Others</summary>
+                  <summary>Lainnya</summary>
                   <ul className="p-2 bg-gray-50">
                     <li>
                       <Link href="/maps">Maps</Link>
@@ -102,7 +102,7 @@ const Navbar = () => {
               role="button"
               className="btn btn-ghost bg-gray-50 font-normal"
             >
-              Product
+              Produk
               <IoIosArrowDown />
             </div>
             <ul
@@ -123,7 +123,7 @@ const Navbar = () => {
               role="button"
               className="btn btn-ghost bg-gray-50 font-normal"
             >
-              Store
+              Toko
               <IoIosArrowDown />
             </div>
             <ul
@@ -144,7 +144,7 @@ const Navbar = () => {
               role="button"
               className="btn btn-ghost bg-gray-50 font-normal"
             >
-              Others
+              Lainnya
               <IoIosArrowDown />
             </div>
             <ul
