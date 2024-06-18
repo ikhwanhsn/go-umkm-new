@@ -99,7 +99,7 @@ const ProductLiked = () => {
                 myRef="product"
                 src={item.image}
                 name={item.name}
-                mitra={"Mitra 1"}
+                mitra={item.storeName}
                 price={item.price}
               />
             ))}
