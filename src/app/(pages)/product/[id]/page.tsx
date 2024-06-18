@@ -101,7 +101,7 @@ const DetailProduct = () => {
 
   return (
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
-      <h1 className="text-xl font-bold mb-5">Detail Product</h1>
+      <h1 className="text-xl font-bold mb-5">Detail Produk</h1>
       {isLoadingProduct && (
         <>
           <section className="flex md:grid grid-cols-12 flex-col mt-3 mb-8 gap-y-5">
@@ -218,7 +218,7 @@ const SimilarProduct = ({ id, kelurahan }: SimilarProductProps) => {
 
   return (
     <main>
-      <h1 className="text-xl font-bold mb-1">Other Product</h1>
+      <h1 className="text-xl font-bold mb-1">Produk Lainnya</h1>
       {isLoadingProduct && (
         <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 lg:gap-5 md:gap-4 gap-3">
           {Array.from({ length: 10 }).map((_, index) => (

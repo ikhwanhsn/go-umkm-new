@@ -36,16 +36,16 @@ const StoreKelurahan = () => {
       <section className="flex md:flex-row flex-col justify-between md:items-center">
         <section>
           <h1 className="text-xl font-bold mb-1 capitalize">
-            Store ({kelurahan})
+            Toko ({kelurahan})
           </h1>
-          <p>Welcome to store page</p>
+          <p>Selamat datang di halaman toko</p>
         </section>
         <section className="flex gap-2 justify-between items-center mt-3 md:mt-0">
           <label className="input input-bordered flex items-center gap-2 bg-gray-50 w-full">
             <input
               type="text"
               className="w-full"
-              placeholder="Search here..."
+              placeholder="Cari toko..."
               value={searchTerm}
               onChange={handleSearchChange}
             />
