@@ -1,5 +1,6 @@
 import Image from "next/image";
 import imageHeader from "../../public/img/image-header.png";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -17,7 +18,7 @@ const Header = () => {
             dengan berbagai macam kategori yang menarik dan berkualitas
             <br /> dengan harga terjangkau.
           </h3>
-          <a href="#produk-unggulan">
+          <a href="#produk-unggulan" className="z-20 relative">
             <button className="btn bg-yellow-500 text-white mt-5 border-none shadow-md hover:bg-yellow-600">
               Cari sekarang
             </button>
@@ -28,7 +29,7 @@ const Header = () => {
           alt="image-header"
           width={300}
           height={300}
-          className="absolute lg:right-32 md:right-12 sm:right-5 bottom-0"
+          className="absolute lg:right-32 md:right-12 sm:right-5 bottom-0 z-0"
         />
       </section>
     </main>
