@@ -30,7 +30,6 @@ const ProductLiked = () => {
   const filteredProducts = productLiked.filter((product: any) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  console.log(productLiked);
 
   return (
     <main className="min-h-screen lg:px-12 md:px-8 px-5 mt-5">
@@ -71,11 +70,13 @@ const ProductLiked = () => {
             Tidak ada produk yang disukai
           </p>
         )}
-        {filteredProducts.length === 0 && !isLoadingLiked && (
-          <p className="text-center mt-12 text-sm italic">
-            Produk tidak ditemukan
-          </p>
-        )}
+        {productLiked.length > 0 &&
+          filteredProducts.length === 0 &&
+          !isLoadingLiked && (
+            <p className="text-center mt-12 text-sm italic">
+              Produk tidak ditemukan
+            </p>
+          )}
         {isLoadingLiked && (
           <section className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 mx-auto mt-7 lg:gap-5 md:gap-4 gap-3">
             {Array.from({ length: 10 }).map((_, index) => (
