@@ -255,6 +255,15 @@ const Navbar = () => {
                 </li>
               )}
               <li>
+                <a
+                  href="https://drive.google.com/drive/folders/1GyORWnrU09kDA8s_-EpN09L4_qIM_ucY"
+                  target="_blank"
+                >
+                  Tutorial
+                  <MdOpenInNew size={15} className="text-black -ml-1" />
+                </a>
+              </li>
+              <li>
                 <a href="https://google.com" target="_blank">
                   Documentation
                   <MdOpenInNew size={15} className="text-black -ml-1" />
