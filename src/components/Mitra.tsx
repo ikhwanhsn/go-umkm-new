@@ -6,6 +6,7 @@ import mitra4 from "../../public/img/mitra-4.png";
 import mitra5 from "../../public/img/mitra-5.png";
 import mitra6 from "../../public/img/mitra-6.png";
 import mitra7 from "../../public/img/mitra-7.png";
+import mitra8 from "../../public/img/mitra-8.png";
 import Image from "next/image";
 
 const Mitra = () => {
@@ -30,6 +31,7 @@ const MarqueeComponent = () => {
     mitra5,
     mitra6,
     mitra7,
+    mitra8,
     mitra1,
     mitra2,
     mitra3,
@@ -37,6 +39,7 @@ const MarqueeComponent = () => {
     mitra5,
     mitra6,
     mitra7,
+    mitra8,
   ];
   return (
     <Marquee speed={40}>
