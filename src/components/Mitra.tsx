@@ -48,9 +48,9 @@ const MarqueeComponent = () => {
           key={index}
           src={item}
           alt="mitra"
-          width={70}
-          height={70}
-          className="md:mx-7 mx-4"
+          width={120}
+          height={120}
+          className="md:mx-5 mx-1"
         />
       ))}
     </Marquee>
