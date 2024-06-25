@@ -50,7 +50,7 @@ const MarqueeComponent = () => {
           alt="mitra"
           width={120}
           height={120}
-          className="md:mx-5 mx-1"
+          className={`md:mx-5 mx-1 w-28 h-28`}
         />
       ))}
     </Marquee>
