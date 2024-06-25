@@ -14,8 +14,8 @@ const JumlahPengunjung = () => {
           <h2 className="text-3xl font-semibold">
             +
             <CountUp
-              start={700}
-              end={1000}
+              start={150}
+              end={200}
               duration={3}
               scrollSpyOnce={true}
               enableScrollSpy={true}
@@ -27,8 +27,8 @@ const JumlahPengunjung = () => {
           <h2 className="text-3xl font-semibold">
             +
             <CountUp
-              start={30}
-              end={50}
+              start={15}
+              end={30}
               duration={3}
               scrollSpyOnce={true}
               enableScrollSpy={true}
@@ -40,8 +40,8 @@ const JumlahPengunjung = () => {
           <h2 className="text-3xl font-semibold">
             +
             <CountUp
-              start={5}
-              end={10}
+              start={3}
+              end={8}
               duration={3}
               scrollSpyOnce={true}
               enableScrollSpy={true}
