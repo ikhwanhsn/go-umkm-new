@@ -72,6 +72,9 @@ const Navbar = () => {
                   <summary>Lainnya</summary>
                   <ul className="p-2 bg-gray-50">
                     <li>
+                      <Link href="/ai">AI</Link>
+                    </li>
+                    <li>
                       <Link href="/maps">Maps</Link>
                     </li>
                     {/* <li>
@@ -151,6 +154,9 @@ const Navbar = () => {
               tabIndex={0}
               className="dropdown-content z-[1] menu p-2 shadow bg-gray-50 rounded-box w-32 mt-2"
             >
+              <li>
+                <Link href="/ai">AI</Link>
+              </li>
               <li>
                 <Link href="/maps">Maps</Link>
               </li>
