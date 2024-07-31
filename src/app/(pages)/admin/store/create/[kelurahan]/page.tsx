@@ -96,7 +96,7 @@ const CreateStore = () => {
           name: storeName,
           description: storeDesc,
           image: imageUrl, // Use the appropriate image URL
-          kelurahan: "barusari",
+          kelurahan: kelurahan,
           alamat: alamat,
           nib: nib,
           telephone: noTelp,
