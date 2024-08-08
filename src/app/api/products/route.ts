@@ -11,9 +11,9 @@ export async function POST(request: Request) {
     const store = await Store.findOne({ _id: store_id });
     const amountProduct = await Product.find({ store_id: store?._id });
 
-    if (amountProduct.length >= 10) {
+    if (amountProduct.length >= 20) {
       return NextResponse.json(
-        { message: "Maksimal 10 produk di setiap toko" },
+        { message: "Maksimal 20 produk di setiap toko" },
         { status: 400 }
       );
     }
