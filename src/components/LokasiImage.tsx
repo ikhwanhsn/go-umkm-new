@@ -10,7 +10,7 @@ const LokasiImage = () => {
   return (
     <main className="pt-16" id="kelurahan">
       <h1 className="text-center text-2xl text-orange-500 font-bold lg:mb-7 md:mb-6 mb-5">
-        Kelurahan
+        Lokasi Mitra
       </h1>
       <section className="md:grid flex flex-col grid-cols-2 p-5 gap-5">
         <section id="barusari">
@@ -22,7 +22,7 @@ const LokasiImage = () => {
             className="object-cover w-full h-[20em] rounded-lg shadow-md"
           />
           <h1 className="text-center text-xl mt-5 font-semibold">
-            Kelurahan Barusari
+            UMKM Semarang Hebat (Kelurahan Barusari)
           </h1>
           <h3 className="text-center text-lg mt-1">
             Kecamatan Semarang Selatan, Kota Semarang <br /> Jawa Tengah
@@ -72,7 +72,7 @@ const LokasiImage = () => {
             className="object-cover w-full h-[20em] rounded-lg shadow-md"
           />
           <h1 className="text-center text-xl mt-5 font-semibold">
-            Kelurahan Bulustalan
+            UMKM Teras Bulan (Kelurahan Bulustalan)
           </h1>
           <h3 className="text-center text-lg mt-1">
             Kecamatan Semarang Selatan, Kota Semarang <br /> Jawa Tengah
