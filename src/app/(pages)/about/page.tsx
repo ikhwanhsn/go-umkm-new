@@ -17,6 +17,9 @@ import dok6 from "../../../../public/img/dok6.webp";
 import dok7 from "../../../../public/img/dok7.webp";
 import dok8 from "../../../../public/img/dok8.webp";
 import dok9 from "../../../../public/img/dok9.webp";
+import dok10 from "../../../../public/img/dok10.webp";
+import dok11 from "../../../../public/img/dok11.webp";
+import dok12 from "../../../../public/img/dok12.webp";
 import { MdOutlineMail } from "react-icons/md";
 import { TbBrandTelegram } from "react-icons/tb";
 import { IoChatbubbleEllipsesOutline, IoLogoInstagram } from "react-icons/io5";
@@ -81,6 +84,18 @@ const documentation = [
   {
     image: dok9,
     name: "Dokumentasi 7",
+  },
+  {
+    image: dok10,
+    name: "Dokumentasi 8",
+  },
+  {
+    image: dok11,
+    name: "Dokumentasi 9",
+  },
+  {
+    image: dok12,
+    name: "Dokumentasi 10",
   },
 ];
 
@@ -198,7 +213,7 @@ const About = () => {
               className="object-cover w-full h-[20em] rounded-lg shadow-md"
             />
             <h1 className="text-center text-xl mt-5 font-semibold">
-              Kelurahan Barusari
+              UMKM Semarang Hebat (Kelurahan Barusari)
             </h1>
             <h3 className="text-center text-lg mt-1">
               Kecamatan Semarang Selatan, Kota Semarang <br /> Jawa Tengah
@@ -234,7 +249,7 @@ const About = () => {
               className="object-cover w-full h-[20em] rounded-lg shadow-md"
             />
             <h1 className="text-center text-xl mt-5 font-semibold">
-              Kelurahan Bulustalan
+              UMKM Teras Bulan (Kelurahan Bulustalan)
             </h1>
             <h3 className="text-center text-lg mt-1">
               Kecamatan Semarang Selatan, Kota Semarang <br /> Jawa Tengah
